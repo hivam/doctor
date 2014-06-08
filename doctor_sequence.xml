@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<openerp>
+	<data noupdate="1">
+	
+		<!-- Sequence type for appointment -->
+		<record model="ir.sequence.type" id="seq_type_appointment">
+			<field name="name">Appointment sequence</field>
+			<field name="code">appointment.sequence</field>
+		</record>
+
+		<!--Sequence for appointment -->
+		<record model="ir.sequence" id="seq_appointment">
+			<field name="name">Appointment sequence</field>
+			<field name="code">appointment.sequence</field>
+			<field name="padding" eval="4"/>
+			<field name="prefix">AP-%(month)s%(y)s-</field>
+		</record>
+
+		<!-- Sequence type for attention -->
+		<record model="ir.sequence.type" id="seq_type_attention">
+			<field name="name">Attention sequence</field>
+			<field name="code">attention.sequence</field>
+		</record>
+
+		<!--Sequence for attention -->
+		<record model="ir.sequence" id="seq_attention">
+			<field name="name">Attention sequence</field>
+			<field name="code">attention.sequence</field>
+			<field name="padding" eval="4"/>
+			<field name="prefix">AT-%(month)s%(y)s-</field>
+		</record>
+
+	</data>
+</openerp>

@@ -1,0 +1,1669 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* doctor
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0-20130608-231017\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-05 12:25+0000\n"
+"PO-Revision-Date: 2013-11-05 08:38-0500\n"
+"Last-Translator: Hector Ivan Valencia Muñoz <hvalencia@opuslibertati.org>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: doctor
+#: field:doctor.appointment,aditional:0
+msgid "Aditional"
+msgstr "Adicional"
+
+#. module: doctor
+#: sql_constraint:doctor.insurer:0
+msgid "The insurer code must be unique"
+msgstr "El código de la aseguradora debe ser único."
+
+#. module: doctor
+#: field:doctor.appointment,nb_register:0
+msgid "Number of Participants"
+msgstr "Nº de pacientes"
+
+#. module: doctor
+#: help:doctor.attentions,number:0
+msgid "Number of attention. Keep empty to get the number assigned by a sequence."
+msgstr "Número de la atención asignado automáticamente por una secuencia."
+
+#. module: doctor
+#: field:doctor.appointment,type_id:0
+#: view:doctor.appointment.type:0
+#: model:ir.actions.act_window,name:doctor.action_doctor_appointment_type
+#: model:ir.ui.menu,name:doctor.menu_doctor_appointment_type
+msgid "Appointment type"
+msgstr "Tipo de cita"
+
+#. module: doctor
+#: field:doctor.attentions.referral,referral_ids:0
+msgid "Service"
+msgstr "Servicio"
+
+#. module: doctor
+#: sql_constraint:doctor.diseases:0
+msgid "The Medical Diseases code must be unique"
+msgstr "El código del diagnóstico debe ser único"
+
+#. module: doctor
+#: field:doctor.attentions,age_attention:0
+msgid "Current age"
+msgstr "Edad actual"
+
+#. module: doctor
+#: view:doctor.past.category:0
+#: model:ir.actions.act_window,name:doctor.action_past_category_form
+#: model:ir.model,name:doctor.model_doctor_past_category
+#: model:ir.ui.menu,name:doctor.menu_doctor_past_category
+msgid "Past categories"
+msgstr "Tipo de antecedentes"
+
+#. module: doctor
+#: field:doctor.review.systems,system_category:0
+msgid "Systems category"
+msgstr "Tipo revisión por sistemas"
+
+#. module: doctor
+#: field:doctor.prescription,measuring_unit_q:0
+#: field:doctor.prescription,measuring_unit_qt:0
+msgid "Drug measuring unit"
+msgstr "Unidad de medida"
+
+#. module: doctor
+#: view:doctor.appointment:0
+msgid "Group By..."
+msgstr "Agrupar por..."
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_speciality
+msgid "doctor.speciality"
+msgstr "doctor.speciality"
+
+#. module: doctor
+#: selection:doctor.prescription,action_id:0
+msgid "Take"
+msgstr "Tomar"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Therapeutic procedure"
+msgstr "Terapéuticos"
+
+#. module: doctor
+#: view:doctor.appointment:0
+#: field:doctor.appointment,professional_id:0
+msgid "Professional"
+msgstr "Profesional"
+
+#. module: doctor
+#: field:doctor.professional,professional_card:0
+msgid "Professional card"
+msgstr "Tarjeta profesional"
+
+#. module: doctor
+#: field:doctor.professional,work_email:0
+msgid "Work Email"
+msgstr "Email - trabajo"
+
+#. module: doctor
+#: view:doctor.appointment:0
+msgid "Today"
+msgstr "Hoy"
+
+#. module: doctor
+#: field:doctor.attentions.referral,interconsultation:0
+msgid "Is interconsultation?"
+msgstr "¿Es una Interconsulta?"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Duration (in days)"
+msgstr "Duración (en dias)"
+
+#. module: doctor
+#: field:doctor.appointment,attended:0
+msgid "Attended"
+msgstr "Atendido"
+
+#. module: doctor
+#: selection:doctor.attentions.referral,referral_ids:0
+#: selection:product.product,procedure_type:0
+msgid "Hospitalization"
+msgstr "Hospitalización"
+
+#. module: doctor
+#: view:product.product:0
+msgid "Health Procedure"
+msgstr "Procedimiento en salud"
+
+#. module: doctor
+#: code:addons/doctor/doctor.py:128
+#: code:addons/doctor/doctor.py:137
+#, python-format
+msgid "Warning !"
+msgstr "¡Alerta!"
+
+#. module: doctor
+#: field:doctor.attentions,other_procedure_ids:0
+msgid "Other Procedure"
+msgstr "Otros procedimientos"
+
+#. module: doctor
+#: view:doctor.appointment:0
+msgid "Assist"
+msgstr "Asiste"
+
+#. module: doctor
+#: view:doctor.exam.category:0
+#: model:ir.actions.act_window,name:doctor.action_exam_category_form
+#: model:ir.model,name:doctor.model_doctor_exam_category
+#: model:ir.ui.menu,name:doctor.menu_doctor_exam_category
+msgid "Exam categories"
+msgstr "Tipo examen físico"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_insurer
+msgid "doctor.insurer"
+msgstr "doctor.insurer"
+
+#. module: doctor
+#: view:doctor.appointment:0
+msgid "Appointmemnt actives"
+msgstr "Citas activas"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Others"
+msgstr "Otros"
+
+#. module: doctor
+#: view:doctor.attentions:0
+#: field:doctor.review.systems,review_systems:0
+msgid "Review systems"
+msgstr "Revisión por sistemas"
+
+#. module: doctor
+#: selection:doctor.prescription,duration_period_n:0
+#: selection:doctor.prescription,duration_period_t:0
+#: selection:doctor.prescription,frequency_unit_n:0
+#: selection:doctor.prescription,frequency_unit_t:0
+msgid "hours"
+msgstr "horas"
+
+#. module: doctor
+#: selection:doctor.prescription,frequency_unit_n:0
+#: selection:doctor.prescription,frequency_unit_t:0
+msgid "weeks"
+msgstr "Semanas"
+
+#. module: doctor
+#: field:doctor.attentions,surgical_procedure_ids:0
+#: selection:product.product,procedure_type:0
+msgid "Surgical Procedure"
+msgstr "Quirúrgicos"
+
+#. module: doctor
+#: field:doctor.attentions,respiratory_rate:0
+msgid "Respiratory Rate"
+msgstr "Frecuencia respiratoria"
+
+#. module: doctor
+#: field:doctor.appointment,procedures_id:0
+#: field:doctor.appointment.procedures,procedures_id:0
+#: field:doctor.attentions.procedures,procedures_id:0
+#: model:ir.actions.act_window,name:doctor.action_doctor_health_procedures
+#: model:ir.ui.menu,name:doctor.menu_doctor_health_procedures
+msgid "Health Procedures"
+msgstr "Procedimientos en salud"
+
+#. module: doctor
+#: view:doctor.attentions:0
+#: field:doctor.prescription,total_quantity:0
+msgid "Total quantity"
+msgstr "Cantidad total"
+
+#. module: doctor
+#: selection:doctor.prescription,frequency_unit_n:0
+#: selection:doctor.prescription,frequency_unit_t:0
+msgid "when required"
+msgstr "Cuando sea requerido"
+
+#. module: doctor
+#: selection:doctor.attentions,age_unit:0
+msgid "Days"
+msgstr "Días"
+
+#. module: doctor
+#: field:doctor.prescription,drugs_id:0
+msgid "Drug"
+msgstr "Medicamento"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_measuring_unit
+msgid "doctor.measuring.unit"
+msgstr "doctor.measuring.unit"
+
+#. module: doctor
+#: code:addons/doctor/doctor.py:1575
+#, python-format
+msgid "Error!"
+msgstr "Error!"
+
+#. module: doctor
+#: sql_constraint:doctor.pharmaceutical.form:0
+msgid "The Pharmaceutical Form code must be unique"
+msgstr "El código de la forma farmacéutica debe ser único"
+
+#. module: doctor
+#: field:doctor.attentions,actual_disease:0
+msgid "Current disease"
+msgstr "Enfermedad actual"
+
+#. module: doctor
+#: selection:doctor.appointment,state:0
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Finish attention"
+msgstr "Finalizar atención"
+
+#. module: doctor
+#: field:doctor.drugs,pharmaceutical_form:0
+#: field:doctor.pharmaceutical.form,name:0
+msgid "Pharmaceutical form"
+msgstr "Forma farmacéutica"
+
+#. module: doctor
+#: model:ir.ui.menu,name:doctor.menu_doctor_appointment
+msgid "Waiting room"
+msgstr "Sala de espera"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Diastolic"
+msgstr "Diastólica"
+
+#. module: doctor
+#: view:doctor.professional:0
+msgid "My procedures"
+msgstr "Mis procedimientos"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Height and weight"
+msgstr "Talla y Peso"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_attentions_diseases
+msgid "doctor.attentions.diseases"
+msgstr "doctor.attentions.diseases"
+
+#. module: doctor
+#: field:product.product,complexity_level:0
+msgid "Complexity Level"
+msgstr "Nivel de complejidad"
+
+#. module: doctor
+#: constraint:doctor.exam.category:0
+#: constraint:doctor.past.category:0
+#: constraint:doctor.systems.category:0
+msgid "Error ! You can not create recursive categories."
+msgstr "¡Atención!  No se pueden crear categorías recursivas."
+
+#. module: doctor
+#: view:doctor.attentions:0
+#: field:doctor.attentions,drugs_ids:0
+msgid "Drugs prescription"
+msgstr "Medicamentos"
+
+#. module: doctor
+#: field:doctor.professional,authority:0
+msgid "Authority"
+msgstr "Autoridad"
+
+#. module: doctor
+#: view:doctor.attentions:0
+#: field:doctor.prescription,dose:0
+msgid "Dose"
+msgstr "Dosis"
+
+#. module: doctor
+#: field:doctor.dose.unit,code:0
+msgid "Abbreviation"
+msgstr "Abreviatura"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Surgical"
+msgstr "Quirúrgicos"
+
+#. module: doctor
+#: selection:doctor.patient,sex:0
+msgid "Female"
+msgstr "Femenino"
+
+#. module: doctor
+#: view:doctor.appointment:0
+msgid "In attention"
+msgstr "En atención"
+
+#. module: doctor
+#: code:addons/doctor/doctor.py:1576
+#, python-format
+msgid "Please define sales journal for this company: \"%s\" (id:%d)."
+msgstr "Por favor defina un Diario de ventas para esta compañía: \"%s\" (id:%d)."
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_appointment_procedures
+msgid "doctor.appointment.procedures"
+msgstr "doctor.appointment.procedures"
+
+#. module: doctor
+#: view:doctor.pharmaceutical.form:0
+#: model:ir.actions.act_window,name:doctor.action_doctor_pharmaceutical_form
+#: model:ir.ui.menu,name:doctor.menu_doctor_pharmaceutical_form
+msgid "Drugs pharmaceutical form"
+msgstr "Forma farmacéutica"
+
+#. module: doctor
+#: selection:doctor.prescription,action_id:0
+msgid "Inject"
+msgstr "Inyectar"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_diseases
+msgid "doctor.diseases"
+msgstr "doctor.diseases"
+
+#. module: doctor
+#: view:doctor.appointment:0
+#: selection:doctor.appointment,state:0
+#: selection:doctor.attentions.diseases,status:0
+msgid "Confirmed"
+msgstr "Confirmado"
+
+#. module: doctor
+#: selection:doctor.prescription,action_id:0
+msgid "Inhale"
+msgstr "Inhalar"
+
+#. module: doctor
+#: field:doctor.patient,death_date:0
+msgid "Date of Death"
+msgstr "Fecha de defunción"
+
+#. module: doctor
+#: help:doctor.attentions,origin:0
+msgid "Reference of the document that produced this attentiont."
+msgstr "Documento desde el que se originó esta atención."
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Blood pressure"
+msgstr "Presión sanguínea"
+
+#. module: doctor
+#: selection:doctor.attentions.diseases,diseases_type:0
+msgid "Related"
+msgstr "Relacionado"
+
+#. module: doctor
+#: selection:doctor.attentions.referral,referral_ids:0
+msgid "Urgency"
+msgstr "Urgencias"
+
+#. module: doctor
+#: view:doctor.attentions:0
+#: field:doctor.attentions,disability_ids:0
+msgid "Disability"
+msgstr "Incapacidad"
+
+#. module: doctor
+#: field:doctor.professional,work_phone:0
+msgid "Work Phone"
+msgstr "Teléfono - trabajo"
+
+#. module: doctor
+#: field:doctor.exam.category,child_ids:0
+#: field:doctor.past.category,child_ids:0
+#: field:doctor.systems.category,child_ids:0
+msgid "Child Categories"
+msgstr "Categorías hijas"
+
+#. module: doctor
+#: model:ir.module.category,description:doctor.module_category_doctor
+msgid "Helps you "
+msgstr "Le ayuda"
+
+#. module: doctor
+#: view:doctor.appointment:0
+#: selection:doctor.appointment,state:0
+msgid "Waiting"
+msgstr "Esperando"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Surgical procedure"
+msgstr "Quirúrgicos"
+
+#. module: doctor
+#: field:doctor.professional,procedures_ids:0
+#: field:product.product,professional_ids:0
+msgid "My health procedures"
+msgstr "Mis procedimientos en salud"
+
+#. module: doctor
+#: view:doctor.attentions:0
+#: field:doctor.attentions,conduct:0
+msgid "Conduct"
+msgstr "Conducta"
+
+#. module: doctor
+#: field:doctor.attentions,heart_rate:0
+msgid "Heart Rate"
+msgstr "Frecuencia cardiaca"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Normal prescription"
+msgstr "Prescripción normal"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Health records"
+msgstr "Registros clínicos"
+
+#. module: doctor
+#: sql_constraint:doctor.speciality:0
+msgid "The Medical Speciality code must be unique"
+msgstr "El código de la especialidad debe ser único."
+
+#. module: doctor
+#: view:doctor.appointment:0
+#: view:doctor.appointment.type:0
+#: field:doctor.appointment.type,name:0
+#: field:doctor.attentions.diseases,diseases_type:0
+#: view:product.product:0
+msgid "Type"
+msgstr "Tipo"
+
+#. module: doctor
+#: field:doctor.patient,rh:0
+msgid "Rh"
+msgstr "Rh"
+
+#. module: doctor
+#: help:doctor.attentions,pulsioximetry:0
+msgid "Oxygen Saturation (arterial)."
+msgstr "Saturación de oxígeno (arterial)."
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_attentions_disability
+msgid "doctor.attentions.disability"
+msgstr "doctor.attentions.disability"
+
+#. module: doctor
+#: field:doctor.patient,blood_type:0
+msgid "Blood Type"
+msgstr "Tipo de sangre"
+
+#. module: doctor
+#: selection:doctor.prescription,frequency_unit_n:0
+#: selection:doctor.prescription,frequency_unit_t:0
+msgid "total"
+msgstr "Total"
+
+#. module: doctor
+#: field:account.invoice,patient_id:0
+#: view:doctor.appointment:0
+#: field:doctor.appointment,patient_id:0
+#: field:doctor.atc.past,patient_id:0
+#: view:doctor.attentions:0
+#: field:doctor.attentions,patient_id:0
+#: field:doctor.attentions.past,patient_id:0
+#: field:doctor.diseases.past,patient_id:0
+#: view:doctor.patient:0
+#: field:doctor.patient,patient:0
+#: model:ir.actions.act_window,name:doctor.action_doctor_patient
+#: model:ir.ui.menu,name:doctor.menu_doctor_patient
+#: field:sale.order,patient_id:0
+msgid "Patient"
+msgstr "Paciente"
+
+#. module: doctor
+#: view:doctor.dose.unit:0
+#: model:ir.actions.act_window,name:doctor.action_doctor_dose_unit
+#: model:ir.ui.menu,name:doctor.menu_doctor_dose_unit
+msgid "Drugs dose unit"
+msgstr "Unidad de dosificación"
+
+#. module: doctor
+#: field:doctor.patient,birth_date:0
+msgid "Date of Birth"
+msgstr "Fecha de nacimiento"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_diseases_past
+msgid "doctor.diseases.past"
+msgstr "doctor.diseases.past"
+
+#. module: doctor
+#: view:doctor.appointment:0
+msgid "Generate order"
+msgstr "Generar orden"
+
+#. module: doctor
+#: field:doctor.diseases.past,diseases_id:0
+msgid "Past diseases"
+msgstr "Antecedentes patológicos"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Body mass"
+msgstr "Masa corporal"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Technical prescription"
+msgstr "Prescripción técnica"
+
+#. module: doctor
+#: selection:doctor.appointment,state:0
+msgid "Attending"
+msgstr "En atención"
+
+#. module: doctor
+#: field:doctor.prescription,frequency:0
+msgid "Frequency (each)"
+msgstr "Frecuencia (cada)"
+
+#. module: doctor
+#: code:addons/doctor/doctor.py:128
+#: code:addons/doctor/doctor.py:137
+#, python-format
+msgid "Birth Date Can not be a future date "
+msgstr "¡Atención!  La fecha de nacimiento no puede ser superior a la fecha actual."
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_systems_category
+msgid "Review systems categories"
+msgstr "Tipos de revisión por sistemas"
+
+#. module: doctor
+#: selection:product.product,procedure_type:0
+msgid "Diagnostic Image"
+msgstr "Imagen diagnóstica"
+
+#. module: doctor
+#: field:doctor.attentions,review_systems_id:0
+msgid "Review of systems"
+msgstr "Revisión por sistemas"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "During"
+msgstr "Durante"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Actual disease"
+msgstr "Enfermedad actual"
+
+#. module: doctor
+#: model:res.groups,name:doctor.group_doctor_configuration
+msgid "Configuration"
+msgstr "Configuration"
+
+#. module: doctor
+#: view:doctor.attentions:0
+#: selection:product.product,procedure_type:0
+msgid "Clinical laboratory"
+msgstr "Laboratorio clínico"
+
+#. module: doctor
+#: field:doctor.prescription,duration_period_n:0
+#: field:doctor.prescription,duration_period_t:0
+msgid "Treatment period"
+msgstr "Durante"
+
+#. module: doctor
+#: field:doctor.attentions,body_mass_index:0
+msgid "Body Mass Index"
+msgstr "Masa corporal"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: doctor
+#: field:doctor.atc.past,atc_id:0
+msgid "Past drugs"
+msgstr "Antecedentes farmacológicos"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: doctor
+#: field:doctor.exam.category,parent_id:0
+#: field:doctor.past.category,parent_id:0
+#: field:doctor.systems.category,parent_id:0
+msgid "Parent Category"
+msgstr "Categoría padre"
+
+#. module: doctor
+#: field:doctor.dose.unit,name:0
+msgid "Dosage unit"
+msgstr "Unidad de dosificación"
+
+#. module: doctor
+#: constraint:doctor.appointment:0
+#: constraint:doctor.schedule:0
+msgid "Error ! Closing Time cannot be set before Beginning Time."
+msgstr "¡Atención!  Hora final no puede ser anterior a la hora de inicio."
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Age"
+msgstr "Edad"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Reason consultation"
+msgstr "Motivo de consulta"
+
+#. module: doctor
+#: model:ir.ui.menu,name:doctor.menu_doctor_drugs_config
+msgid "Drugs Configuration"
+msgstr "Configuración de medicamentos"
+
+#. module: doctor
+#: view:doctor.administration.route:0
+#: model:ir.actions.act_window,name:doctor.action_doctor_administration_route
+#: model:ir.ui.menu,name:doctor.menu_doctor_administration_route
+msgid "Drugs administration route"
+msgstr "Vía de administración"
+
+#. module: doctor
+#: field:doctor.attentions,temperature:0
+msgid "Temperature (celsius)"
+msgstr "Temperatura (celsius)"
+
+#. module: doctor
+#: view:doctor.attentions:0
+#: field:doctor.attentions,drugs_past:0
+msgid "Drugs past"
+msgstr "Antecedentes farmacológicos"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_atc_past
+msgid "doctor.atc.past"
+msgstr "doctor.atc.past"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Each"
+msgstr "Cada"
+
+#. module: doctor
+#: field:doctor.attentions,pulsioximetry:0
+msgid "Oxygen Saturation"
+msgstr "Saturación de oxígeno"
+
+#. module: doctor
+#: selection:doctor.patient,sex:0
+msgid "Male"
+msgstr "Masculino"
+
+#. module: doctor
+#: field:doctor.exam.category,complete_name:0
+#: field:doctor.past.category,complete_name:0
+#: field:doctor.systems.category,complete_name:0
+msgid "Full Name"
+msgstr "Nombre completo"
+
+#. module: doctor
+#: field:doctor.prescription,duration:0
+msgid "Treatment duration"
+msgstr "Duración del tratamiento"
+
+#. module: doctor
+#: view:doctor.attentions:0
+#: field:doctor.attentions,attentions_exam_ids:0
+#: field:doctor.attentions.exam,exam:0
+msgid "Exam"
+msgstr "Examen físico"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "SpO2"
+msgstr "SpO2"
+
+#. module: doctor
+#: model:ir.ui.menu,name:doctor.menu_doctor_professional
+msgid "Healthcare professional"
+msgstr "Profesional de la salud"
+
+#. module: doctor
+#: view:doctor.systems.category:0
+#: model:ir.actions.act_window,name:doctor.action_systems_category_form
+#: model:ir.ui.menu,name:doctor.menu_doctor_systems_category
+msgid "Review sistems categories"
+msgstr "Tipo revisión por sistemas"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venta"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_pharmaceutical_form
+msgid "doctor.pharmaceutical.form"
+msgstr "doctor.pharmaceutical.form"
+
+#. module: doctor
+#: field:doctor.attentions,speciality:0
+#: field:doctor.attentions.referral,speciality_id:0
+#: field:doctor.professional,speciality_id:0
+#: field:doctor.speciality,name:0
+msgid "Speciality"
+msgstr "Especialidad"
+
+#. module: doctor
+#: selection:doctor.attentions.diseases,status:0
+msgid "Presumptive"
+msgstr "Impresión diagnóstica"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Add past"
+msgstr "Agregar antecedente"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_attentions_exam
+msgid "doctor.attentions.exam"
+msgstr "doctor.attentions.exam"
+
+#. module: doctor
+#: selection:doctor.prescription,duration_period_n:0
+#: selection:doctor.prescription,duration_period_t:0
+#: selection:doctor.prescription,frequency_unit_n:0
+#: selection:doctor.prescription,frequency_unit_t:0
+msgid "days"
+msgstr "Días"
+
+#. module: doctor
+#: selection:doctor.attentions,age_unit:0
+msgid "Years"
+msgstr "Años"
+
+#. module: doctor
+#: view:doctor.attentions:0
+#: field:doctor.attentions,attentions_past_ids:0
+#: field:doctor.attentions.past,past:0
+msgid "Past"
+msgstr "Antecedentes"
+
+#. module: doctor
+#: view:doctor.appointment:0
+msgid "Canceled"
+msgstr "Canceled"
+
+#. module: doctor
+#: field:product.product,procedure_type:0
+msgid "Procedure Type"
+msgstr "Tipo de procedimiento"
+
+#. module: doctor
+#: view:doctor.appointment:0
+msgid "Appointmemnt today"
+msgstr "Citas del día"
+
+#. module: doctor
+#: view:doctor.professional:0
+msgid "Related User"
+msgstr "Usuario relacionado"
+
+#. module: doctor
+#: field:doctor.attentions.past,past_category:0
+msgid "Past category"
+msgstr "Tipo de antecedente"
+
+#. module: doctor
+#: view:doctor.appointment:0
+msgid "Search Appointment"
+msgstr "Buscar cita"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Therapeutic"
+msgstr "Terapéutico"
+
+#. module: doctor
+#: field:doctor.attentions,patient_photo:0
+#: field:doctor.attentions,professional_photo:0
+#: field:doctor.patient,photo:0
+#: field:doctor.professional,photo:0
+msgid "unknown"
+msgstr "Desconocido"
+
+#. module: doctor
+#: sql_constraint:doctor.dose.unit:0
+msgid "The Dose code must be unique"
+msgstr "¡Atención!  No puede haber códigos de dosis repetidos"
+
+#. module: doctor
+#: view:doctor.appointment:0
+#: selection:doctor.appointment,state:0
+msgid "Invoiced"
+msgstr "Facturado"
+
+#. module: doctor
+#: field:doctor.appointment.procedures,additional_description:0
+msgid "Add. description"
+msgstr "Agregar descripción"
+
+#. module: doctor
+#: field:doctor.drugs,atc_id:0
+msgid "ATC"
+msgstr "ATC"
+
+#. module: doctor
+#: field:doctor.appointment.procedures,professional_id:0
+#: field:doctor.attentions,professional_id:0
+#: view:doctor.schedule:0
+#: field:doctor.schedule,professional_id:0
+#: model:ir.module.category,name:doctor.module_category_doctor
+#: model:ir.ui.menu,name:doctor.menu_doctor
+msgid "Doctor"
+msgstr "Doctor"
+
+#. module: doctor
+#: field:doctor.attentions,date_attention:0
+msgid "Date of attention"
+msgstr "Fecha de atención"
+
+#. module: doctor
+#: field:doctor.attentions,reason_consultation:0
+msgid "Reason for consultation"
+msgstr "Motivo de consulta"
+
+#. module: doctor
+#: field:doctor.exam.category,parent_left:0
+#: field:doctor.past.category,parent_left:0
+#: field:doctor.systems.category,parent_left:0
+msgid "Left parent"
+msgstr "Relación a la izquierda"
+
+#. module: doctor
+#: field:doctor.attentions,diagnostic_images_ids:0
+msgid "Diagnostic Images"
+msgstr "Imagen diagnóstica"
+
+#. module: doctor
+#: view:doctor.atc:0
+#: model:ir.actions.act_window,name:doctor.action_doctor_atc
+#: model:ir.ui.menu,name:doctor.menu_doctor_atc
+msgid "Drugs ATC"
+msgstr "Medicamento (ATC)"
+
+#. module: doctor
+#: field:doctor.exam.category,name:0
+#: field:doctor.past.category,name:0
+#: field:doctor.systems.category,name:0
+msgid "Category Name"
+msgstr "Nombre de la categoría"
+
+#. module: doctor
+#: help:doctor.appointment.procedures,additional_description:0
+msgid "Additional description that will be added to the product description on orders."
+msgstr "Descripción adicional que será agregada a la descripción del producto en la orden de venta."
+
+#. module: doctor
+#: field:doctor.appointment,attentiont_id:0
+msgid "Attentiont"
+msgstr "Atención"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_drugs
+msgid "doctor.drugs"
+msgstr "doctor.drugs"
+
+#. module: doctor
+#: selection:doctor.prescription,duration_period_n:0
+#: selection:doctor.prescription,duration_period_t:0
+msgid "indefinite"
+msgstr "Indefinido"
+
+#. module: doctor
+#: selection:product.product,procedure_type:0
+msgid "Other"
+msgstr "Otros"
+
+#. module: doctor
+#: field:doctor.attentions,clinical_laboratory_ids:0
+msgid "Clinical Laboratory"
+msgstr "Laboratorio clínico"
+
+#. module: doctor
+#: field:doctor.prescription,frequency_dose:0
+msgid "Frequency dose (each)"
+msgstr "Frecuencia (cada)"
+
+#. module: doctor
+#: view:doctor.attentions:0
+#: view:doctor.patient:0
+#: field:doctor.patient,appointments_ids:0
+#: field:doctor.patient,attentions_ids:0
+#: model:ir.actions.act_window,name:doctor.action_doctor_attentions
+#: model:ir.ui.menu,name:doctor.menu_doctor_attentions
+msgid "Attentions"
+msgstr "Atenciones"
+
+#. module: doctor
+#: field:doctor.appointment,state:0
+#: field:doctor.attentions.diseases,status:0
+msgid "Status"
+msgstr "Estado"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_appointment_type
+msgid "doctor.appointment.type"
+msgstr "doctor.appointment.type"
+
+#. module: doctor
+#: view:doctor.appointment:0
+#: field:doctor.appointment.procedures,appointment_id:0
+#: view:doctor.schedule:0
+#: model:ir.actions.act_window,name:doctor.action_doctor_appointment
+msgid "Appointment"
+msgstr "Cita"
+
+#. module: doctor
+#: field:doctor.administration.route,name:0
+#: field:doctor.drugs,administration_route:0
+#: field:doctor.prescription,administration_route_id:0
+msgid "Administration route"
+msgstr "Vía de administración"
+
+#. module: doctor
+#: view:doctor.appointment:0
+#: view:doctor.patient:0
+msgid "Attend"
+msgstr "Atender"
+
+#. module: doctor
+#: view:doctor.appointment:0
+#: field:doctor.appointment,insurer_id:0
+#: view:doctor.insurer:0
+#: field:doctor.insurer,insurer:0
+#: help:doctor.insurer,insurer:0
+#: view:doctor.patient:0
+#: field:doctor.patient,insurer:0
+#: help:doctor.patient,insurer:0
+#: model:ir.actions.act_window,name:doctor.action_doctor_insurer
+#: model:ir.ui.menu,name:doctor.menu_doctor_insurer
+msgid "Insurer"
+msgstr "Aseguradora"
+
+#. module: doctor
+#: view:doctor.drugs:0
+#: model:ir.actions.act_window,name:doctor.action_doctor_drugs
+#: model:ir.ui.menu,name:doctor.menu_doctor_drugs
+msgid "Drugs"
+msgstr "Medicamento"
+
+#. module: doctor
+#: model:res.groups,name:doctor.group_doctor_assistant
+msgid "Assistant"
+msgstr "Asistente"
+
+#. module: doctor
+#: view:doctor.appointment:0
+#: view:doctor.schedule:0
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_review_systems
+msgid "doctor.review.systems"
+msgstr "doctor.review.systems"
+
+#. module: doctor
+#: constraint:doctor.appointment:0
+msgid "Error ! Already exists an appointment at that time."
+msgstr "¡Atención!  Ya hay una cita asignada a esa misma hora."
+
+#. module: doctor
+#: help:doctor.attentions,heart_rate:0
+msgid "Heart rate expressed in beats per minute"
+msgstr "Frecuencia cardiaca (latidos por minuto)"
+
+#. module: doctor
+#: field:doctor.schedule,appointment_ids:0
+msgid "Appointments"
+msgstr "Citas"
+
+#. module: doctor
+#: model:ir.ui.menu,name:doctor.menu_doctor_config
+msgid "Doctor Configuration"
+msgstr "Configuración Módulo"
+
+#. module: doctor
+#: field:doctor.attentions,pathological_past_ids:0
+msgid "Old Pathological Past"
+msgstr "Antecedentes patológicos"
+
+#. module: doctor
+#: view:doctor.attentions:0
+#: field:doctor.measuring.unit,name:0
+msgid "Measuring unit"
+msgstr "Unidad de medida"
+
+#. module: doctor
+#: field:doctor.exam.category,active:0
+#: field:doctor.past.category,active:0
+#: field:doctor.professional,active:0
+#: field:doctor.systems.category,active:0
+msgid "Active"
+msgstr "Activo"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "- of age"
+msgstr "- de edad"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Vital signs"
+msgstr "Constantes vitales"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_schedule
+msgid "Scheduling doctor office hours"
+msgstr "Agenda del consultorio"
+
+#. module: doctor
+#: field:doctor.professional,user_id:0
+msgid "User"
+msgstr "Usuario"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_attentions_past
+msgid "doctor.attentions.past"
+msgstr "doctor.attentions.past"
+
+#. module: doctor
+#: view:doctor.patient:0
+msgid "Blood type"
+msgstr "Tipo de sangre"
+
+#. module: doctor
+#: selection:doctor.attentions.diseases,status:0
+msgid "Recurrent"
+msgstr "Recurrente"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Temperature"
+msgstr "Temperatura"
+
+#. module: doctor
+#: field:doctor.attentions,past_ids:0
+msgid "Old Past"
+msgstr "Antecedentes"
+
+#. module: doctor
+#: constraint:doctor.schedule:0
+msgid "Error ! The Office Doctor is busy."
+msgstr "¡Atención!  El consultorio está ocupado."
+
+#. module: doctor
+#: selection:doctor.attentions,age_unit:0
+msgid "Months"
+msgstr "Meses"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_attentions_procedures
+msgid "doctor.attentions.procedures"
+msgstr "doctor.attentions.procedures"
+
+#. module: doctor
+#: field:doctor.appointment,time_begin:0
+msgid "Start time"
+msgstr "Desde"
+
+#. module: doctor
+#: view:doctor.appointment:0
+msgid "Actives"
+msgstr "Activas"
+
+#. module: doctor
+#: field:doctor.attentions,diastolic:0
+msgid "Diastolic Pressure"
+msgstr "Presión diastólica"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Other procedures"
+msgstr "Otros procedimientos"
+
+#. module: doctor
+#: constraint:doctor.schedule:0
+msgid "Error ! Can not create a schedule for a date before the current."
+msgstr "¡Atención!  No puede crear una agenda para una fecha anterior a la actual."
+
+#. module: doctor
+#: field:doctor.prescription,action_id:0
+msgid "Action"
+msgstr "Acción"
+
+#. module: doctor
+#: view:doctor.speciality:0
+#: model:ir.ui.menu,name:doctor.menu_doctor_speciality
+msgid "Doctor speciality"
+msgstr "Especialidad"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_atc
+msgid "doctor.atc"
+msgstr "doctor.atc"
+
+#. module: doctor
+#: field:doctor.appointment.procedures,quantity:0
+#: field:doctor.attentions.procedures,quantity:0
+#: field:doctor.prescription,quantity:0
+msgid "Quantity"
+msgstr "Cantidad total"
+
+#. module: doctor
+#: field:doctor.schedule,date_end:0
+msgid "End date"
+msgstr "Hasta"
+
+#. module: doctor
+#: field:doctor.attentions.procedures,indications:0
+#: field:doctor.prescription,indications:0
+msgid "Indications"
+msgstr "Indicaciones"
+
+#. module: doctor
+#: field:doctor.administration.route,code:0
+#: field:doctor.atc,code:0
+#: field:doctor.diseases,code:0
+#: field:doctor.drugs,code:0
+#: field:doctor.insurer,code:0
+#: field:doctor.measuring.unit,code:0
+#: field:doctor.pharmaceutical.form,code:0
+#: field:doctor.speciality,code:0
+#: view:product.product:0
+#: field:product.product,procedure_code:0
+msgid "Code"
+msgstr "Código"
+
+#. module: doctor
+#: view:doctor.attentions:0
+#: field:doctor.attentions,weight:0
+msgid "Weight (kg)"
+msgstr "Peso (kg)"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_dose_unit
+msgid "doctor.dose.unit"
+msgstr "doctor.dose.unit"
+
+#. module: doctor
+#: field:doctor.appointment,schedule_id:0
+#: view:doctor.schedule:0
+#: model:ir.actions.act_window,name:doctor.action_doctor_schedule
+#: model:ir.ui.menu,name:doctor.menu_doctor_schedule
+msgid "Schedule"
+msgstr "Agenda"
+
+#. module: doctor
+#: help:doctor.professional,user_id:0
+msgid "Related user name"
+msgstr "Usuario relacionado"
+
+#. module: doctor
+#: field:doctor.patient,sex:0
+msgid "Sex"
+msgstr "Sexo"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Diagnostic images"
+msgstr "Imagenes diagnósticas"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Pulsioximetry"
+msgstr "Pulsioximetría"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_professional
+msgid "Information about the healthcare professional"
+msgstr "Información acerca del profesional de la salud."
+
+#. module: doctor
+#: field:doctor.prescription,duration_dose:0
+msgid "Treatment dose duration"
+msgstr "Durante"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_patient
+msgid "Information about the patient"
+msgstr "Información acerca del paciente"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Measure"
+msgstr "Medida"
+
+#. module: doctor
+#: view:doctor.appointment:0
+#: view:doctor.schedule:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: doctor
+#: selection:doctor.prescription,duration_period_n:0
+#: selection:doctor.prescription,duration_period_t:0
+#: selection:doctor.prescription,frequency_unit_n:0
+#: selection:doctor.prescription,frequency_unit_t:0
+msgid "minutes"
+msgstr "Minutos"
+
+#. module: doctor
+#: view:doctor.attentions:0
+#: field:doctor.attentions,height:0
+msgid "Height (cm)"
+msgstr "Altura (cm)"
+
+#. module: doctor
+#: help:doctor.attentions,respiratory_rate:0
+msgid "Respiratory rate expressed in breaths per minute"
+msgstr "Frecuencia respiratoria (respiraciones por minuto)"
+
+#. module: doctor
+#: view:product.product:0
+#: field:product.product,is_health_procedure:0
+msgid "Is Health Procedure?"
+msgstr "¿Es un procedimiento en salud?"
+
+#. module: doctor
+#: view:doctor.professional:0
+#: field:doctor.professional,professional:0
+#: model:ir.actions.act_window,name:doctor.action_doctor_professional
+msgid "Healthcare Professional"
+msgstr "Profesional de la salud"
+
+#. module: doctor
+#: field:doctor.attentions,age_unit:0
+msgid "Unit of measure of age"
+msgstr "Unidad de la edad"
+
+#. module: doctor
+#: view:doctor.attentions:0
+#: model:res.groups,name:doctor.group_doctor_physician
+msgid "Physician"
+msgstr "Profesional en salud"
+
+#. module: doctor
+#: field:doctor.professional,work_mobile:0
+msgid "Work Mobile"
+msgstr "Celular - trabajo"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Add Past"
+msgstr "Agregar antecedente"
+
+#. module: doctor
+#: help:doctor.patient,deceased:0
+msgid "Mark if the patient has died"
+msgstr "Marque esta casilla si el paciente falleció"
+
+#. module: doctor
+#: field:doctor.attentions,drugs_past_ids:0
+msgid "Old drugs Past"
+msgstr "Antecedentes farmacológicos"
+
+#. module: doctor
+#: selection:doctor.attentions.referral,referral_ids:0
+#: selection:product.product,procedure_type:0
+msgid "Consultation"
+msgstr "Consulta"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_prescription
+msgid "doctor.prescription"
+msgstr "doctor.prescription"
+
+#. module: doctor
+#: view:doctor.appointment:0
+msgid "In Attention"
+msgstr "En atención"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Respiratory"
+msgstr "Respiratorio"
+
+#. module: doctor
+#: selection:doctor.attentions.diseases,diseases_type:0
+msgid "Main"
+msgstr "Principal"
+
+#. module: doctor
+#: field:doctor.attentions.disability,disability_ids:0
+#: field:doctor.schedule,date_begin:0
+msgid "Start date"
+msgstr "Desde"
+
+#. module: doctor
+#: sql_constraint:doctor.administration.route:0
+msgid "The Administration Route code must be unique"
+msgstr "¡Atención!  No puede haber códigos repetidos"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_product_product
+msgid "Product"
+msgstr "Producto"
+
+#. module: doctor
+#: view:doctor.attentions:0
+#: field:doctor.attentions,diseases_ids:0
+#: view:doctor.diseases:0
+#: model:ir.actions.act_window,name:doctor.action_doctor_diseases
+#: model:ir.ui.menu,name:doctor.menu_doctor_diseases
+msgid "Diseases"
+msgstr "Diagnósticos"
+
+#. module: doctor
+#: field:doctor.appointment,appointment_today:0
+msgid "Appointment today"
+msgstr "Citas del día"
+
+#. module: doctor
+#: field:doctor.prescription,frequency_unit_n:0
+#: field:doctor.prescription,frequency_unit_t:0
+msgid "Frequency unit"
+msgstr "Unidad de frecuencia"
+
+#. module: doctor
+#: field:doctor.atc.past,attentiont_id:0
+#: field:doctor.attentions.disability,attentiont_id:0
+#: field:doctor.attentions.diseases,attentiont_id:0
+#: field:doctor.attentions.exam,attentiont_id:0
+#: field:doctor.attentions.past,attentiont_id:0
+#: field:doctor.attentions.procedures,attentiont_id:0
+#: field:doctor.attentions.referral,attentiont_id:0
+#: field:doctor.diseases.past,attentiont_id:0
+#: field:doctor.prescription,attentiont_id:0
+#: field:doctor.review.systems,attentiont_id:0
+msgid "Attention"
+msgstr "Atención"
+
+#. module: doctor
+#: model:res.groups,name:doctor.group_doctor_manager
+msgid "Manager"
+msgstr "Responsable"
+
+#. module: doctor
+#: selection:doctor.prescription,duration_period_n:0
+#: selection:doctor.prescription,duration_period_t:0
+msgid "months"
+msgstr "Meses"
+
+#. module: doctor
+#: view:doctor.attentions:0
+#: field:doctor.attentions,pathological_past:0
+msgid "Pathological past"
+msgstr "Antecedentes patológicos"
+
+#. module: doctor
+#: view:doctor.appointment:0
+msgid "Assists"
+msgstr "Asiste"
+
+#. module: doctor
+#: model:ir.actions.act_window,name:doctor.action_patient2attention
+msgid "Patient to Attention"
+msgstr "Atender paciente"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Systolic"
+msgstr "Sistólica"
+
+#. module: doctor
+#: field:doctor.prescription,dose_unit_id:0
+msgid "Dose unit"
+msgstr "Unidad de dosificación"
+
+#. module: doctor
+#: model:ir.ui.menu,name:doctor.menu_doctor_process
+msgid "Doctor Process"
+msgstr "Procesos"
+
+#. module: doctor
+#: view:doctor.appointment:0
+#: selection:doctor.appointment,state:0
+msgid "Unconfirmed"
+msgstr "Sin confirmar"
+
+#. module: doctor
+#: field:doctor.drugs,drugs_concentration:0
+msgid "Drugs concentration"
+msgstr "Concentración"
+
+#. module: doctor
+#: constraint:doctor.appointment:0
+msgid "Error ! Appointment time outside scheduling."
+msgstr "¡Atención! Hora de la cita por fuera de la agenda."
+
+#. module: doctor
+#: selection:doctor.patient,blood_type:0
+msgid "AB"
+msgstr "AB"
+
+#. module: doctor
+#: field:doctor.attentions,therapeutic_procedure_ids:0
+#: selection:product.product,procedure_type:0
+msgid "Therapeutic Procedure"
+msgstr "Terapéutico"
+
+#. module: doctor
+#: sql_constraint:doctor.measuring.unit:0
+msgid "The Measuring unit code must be unique"
+msgstr "¡Atención!  No puede haber códigos repetidos"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_attentions
+msgid "doctor.attentions"
+msgstr "doctor.attentions"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Route"
+msgstr "Vía"
+
+#. module: doctor
+#: help:doctor.exam.category,active:0
+#: help:doctor.past.category,active:0
+#: help:doctor.systems.category,active:0
+msgid "The active field allows you to hide the category without removing it."
+msgstr "El campo \"Activo\" le permite ocultar la categoría sin necesidad de removerla."
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_attentions_referral
+msgid "doctor.attentions.referral"
+msgstr "doctor.attentions.referral"
+
+#. module: doctor
+#: field:doctor.attentions.diseases,diseases_id:0
+#: field:doctor.diseases,name:0
+msgid "Disease"
+msgstr "Diagnóstico"
+
+#. module: doctor
+#: field:doctor.attentions,origin:0
+msgid "Source Document"
+msgstr "Documento origen"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Heart rate"
+msgstr "Frecuencia cardíaca"
+
+#. module: doctor
+#: field:doctor.appointment,time_end:0
+msgid "End time"
+msgstr "Hasta"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Actual_disease"
+msgstr "Enfermedad actual"
+
+#. module: doctor
+#: view:doctor.attentions:0
+#: field:doctor.attentions,analysis:0
+msgid "Analysis"
+msgstr "Análisis"
+
+#. module: doctor
+#: selection:doctor.prescription,action_id:0
+msgid "Apply"
+msgstr "Aplicar"
+
+#. module: doctor
+#: field:doctor.attentions,systolic:0
+msgid "Systolic Pressure"
+msgstr "Presión sistólica"
+
+#. module: doctor
+#: field:doctor.attentions.exam,exam_category:0
+msgid "Exam category"
+msgstr "Tipo de examen físico"
+
+#. module: doctor
+#: view:doctor.attentions:0
+#: field:doctor.attentions,referral_ids:0
+msgid "Referral"
+msgstr "Referencia"
+
+#. module: doctor
+#: field:doctor.appointment,order_id:0
+msgid "Order"
+msgstr "Orden"
+
+#. module: doctor
+#: field:doctor.patient,deceased:0
+msgid "Deceased"
+msgstr "Fallecido"
+
+#. module: doctor
+#: field:doctor.atc,name:0
+#: field:product.product,procedure_description:0
+msgid "Description"
+msgstr "Descripción"
+
+#. module: doctor
+#: view:doctor.appointment:0
+msgid "Health procedures"
+msgstr "Procedimientos en salud"
+
+#. module: doctor
+#: field:doctor.patient,death_cause:0
+msgid "Cause of Death"
+msgstr "Causa de muerte"
+
+#. module: doctor
+#: view:doctor.measuring.unit:0
+#: model:ir.actions.act_window,name:doctor.action_doctor_measuring_unit
+#: model:ir.ui.menu,name:doctor.menu_doctor_measuring_unit
+msgid "Drugs measuring unit"
+msgstr "Unidad de medida"
+
+#. module: doctor
+#: field:doctor.schedule,schedule_duration:0
+msgid "Duration (in hours)"
+msgstr "Duration (in hours)"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_administration_route
+msgid "doctor.administration.route"
+msgstr "doctor.administration.route"
+
+#. module: doctor
+#: field:doctor.attentions.referral,cause:0
+msgid "Referral cause"
+msgstr "Causa de referencia"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Diagnostic support"
+msgstr "Ayudas diagnósticas"
+
+#. module: doctor
+#: view:product.product:0
+msgid "Cmplexity Level"
+msgstr "Nivel de complejidad"
+
+#. module: doctor
+#: field:doctor.attentions,number:0
+msgid "Attention number"
+msgstr "Atención Nº"
+
+#. module: doctor
+#: model:ir.model,name:doctor.model_doctor_appointment
+msgid "doctor.appointment"
+msgstr "doctor.appointment"
+
+#. module: doctor
+#: view:doctor.attentions:0
+msgid "Referral and interconsultation"
+msgstr "Referencia e Interconsulta"
+
+#. module: doctor
+#: field:doctor.appointment.type,duration:0
+#: field:doctor.attentions.disability,duration:0
+msgid "Duration"
+msgstr "Duración (minutos)"
+
+#. module: doctor
+#: model:ir.actions.act_window,name:doctor.action_doctor_speciality
+msgid "Doctor Speciality"
+msgstr "Especialidad"
+
+#. module: doctor
+#: field:doctor.schedule,patients_count:0
+msgid "Number of patients"
+msgstr "Número de pacientes"
+
+#. module: doctor
+#: view:doctor.appointment:0
+msgid "Patient in waiting room?"
+msgstr "¿Paciente en sala de espera?"
+
+#. module: doctor
+#: field:doctor.exam.category,parent_right:0
+#: field:doctor.past.category,parent_right:0
+#: field:doctor.systems.category,parent_right:0
+msgid "Right parent"
+msgstr "Relación a la derecha"
+

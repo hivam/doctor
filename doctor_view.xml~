@@ -1,0 +1,222 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    
+    <!-- doctor speciality Form View -->    
+    <record model="ir.ui.view" id="view_doctor_speciality_form">
+        <field name="name">doctor.speciality.form</field>
+        <field name="model">doctor.speciality</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Doctor speciality" version="7.0">
+                <group>
+                    <field name="code"/>
+                    <field name="name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+     
+    <!-- doctor speciality Tree View -->     
+    <record model="ir.ui.view" id="view_doctor_speciality_tree">
+        <field name="name">doctor.speciality.tree</field>
+        <field name="model">doctor.speciality</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Office Doctor" version="7.0">                 
+                <field name="code"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+     
+    <!-- doctor speciality Action -->     
+    <record model="ir.actions.act_window" id="action_doctor_speciality">
+        <field name="name">Doctor Speciality</field>
+        <field name="res_model">doctor.speciality</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>         
+    </record>
+     
+    <!-- doctor Menu -->          
+    <menuitem id="menu_doctor" name="Doctor" />     
+    <menuitem id="menu_doctor_config" name="Doctor Configuration" parent="menu_doctor" />
+    <menuitem id="menu_doctor_speciality" name="Doctor speciality" parent="menu_doctor_config" action="doctor.action_doctor_speciality"/>     
+   
+    <!-- healthcare professional Form View-->
+    <record model="ir.ui.view" id="view_doctor_professional_form">
+        <field name="name">Healthcare Professional</field>
+        <field name="model">doctor.professional</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Healthcare Professional">
+                <group>
+                    <field name="name"></field>
+                    <field name="speciality"></field>
+                    <field name="active"></field>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- healthcare professional Tree View-->    
+    <record model="ir.ui.view" id="view_doctor_professional_tree">
+        <field name="name">Healthcare Professional</field>
+        <field name="model">doctor.professional</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string='Healthcare Professional'>
+                <field name="name"></field>
+                <field name="speciality"></field>
+                <field name="active"></field>                   
+            </tree>
+        </field>
+    </record>
+
+    <!-- healthcare professional Action -->
+    <record model="ir.actions.act_window" id="action_doctor_professional">
+        <field name="name">Healthcare Professional</field>          
+        <field name="res_model">doctor.professional</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>           
+    </record>
+
+    <!-- healthcare professional Menu-->          
+    <menuitem id="menu_doctor_professional" name="Healthcare Professional" parent="menu_doctor_config" action="doctor.action_doctor_professional"/>
+
+<!-- patient Form View-->
+    <record model="ir.ui.view" id="view_doctor_patient_form">
+        <field name="name">Patient</field>
+        <field name="model">doctor.patient</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Patient">
+                <group>
+                    <field name="name"></field>                    
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- patient Tree View-->    
+    <record model="ir.ui.view" id="view_doctor_patient_tree">
+        <field name="name">Patient</field>
+        <field name="model">doctor.patient</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string='Patient'>
+                <field name="name"></field>                                   
+            </tree>
+        </field>
+    </record>
+
+    <!-- patient Action -->
+    <record model="ir.actions.act_window" id="action_doctor_patient">
+        <field name="name">Patient</field>          
+        <field name="res_model">doctor.patient</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>           
+    </record>
+  
+    <!-- schedule Form View -->
+    <record model="ir.ui.view" id="view_doctor_schedule_form">
+        <field name="name">Schedule</field>
+        <field name="model">doctor.schedule</field>
+        <field name="arch" type="xml">
+            <form string="Schedule" version="7.0">                             
+                <group>
+                    <field name="name"/>
+                    <field name="date_begin" on_change="onchange_start_date(date_begin,date_end)"/>
+                    <field name="date_end"/>                   
+                </group>                    
+            </form>
+        </field>
+    </record>
+
+    <!-- schedule Tree View -->
+    <record model="ir.ui.view" id="view_doctor_schedule_tree">
+        <field name="name">Schedule</field>
+        <field name="model">doctor.schedule</field>
+        <field name="arch" type="xml">
+            <tree string="Schedule">
+                <field name="name" string="Doctor"/>                
+                <field name="date_begin"/>
+                <field name="date_end"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- schedule Calendar View -->
+    <record id="view_doctor_schedule_calendar" model="ir.ui.view">
+        <field name="name">Schedule</field>
+        <field name="model">doctor.schedule</field>
+        <field name="arch" type="xml">
+            <calendar color="name" date_start="date_begin" date_stop="date_end" string="Schedule">
+                <field name="name"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- schedule Action -->
+    <record model="ir.actions.act_window" id="action_doctor_schedule">
+       <field name="name">Schedule</field>
+       <field name="type">ir.actions.act_window</field>
+       <field name="res_model">doctor.schedule</field>
+       <field name="view_type">form</field>
+       <field name="view_mode">calendar,tree,form</field>
+    </record>
+
+    <!-- process Menu-->          
+    <menuitem id="menu_doctor_process" name="Doctor Process" parent="menu_doctor" />
+    
+    <!-- patient Menu-->          
+    <menuitem id="menu_doctor_patient" name="Patient" parent="menu_doctor_process" action="doctor.action_doctor_patient" sequence="10" />
+
+    <!-- schedule Menu -->
+    
+    <menuitem name="Schedule" id="menu_doctor_schedule" action="doctor.action_doctor_schedule" parent="menu_doctor_process" sequence="20" />
+
+    <!-- appointment Form View-->
+    <record model="ir.ui.view" id="view_doctor_appointment_form">
+        <field name="name">Appointment</field>
+        <field name="model">doctor.appointment</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Appointment">
+                <group>
+                    <field name="schedule_id"></field>
+                    <field name="patient_id"></field>
+                    <field name="time_begin"></field>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- appointment Tree View-->    
+    <record model="ir.ui.view" id="view_doctor_appointment_tree">
+        <field name="name">Appointment</field>
+        <field name="model">doctor.appointment</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string='Appointment'>                          
+                <field name="schedule_id"></field>
+                <field name="patient_id"></field>
+                <field name="time_begin"></field>                         
+            </tree>
+        </field>
+    </record>
+
+    <!-- appointment Action -->
+    <record model="ir.actions.act_window" id="action_doctor_appointment">
+        <field name="name">Appointment</field>          
+        <field name="res_model">doctor.appointment</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>           
+    </record>
+
+    <!-- appointment Menu -->
+    
+    <menuitem name="Appointment" id="menu_doctor_appointment" action="doctor.action_doctor_appointment" parent="menu_doctor_process" sequence="30" />
+
+    </data>
+</openerp>
