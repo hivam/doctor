@@ -19,7 +19,7 @@
 #
 ##############################################################################
 import time
-import pooler
+from openerp import pooler
 from datetime import date, datetime, timedelta
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
@@ -38,9 +38,9 @@ import math
 from openerp import SUPERUSER_ID, tools
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
 
-import sale
+#import sale
 import doctor
-import netsvc
+#import netsvc
 
 class product_template(osv.osv):
     _inherit = 'product.template'

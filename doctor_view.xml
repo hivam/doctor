@@ -1495,9 +1495,10 @@
 
                 <field name="default_code" position="replace"/>
 
-                <field name="qty_available" position="replace"/>
+                <!--<field name="qty_available" position="replace"/>--> <!--Not exits in product_view-->
 
-                <field name="categ_id" position="after">
+                <!-- <field name="categ_id"> cannot be located in parent view-->
+                <field name="name" position="after">
                     <field name="procedure_code" string="Code"/>
                         <field name="is_health_procedure" string= "Type" invisible="1" domain="[('is_health_procedure', '=', True)]" />
                         <field name="complexity_level" string="Cmplexity Level"/>
