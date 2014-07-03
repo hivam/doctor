@@ -38,8 +38,11 @@ This module allows
               'doctor_sequence.xml',
               'doctor_view.xml',
               ],
-    'css': ['static/src/css/doctor.css'],        
-    'installable': True,       
+    'css': ['static/src/css/doctor.css'],
+    "js": [
+        "static/src/js/search.js",
+    ],
+    'installable': True,
 }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
