@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+# #############################################################################
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
@@ -18,41 +18,23 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import time
-import pooler
-from datetime import date, datetime, timedelta
+
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 import openerp.addons.decimal_precision as dp
-from pytz import timezone
-import pytz
+from openerp.tools.translate import _
 
-#~ import logging
-from dateutil import parser
-from dateutil import rrule
-from dateutil.relativedelta import relativedelta
-import time
-import re
-import math
 
-from openerp import SUPERUSER_ID, tools
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
-
-import sale
-import doctor
-import doctor_person
-import doctor_appointment
-import doctor_attentions
-import doctor_invoice
-import netsvc
-
-class doctor_sales_order (osv.osv):
+class doctor_sales_order(osv.osv):
     _inherit = "sale.order"
     _name = "sale.order"
 
     def _amount_line_tax(self, cr, uid, line, context=None):
         val = 0.0
-        for c in self.pool.get('account.tax').compute_all(cr, uid, line.tax_id, line.price_unit * (1-(line.discount or 0.0)/100.0), line.product_uom_qty, line.product_id, line.order_id.partner_id)['taxes']:
+        for c in self.pool.get('account.tax').compute_all(cr, uid, line.tax_id,
+                                                          line.price_unit * (1 - (line.discount or 0.0) / 100.0),
+                                                          line.product_uom_qty, line.product_id,
+                                                          line.order_id.partner_id)['taxes']:
             val += c.get('amount', 0.0)
         return val
 
@@ -75,7 +57,8 @@ class doctor_sales_order (osv.osv):
             res[order.id]['amount_tax'] = cur_obj.round(cr, uid, cur, val)
             res[order.id]['amount_untaxed'] = cur_obj.round(cr, uid, cur, val1)
             res[order.id]['amount_patient'] = order.amount_patient
-            res[order.id]['amount_total'] = res[order.id]['amount_untaxed'] + res[order.id]['amount_tax'] - res[order.id]['amount_patient']
+            res[order.id]['amount_total'] = res[order.id]['amount_untaxed'] + res[order.id]['amount_tax'] - \
+                                            res[order.id]['amount_patient']
         return res
 
     def _get_order(self, cr, uid, ids, context=None):
@@ -85,29 +68,36 @@ class doctor_sales_order (osv.osv):
         return result.keys()
 
     _columns = {
-        'patient_id': fields.many2one('doctor.patient',"Patient"),
-        'amount_untaxed': fields.function(_amount_all, digits_compute=dp.get_precision('Account'), string='Untaxed Amount',
-            store={
-                'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
-                'sale.order.line': (_get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
-            },
-            multi='sums', help="The amount without tax.", track_visibility='always'),
+        'patient_id': fields.many2one('doctor.patient', "Patient"),
+        'amount_untaxed': fields.function(_amount_all, digits_compute=dp.get_precision('Account'),
+                                          string='Untaxed Amount',
+                                          store={
+                                              'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
+                                              'sale.order.line': (
+                                              _get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
+                                          },
+                                          multi='sums', help="The amount without tax.", track_visibility='always'),
         'amount_tax': fields.function(_amount_all, digits_compute=dp.get_precision('Account'), string='Taxes',
-            store={
-                'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
-                'sale.order.line': (_get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
-            },
-            multi='sums', help="The tax amount."),
+                                      store={
+                                          'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
+                                          'sale.order.line': (
+                                          _get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
+                                      },
+                                      multi='sums', help="The tax amount."),
         'amount_total': fields.function(_amount_all, digits_compute=dp.get_precision('Account'), string='Total',
-            store={
-                'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
-                'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['amount_patient'], 10),
-                'sale.order.line': (_get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
-            },
-            multi='sums', help="The total amount."),
-        'amount_patient': fields.float('Amount patient', digits_compute= dp.get_precision('Account'), readonly=True, states={'draft': [('readonly', False)]}),
-        'amount_partner': fields.float('Amount partner', digits_compute= dp.get_precision('Account'), readonly=True, states={'draft': [('readonly', False)]}),
-                 }
+                                        store={
+                                            'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
+                                            'sale.order': (
+                                            lambda self, cr, uid, ids, c={}: ids, ['amount_patient'], 10),
+                                            'sale.order.line': (
+                                            _get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
+                                        },
+                                        multi='sums', help="The total amount."),
+        'amount_patient': fields.float('Amount patient', digits_compute=dp.get_precision('Account'), readonly=True,
+                                       states={'draft': [('readonly', False)]}),
+        'amount_partner': fields.float('Amount partner', digits_compute=dp.get_precision('Account'), readonly=True,
+                                       states={'draft': [('readonly', False)]}),
+    }
 
     def onchange_amount_patient(self, cr, uid, ids, amount_untaxed, amount_tax, amount_patient, context=None):
         values = {}
@@ -118,9 +108,9 @@ class doctor_sales_order (osv.osv):
         total_patient = amount_patient
         total_partner = total_invoice + total_tax - total_patient
         values.update({
-            'amount_total' : total_partner,
+            'amount_total': total_partner,
         })
-        return {'value' : values}
+        return {'value': values}
 
     def _prepare_invoice(self, cr, uid, order, lines, context=None):
         """Prepare the dict of values to create the new invoice for a
@@ -136,11 +126,13 @@ class doctor_sales_order (osv.osv):
         if context is None:
             context = {}
         journal_ids = self.pool.get('account.journal').search(cr, uid,
-            [('type', '=', 'sale'), ('company_id', '=', order.company_id.id)],
-            limit=1)
+                                                              [('type', '=', 'sale'),
+                                                               ('company_id', '=', order.company_id.id)],
+                                                              limit=1)
         if not journal_ids:
             raise osv.except_osv(_('Error!'),
-                _('Please define sales journal for this company: "%s" (id:%d).') % (order.company_id.name, order.company_id.id))
+                                 _('Please define sales journal for this company: "%s" (id:%d).') % (
+                                 order.company_id.name, order.company_id.id))
         invoice_vals = {
             'name': order.client_order_ref or '',
             'origin': order.name,
@@ -165,5 +157,6 @@ class doctor_sales_order (osv.osv):
         # Care for deprecated _inv_get() hook - FIXME: to be removed after 6.1
         invoice_vals.update(self._inv_get(cr, uid, order, context=context))
         return invoice_vals
+
 
 doctor_sales_order()

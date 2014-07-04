@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+# #############################################################################
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
@@ -19,11 +19,12 @@
 #
 ##############################################################################
 import time
-import pooler
 from openerp.osv import fields, osv
 import openerp.addons.decimal_precision as dp
+from openerp.tools.translate import _
 
-class doctor_invoice (osv.osv):
+
+class doctor_invoice(osv.osv):
     _inherit = "account.invoice"
     _name = "account.invoice"
 
@@ -41,7 +42,8 @@ class doctor_invoice (osv.osv):
             for line in invoice.tax_line:
                 res[invoice.id]['amount_tax'] += line.amount
             res[invoice.id]['amount_patient'] = invoice.amount_patient
-            res[invoice.id]['amount_total'] = res[invoice.id]['amount_tax'] + res[invoice.id]['amount_untaxed'] - res[invoice.id]['amount_patient']
+            res[invoice.id]['amount_total'] = res[invoice.id]['amount_tax'] + res[invoice.id]['amount_untaxed'] - \
+                                              res[invoice.id]['amount_patient']
         return res
 
     def _get_invoice_line(self, cr, uid, ids, context=None):
@@ -57,33 +59,48 @@ class doctor_invoice (osv.osv):
         return result.keys()
 
     _columns = {
-        'patient_id': fields.many2one('doctor.patient',"Patient"),
-        'amount_untaxed': fields.function(_amount_all, digits_compute=dp.get_precision('Account'), string='Subtotal', track_visibility='always',
-            store={
-                'account.invoice': (lambda self, cr, uid, ids, c={}: ids, ['invoice_line'], 20),
-                'account.invoice.tax': (_get_invoice_tax, None, 20),
-                'account.invoice.line': (_get_invoice_line, ['price_unit','invoice_line_tax_id','quantity','discount','invoice_id'], 20),
-            },
-            multi='all'),
+        'patient_id': fields.many2one('doctor.patient', "Patient"),
+        'amount_untaxed': fields.function(_amount_all, digits_compute=dp.get_precision('Account'), string='Subtotal',
+                                          track_visibility='always',
+                                          store={
+                                              'account.invoice': (
+                                              lambda self, cr, uid, ids, c={}: ids, ['invoice_line'], 20),
+                                              'account.invoice.tax': (_get_invoice_tax, None, 20),
+                                              'account.invoice.line': (_get_invoice_line,
+                                                                       ['price_unit', 'invoice_line_tax_id', 'quantity',
+                                                                        'discount', 'invoice_id'], 20),
+                                          },
+                                          multi='all'),
         'amount_tax': fields.function(_amount_all, digits_compute=dp.get_precision('Account'), string='Tax',
-            store={
-                'account.invoice': (lambda self, cr, uid, ids, c={}: ids, ['invoice_line'], 20),
-                'account.invoice.tax': (_get_invoice_tax, None, 20),
-                'account.invoice.line': (_get_invoice_line, ['price_unit','invoice_line_tax_id','quantity','discount','invoice_id'], 20),
-            },
-            multi='all'),
+                                      store={
+                                          'account.invoice': (
+                                          lambda self, cr, uid, ids, c={}: ids, ['invoice_line'], 20),
+                                          'account.invoice.tax': (_get_invoice_tax, None, 20),
+                                          'account.invoice.line': (_get_invoice_line,
+                                                                   ['price_unit', 'invoice_line_tax_id', 'quantity',
+                                                                    'discount', 'invoice_id'], 20),
+                                      },
+                                      multi='all'),
         'amount_total': fields.function(_amount_all, digits_compute=dp.get_precision('Account'), string='Total',
-            store={
-                'account.invoice': (lambda self, cr, uid, ids, c={}: ids, ['amount_patient'], 20),
-                'account.invoice': (lambda self, cr, uid, ids, c={}: ids, ['invoice_line'], 20),
-                'account.invoice.tax': (_get_invoice_tax, None, 20),
-                'account.invoice.line': (_get_invoice_line, ['price_unit','invoice_line_tax_id','quantity','discount','invoice_id'], 20),
-            },
-            multi='all'),
-        'amount_patient': fields.float('Amount patient', digits_compute= dp.get_precision('Account'), readonly=True, states={'draft': [('readonly', False)]}),
-        'amount_partner': fields.float('Amount partner', digits_compute= dp.get_precision('Account'), readonly=True, states={'draft': [('readonly', False)]}),
-        'account_patient': fields.many2one('account.account', 'Account patient', readonly=True, states={'draft':[('readonly',False)]}, help="The patient account used for this invoice."),
-                 }
+                                        store={
+                                            'account.invoice': (
+                                            lambda self, cr, uid, ids, c={}: ids, ['amount_patient'], 20),
+                                            'account.invoice': (
+                                            lambda self, cr, uid, ids, c={}: ids, ['invoice_line'], 20),
+                                            'account.invoice.tax': (_get_invoice_tax, None, 20),
+                                            'account.invoice.line': (_get_invoice_line,
+                                                                     ['price_unit', 'invoice_line_tax_id', 'quantity',
+                                                                      'discount', 'invoice_id'], 20),
+                                        },
+                                        multi='all'),
+        'amount_patient': fields.float('Amount patient', digits_compute=dp.get_precision('Account'), readonly=True,
+                                       states={'draft': [('readonly', False)]}),
+        'amount_partner': fields.float('Amount partner', digits_compute=dp.get_precision('Account'), readonly=True,
+                                       states={'draft': [('readonly', False)]}),
+        'account_patient': fields.many2one('account.account', 'Account patient', readonly=True,
+                                           states={'draft': [('readonly', False)]},
+                                           help="The patient account used for this invoice."),
+    }
 
     def onchange_amount_patient(self, cr, uid, ids, amount_untaxed, amount_tax, amount_patient, context=None):
         values = {}
@@ -94,9 +111,9 @@ class doctor_invoice (osv.osv):
         total_patient = amount_patient
         total_partner = total_invoice + total_tax - total_patient
         values.update({
-            'amount_total' : total_partner,
+            'amount_total': total_partner,
         })
-        return {'value' : values}
+        return {'value': values}
 
     def finalize_invoice_move_lines(self, cr, uid, invoice_browse, move_lines):
         """finalize_invoice_move_lines(cr, uid, invoice, move_lines) -> move_lines
@@ -148,7 +165,8 @@ class doctor_invoice (osv.osv):
             ctx = context.copy()
             ctx.update({'lang': inv.partner_id.lang})
             if not inv.date_invoice:
-                self.write(cr, uid, [inv.id], {'date_invoice': fields.date.context_today(self,cr,uid,context=context)}, context=ctx)
+                self.write(cr, uid, [inv.id],
+                           {'date_invoice': fields.date.context_today(self, cr, uid, context=context)}, context=ctx)
             company_currency = self.pool['res.company'].browse(cr, uid, inv.company_id.id).currency_id.id
             # create the analytical lines
             # one move line per invoice line
@@ -158,11 +176,14 @@ class doctor_invoice (osv.osv):
             self.check_tax_lines(cr, uid, inv, compute_taxes, ait_obj)
 
             # I disabled the check_total feature
-            group_check_total_id = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'account', 'group_supplier_inv_check_total')[1]
+            group_check_total_id = \
+            self.pool.get('ir.model.data').get_object_reference(cr, uid, 'account', 'group_supplier_inv_check_total')[1]
             group_check_total = self.pool.get('res.groups').browse(cr, uid, group_check_total_id, context=context)
             if group_check_total and uid in [x.id for x in group_check_total.users]:
-                if (inv.type in ('in_invoice', 'in_refund') and abs(inv.check_total - inv.amount_total) >= (inv.currency_id.rounding/2.0)):
-                    raise osv.except_osv(_('Bad Total!'), _('Please verify the price of the invoice!\nThe encoded total does not match the computed total.'))
+                if (inv.type in ('in_invoice', 'in_refund') and abs(inv.check_total - inv.amount_total) >= (
+                    inv.currency_id.rounding / 2.0)):
+                    raise osv.except_osv(_('Bad Total!'), _(
+                    'Please verify the price of the invoice!\nThe encoded total does not match the computed total.'))
 
             if inv.payment_term:
                 total_fixed = total_percent = 0
@@ -173,7 +194,10 @@ class doctor_invoice (osv.osv):
                         total_percent += line.value_amount
                 total_fixed = (total_fixed * 100) / (inv.amount_total or 1.0)
                 if (total_fixed + total_percent) > 100:
-                    raise osv.except_osv(_('Error!'), _("Cannot create the invoice.\nThe related payment term is probably misconfigured as it gives a computed amount greater than the total invoiced amount. In order to avoid rounding issues, the latest line of your payment term must be of type 'balance'."))
+                    raise osv.except_osv(_('Error!'), _(
+                        "Cannot create the invoice.\nThe related payment term is probably misconfigured"
+                        " as it gives a computed amount greater than the total invoiced amount. In order to"
+                        " avoid rounding issues, the latest line of your payment term must be of type 'balance'."))
 
             # one move line per tax line
             iml += ait_obj.move_line_get(cr, uid, inv.id)
@@ -194,7 +218,8 @@ class doctor_invoice (osv.osv):
             # create one move line for the total and possibly adjust the other lines amount
             total = 0
             total_currency = 0
-            total, total_currency, iml = self.compute_invoice_totals(cr, uid, inv, company_currency, ref, iml, context=ctx)
+            total, total_currency, iml = self.compute_invoice_totals(cr, uid, inv, company_currency, ref, iml,
+                                                                     context=ctx)
             total_patient = inv.amount_patient
             total = total - total_patient
             acc_id = inv.account_id.id
@@ -203,14 +228,16 @@ class doctor_invoice (osv.osv):
             totlines = False
             if inv.payment_term:
                 totlines = payment_term_obj.compute(cr,
-                        uid, inv.payment_term.id, total, inv.date_invoice or False, context=ctx)
+                                                    uid, inv.payment_term.id, total, inv.date_invoice or False,
+                                                    context=ctx)
             if totlines:
                 res_amount_currency = total_currency
                 i = 0
                 ctx.update({'date': inv.date_invoice})
                 for t in totlines:
                     if inv.currency_id.id != company_currency:
-                        amount_currency = cur_obj.compute(cr, uid, company_currency, inv.currency_id.id, t[1], context=ctx)
+                        amount_currency = cur_obj.compute(cr, uid, company_currency, inv.currency_id.id, t[1],
+                                                          context=ctx)
                     else:
                         amount_currency = False
 
@@ -227,9 +254,9 @@ class doctor_invoice (osv.osv):
                         'account_id': acc_id,
                         'date_maturity': t[0],
                         'amount_currency': diff_currency_p \
-                                and amount_currency or False,
+                                           and amount_currency or False,
                         'currency_id': diff_currency_p \
-                                and inv.currency_id.id or False,
+                                       and inv.currency_id.id or False,
                         'ref': ref,
                     })
             else:
@@ -240,17 +267,17 @@ class doctor_invoice (osv.osv):
                     'account_id': acc_id,
                     'date_maturity': inv.date_due or False,
                     'amount_currency': diff_currency_p \
-                            and total_currency or False,
+                                       and total_currency or False,
                     'currency_id': diff_currency_p \
-                            and inv.currency_id.id or False,
+                                   and inv.currency_id.id or False,
                     'ref': ref
-            })
+                })
 
             date = inv.date_invoice or time.strftime('%Y-%m-%d')
 
             part = self.pool.get("res.partner")._find_accounting_partner(inv.partner_id)
 
-            line = map(lambda x:(0,0,self.line_get_convert(cr, uid, x, part.id, date, context=ctx)),iml)
+            line = map(lambda x: (0, 0, self.line_get_convert(cr, uid, x, part.id, date, context=ctx)), iml)
 
             line = self.group_lines(cr, uid, iml, line, inv)
 
@@ -258,7 +285,8 @@ class doctor_invoice (osv.osv):
             journal = journal_obj.browse(cr, uid, journal_id, context=ctx)
             if journal.centralisation:
                 raise osv.except_osv(_('User Error!'),
-                        _('You cannot create an invoice on a centralized journal. Uncheck the centralized counterpart box in the related journal from the configuration menu.'))
+                                     _( 'You cannot create an invoice on a centralized journal. Uncheck the '
+                                    'centralized counterpart box in the related journal from the configuration menu.'))
 
             line = self.finalize_invoice_move_lines(cr, uid, inv, line)
 
@@ -285,7 +313,8 @@ class doctor_invoice (osv.osv):
             move_id = move_obj.create(cr, uid, move, context=ctx)
             new_move_name = move_obj.browse(cr, uid, move_id, context=ctx).name
             # make the invoice point to that move
-            self.write(cr, uid, [inv.id], {'move_id': move_id,'period_id':period_id, 'move_name':new_move_name}, context=ctx)
+            self.write(cr, uid, [inv.id], {'move_id': move_id, 'period_id': period_id, 'move_name': new_move_name},
+                       context=ctx)
             # Pass invoice in context in method post: used if you want to get the same
             # account move reference when creating the same invoice after a cancelled one:
             move_obj.post(cr, uid, [move_id], context=ctx)
@@ -294,11 +323,12 @@ class doctor_invoice (osv.osv):
 
     def invoice_pay_patient(self, cr, uid, ids, context=None):
         if not ids: return []
-        dummy, view_id = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'account_voucher', 'view_vendor_receipt_dialog_form')
+        dummy, view_id = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'account_voucher',
+                                                                             'view_vendor_receipt_dialog_form')
 
         inv = self.browse(cr, uid, ids[0], context=context)
         return {
-            'name':_("Pay Invoice"),
+            'name': _("Pay Invoice"),
             'view_mode': 'form',
             'view_id': view_id,
             'view_type': 'form',
@@ -315,9 +345,10 @@ class doctor_invoice (osv.osv):
                 'close_after_process': True,
                 'invoice_type': inv.type,
                 'invoice_id': inv.id,
-                'default_type': inv.type in ('out_invoice','out_refund') and 'receipt' or 'payment',
-                'type': inv.type in ('out_invoice','out_refund') and 'receipt' or 'payment'
+                'default_type': inv.type in ('out_invoice', 'out_refund') and 'receipt' or 'payment',
+                'type': inv.type in ('out_invoice', 'out_refund') and 'receipt' or 'payment'
             }
         }
+
 
 doctor_invoice()

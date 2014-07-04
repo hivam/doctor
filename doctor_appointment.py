@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+# #############################################################################
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
@@ -18,36 +18,23 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import time
-import pooler
-from datetime import date, datetime, timedelta
+
+from datetime import datetime, timedelta
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-from pytz import timezone
 import pytz
 
-#~ import logging
-from dateutil import parser
-from dateutil import rrule
-from dateutil.relativedelta import relativedelta
-import time
-import re
-import math
-
-from openerp import SUPERUSER_ID, tools
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
-
-import doctor
-import netsvc
 
 class doctor_appointment_type(osv.osv):
     _name = "doctor.appointment.type"
     _columns = {
-        'name': fields.char ('Type', size=10, required=True),
+        'name': fields.char('Type', size=10, required=True),
         'duration': fields.integer('Duration', required=True),
-        }
+    }
+
 
 doctor_appointment_type()
+
 
 class doctor_appointment(osv.osv):
     _name = "doctor.appointment"
@@ -59,7 +46,7 @@ class doctor_appointment(osv.osv):
             return []
         rec_name = 'number'
         res = [(r['id'], r[rec_name])
-        for r in self.read(cr, uid, ids, [rec_name], context)]
+               for r in self.read(cr, uid, ids, [rec_name], context)]
         return res
 
     def create(self, cr, uid, vals, context=None):
@@ -91,7 +78,7 @@ class doctor_appointment(osv.osv):
         res = {}
         for record in self.browse(cr, uid, ids):
             date_today = fields.date.context_today(self, cr, uid, context=context)
-            time_begin = self._time2user(cr, uid, ids,record.time_begin)
+            time_begin = self._time2user(cr, uid, ids, record.time_begin)
             if time_begin == date_today:
                 res[record.id] = True
             else:
@@ -99,27 +86,36 @@ class doctor_appointment(osv.osv):
         return res
 
     _columns = {
-        'schedule_id': fields.many2one('doctor.schedule', 'Schedule', states={'invoiced':[('readonly',True)]}),
-        'number': fields.char('Appointment number', select=1, size=32, readonly=True, help="Number of appointment. Keep empty to get the number assigned by a sequence."),
-        'professional_id': fields.related ('schedule_id', 'professional_id', type="many2one", relation="doctor.professional", string='Professional', required=True, store=True),
-        'patient_id': fields.many2one('doctor.patient',"Patient", required=True, states={'invoiced':[('readonly',True)]}),
-        'insurer_id': fields.related ('patient_id', 'insurer', type="many2one", relation="doctor.insurer", string='Insurer', required=True, states={'invoiced':[('readonly',True)]}, store=True),
-        'type_id' : fields.many2one('doctor.appointment.type',"Appointment type", states={'invoiced':[('readonly',True)]}),
-        'time_begin': fields.datetime('Start time', required=True, states={'invoiced':[('readonly',True)]}),
-        'time_end': fields.datetime('End time', required=True, states={'invoiced':[('readonly',True)]}),
-        'appointment_today': fields.function (_get_appointment_today, type = "boolean", store=True, readonly=True, method=True, string="Appointment today"),
+        'schedule_id': fields.many2one('doctor.schedule', 'Schedule', states={'invoiced': [('readonly', True)]}),
+        'number': fields.char('Appointment number', select=1, size=32, readonly=True,
+                              help="Number of appointment. Keep empty to get the number assigned by a sequence."),
+        'professional_id': fields.related('schedule_id', 'professional_id', type="many2one",
+                                          relation="doctor.professional", string='Professional', required=True,
+                                          store=True),
+        'patient_id': fields.many2one('doctor.patient', "Patient", required=True,
+                                      states={'invoiced': [('readonly', True)]}),
+        'insurer_id': fields.related('patient_id', 'insurer', type="many2one", relation="doctor.insurer",
+                                     string='Insurer', required=True, states={'invoiced': [('readonly', True)]},
+                                     store=True),
+        'type_id': fields.many2one('doctor.appointment.type', "Appointment type",
+                                   states={'invoiced': [('readonly', True)]}),
+        'time_begin': fields.datetime('Start time', required=True, states={'invoiced': [('readonly', True)]}),
+        'time_end': fields.datetime('End time', required=True, states={'invoiced': [('readonly', True)]}),
+        'appointment_today': fields.function(_get_appointment_today, type="boolean", store=True, readonly=True,
+                                             method=True, string="Appointment today"),
         'state': fields.selection([
-            ('draft', 'Unconfirmed'), ('cancel', 'Cancelled'),
-            ('confirm', 'Confirmed'), ('assists', 'Waiting'),
-            ('attending', 'Attending'), ('invoiced', 'Invoiced')],
-            'Status', readonly=True, required=True),
-        'procedures_id': fields.one2many('doctor.appointment.procedures', 'appointment_id', 'Health Procedures', ondelete='restrict', states={'invoiced':[('readonly',True)]}),
-        'order_id' : fields.many2one('sale.order', 'Order', ondelete='restrict', readonly=True),
-        'attentiont_id' : fields.many2one('doctor.attentions', 'Attentiont', ondelete='restrict', readonly=True),
+                                      ('draft', 'Unconfirmed'), ('cancel', 'Cancelled'),
+                                      ('confirm', 'Confirmed'), ('assists', 'Waiting'),
+                                      ('attending', 'Attending'), ('invoiced', 'Invoiced')],
+                                  'Status', readonly=True, required=True),
+        'procedures_id': fields.one2many('doctor.appointment.procedures', 'appointment_id', 'Health Procedures',
+                                         ondelete='restrict', states={'invoiced': [('readonly', True)]}),
+        'order_id': fields.many2one('sale.order', 'Order', ondelete='restrict', readonly=True),
+        'attentiont_id': fields.many2one('doctor.attentions', 'Attentiont', ondelete='restrict', readonly=True),
         'attended': fields.boolean('Attended', readonly=True),
         'aditional': fields.boolean('Aditional'),
         'nb_register': fields.integer('Number of Participants', required=True, readonly=True),
-        }
+    }
 
     _defaults = {
         'state': 'draft',
@@ -137,7 +133,10 @@ class doctor_appointment(osv.osv):
 
     def _check_appointment(self, cr, uid, ids, context=None):
         for record in self.browse(cr, uid, ids, context=context):
-            appointment_ids = self.search(cr, uid, [('time_begin', '<', record.time_end), ('time_end', '>', record.time_begin), ('aditional', '=', record.aditional), ('state', '=',record.state), ('id', '<>', record.id)])
+            appointment_ids = self.search(cr, uid,
+                                          [('time_begin', '<', record.time_end), ('time_end', '>', record.time_begin),
+                                           ('aditional', '=', record.aditional), ('state', '=', record.state),
+                                           ('id', '<>', record.id)])
             if appointment_ids:
                 return False
         return True
@@ -160,9 +159,9 @@ class doctor_appointment(osv.osv):
 
     _constraints = [
         (_check_closing_time, 'Error ! Closing Time cannot be set before Beginning Time.', ['time_end']),
-        (_check_appointment, 'Error ! Already exists an appointment at that time.', ['time_begin','time_end']),
-        (_check_date_appointment, 'Error ! Appointment time outside scheduling.', ['time_begin','time_end']),
-        ]
+        (_check_appointment, 'Error ! Already exists an appointment at that time.', ['time_begin', 'time_end']),
+        (_check_date_appointment, 'Error ! Appointment time outside scheduling.', ['time_begin', 'time_end']),
+    ]
 
     def onchange_patient(self, cr, uid, ids, patient_id, insurer_id, context=None):
         values = {}
@@ -171,9 +170,9 @@ class doctor_appointment(osv.osv):
         patient = self.pool.get('doctor.patient').browse(cr, uid, patient_id, context=context)
         insurer_patient = patient.insurer.id
         values.update({
-            'insurer_id' : insurer_patient,
+            'insurer_id': insurer_patient,
         })
-        return {'value' : values}
+        return {'value': values}
 
     def onchange_start_time(self, cr, uid, ids, schedule_id, professional_id, time_begin, context=None):
         values = {}
@@ -184,10 +183,10 @@ class doctor_appointment(osv.osv):
         schedule_begin = datetime.strptime(schedule.date_begin, "%Y-%m-%d %H:%M:%S")
         time_begin = schedule_begin.strftime("%Y-%m-%d %H:%M:%S")
         values.update({
-            'time_begin' : time_begin,
-            'professional_id' : schedule_professional,
+            'time_begin': time_begin,
+            'professional_id': schedule_professional,
         })
-        return {'value' : values}
+        return {'value': values}
 
     def onchange_end_time(self, cr, uid, ids, type_id, time_begin, time_end, context=None):
         values = {}
@@ -199,9 +198,9 @@ class doctor_appointment(osv.osv):
         time_end = time_begin + timedelta(minutes=duration)
         time_end = time_end.strftime("%Y-%m-%d %H:%M:%S")
         values.update({
-            'time_end' : time_end,
+            'time_end': time_end,
         })
-        return {'value' : values}
+        return {'value': values}
 
     def create_order(self, cr, uid, doctor_appointment, date, appointment_procedures, confirmed_flag, context={}):
         """
@@ -222,7 +221,9 @@ class doctor_appointment(osv.osv):
             'state': 'draft',
         }
         # Get other order values from appointment partner
-        order.update(sale.sale.sale_order.onchange_partner_id(order_obj, cr, uid, [], doctor_appointment.insurer_id.insurer.id)['value'])
+        order.update(
+            sale.sale.sale_order.onchange_partner_id(order_obj, cr, uid, [], doctor_appointment.insurer_id.insurer.id)[
+                'value'])
         order['user_id'] = doctor_appointment.insurer_id.insurer.user_id.id
         order_id = order_obj.create(cr, uid, order, context=context)
         # Create order lines objects
@@ -234,8 +235,12 @@ class doctor_appointment(osv.osv):
                 'product_uom_qty': procedures_id.quantity,
             }
             # get other order line values from appointment procedures line product
-            order_line.update(sale.sale.sale_order_line.product_id_change(order_line_obj, cr, uid, [], order['pricelist_id'], \
-                product=procedures_id.procedures_id.id, qty=procedures_id.quantity, partner_id=doctor_appointment.insurer_id.insurer.id, fiscal_position=order['fiscal_position'])['value'])
+            order_line.update(
+                sale.sale.sale_order_line.product_id_change(order_line_obj, cr, uid, [], order['pricelist_id'], \
+                                                            product=procedures_id.procedures_id.id,
+                                                            qty=procedures_id.quantity,
+                                                            partner_id=doctor_appointment.insurer_id.insurer.id,
+                                                            fiscal_position=order['fiscal_position'])['value'])
             # Put line taxes
             order_line['tax_id'] = [(6, 0, tuple(order_line['tax_id']))]
             # Put custom description
@@ -263,9 +268,10 @@ class doctor_appointment(osv.osv):
         # Add only active lines
         for line in doctor_appointment.procedures_id:
             if line: appointment_procedures.append(line)
-        order_id = self.create_order(cr, uid, doctor_appointment, date_begin, appointment_procedures, True, context=context)
+        order_id = self.create_order(cr, uid, doctor_appointment, date_begin, appointment_procedures, True,
+                                     context=context)
         # Update appointment state
-        self.write(cr, uid, doctor_appointment.id, { 'state': 'invoiced' }, context=context)
+        self.write(cr, uid, doctor_appointment.id, {'state': 'invoiced'}, context=context)
         # Get view to show
         data_obj = self.pool.get('ir.model.data')
         result = data_obj._get_id(cr, uid, 'sale', 'view_order_form')
@@ -292,12 +298,15 @@ class doctor_appointment(osv.osv):
         # Create attentiont object
         attentiont = {
             'patient_id': doctor_appointment.patient_id.id,
-            'professional_id' : doctor_appointment.professional_id.id,
+            'professional_id': doctor_appointment.professional_id.id,
             'origin': doctor_appointment.number,
         }
         # Get other attentiont values from appointment partner
-        attentiont.update(doctor_attentions.onchange_patient(attentiont_obj, cr, uid, [], doctor_appointment.patient_id.id)['value'])
-        attentiont.update(doctor_attentions.onchange_professional(attentiont_obj, cr, uid, [], doctor_appointment.professional_id.id)['value'])
+        attentiont.update(
+            doctor_attentions.onchange_patient(attentiont_obj, cr, uid, [], doctor_appointment.patient_id.id)['value'])
+        attentiont.update(
+            doctor_attentions.onchange_professional(attentiont_obj, cr, uid, [], doctor_appointment.professional_id.id)[
+                'value'])
         attentiont_id = attentiont_obj.create(cr, uid, attentiont, context=context)
         # Create number attentiont record
         attentiont_number = {
@@ -317,8 +326,8 @@ class doctor_appointment(osv.osv):
         # Update appointment state
         appointment_state = doctor_appointment.state
         if appointment_state != 'invoiced':
-            self.write(cr, uid, doctor_appointment.id, { 'state': 'attending' }, context=context)
-        self.write(cr, uid, doctor_appointment.id, { 'attended': True }, context=context)
+            self.write(cr, uid, doctor_appointment.id, {'state': 'attending'}, context=context)
+        self.write(cr, uid, doctor_appointment.id, {'attended': True}, context=context)
         # Get view to show
         data_obj = self.pool.get('ir.model.data')
         result = data_obj._get_id(cr, uid, 'doctor', 'view_doctor_attentions_form')
@@ -335,30 +344,34 @@ class doctor_appointment(osv.osv):
             'nodestroy': True
         }
 
+
 doctor_appointment()
 
-class doctor_appointment_procedures (osv.osv):
+
+class doctor_appointment_procedures(osv.osv):
     _name = "doctor.appointment.procedures"
     _rec_name = 'procedures_id'
     _columns = {
-        'appointment_id' : fields.many2one ('doctor.appointment', 'Appointment'),
-        'professional_id': fields.many2one ('doctor.professional','Doctor'),
-        'procedures_id' : fields.many2one ('product.product', 'Health Procedures', required=True, ondelete='restrict'),
-        'quantity' : fields.integer ('Quantity', required=True),
-        'additional_description': fields.char('Add. description', size=30, help='Additional description that will be added to the product description on orders.'),
-        }
+        'appointment_id': fields.many2one('doctor.appointment', 'Appointment'),
+        'professional_id': fields.many2one('doctor.professional', 'Doctor'),
+        'procedures_id': fields.many2one('product.product', 'Health Procedures', required=True, ondelete='restrict'),
+        'quantity': fields.integer('Quantity', required=True),
+        'additional_description': fields.char('Add. description', size=30,
+                                              help='Additional description that will be added to the product description on orders.'),
+    }
 
     def name_get(self, cr, uid, ids, context={}):
         if not len(ids):
             return []
         rec_name = 'procedures_id'
         res = [(r['id'], r[rec_name][1])
-        for r in self.read(cr, uid, ids, [rec_name], context)]
+               for r in self.read(cr, uid, ids, [rec_name], context)]
         return res
 
     _defaults = {
-         'professional_id': lambda self, cr, uid, context: context.get('professional_id', False),
-         'quantity' : 1,
+        'professional_id': lambda self, cr, uid, context: context.get('professional_id', False),
+        'quantity': 1,
     }
 
-doctor_appointment_procedures ()
+
+doctor_appointment_procedures()
