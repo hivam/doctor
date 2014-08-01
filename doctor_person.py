@@ -25,12 +25,16 @@ import time
 
 
 class doctor_professional(osv.osv):
+    _inherits = {
+        'res.users': 'user_id',
+    }
     _name = "doctor.professional"
     _description = "Information about the healthcare professional"
     _rec_name = 'professional'
     _columns = {
         'professional': fields.many2one('res.partner', 'Healthcare Professional', required=True, ondelete='restrict',
                                         domain=[('is_company', '=', False)]),
+        'username': fields.char('Username', size=64, required=True),
         'photo': fields.related('professional', 'image_medium', type="binary", relation="res.partner", readonly=True),
         'speciality_id': fields.many2one('doctor.speciality', 'Speciality', required=True),
         'professional_card': fields.char('Professional card', size=64, required=True),
@@ -73,6 +77,12 @@ class doctor_professional(osv.osv):
             work_email = self.pool.get('res.users').browse(cr, uid, user_id, context=context).email
         return {'value': {'work_email': work_email}}
 
+    def onchange_username(self, cr, uid, ids, username, context=None):
+        if self.pool.get('res.users').search(cr, uid, [('login', '=', username),], context):
+            return {'value': {'username': False,}, 'warning': {'title': 'The username exists', 'message': "Please change the username"}}
+        else:
+            user_id = self.pool.get('res.users').create(cr, uid, {'login': username, 'name': username})
+            return {'value': {'user_id': user_id, },}
 
 doctor_professional()
 

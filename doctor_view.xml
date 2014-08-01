@@ -50,6 +50,7 @@
                 <group>
                     <group>
                         <field name="professional" on_change="onchange_photo(professional,photo)"></field>
+                        <field name="username" on_change="onchange_username(username)"></field>
                         <field name="speciality_id"></field>
                         <field name="professional_card"></field>
                         <field name="authority"></field>
