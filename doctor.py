@@ -153,6 +153,7 @@ class doctor_schedule(osv.osv):
 
     def onchange_start_date(self, cr, uid, ids, date_begin, schedule_duration, date_end, context={}):
         values = {}
+        res = {}
         if not date_begin and not date_end:
             return res
         schedule_begin = datetime.strptime(date_begin, "%Y-%m-%d %H:%M:%S")

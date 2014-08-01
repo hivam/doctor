@@ -23,7 +23,7 @@ from datetime import datetime, timedelta
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 import pytz
-
+from doctor_attentions import doctor_attentions
 
 class doctor_appointment_type(osv.osv):
     _name = "doctor.appointment.type"
