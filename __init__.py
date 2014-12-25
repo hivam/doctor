@@ -19,3 +19,10 @@
 #
 ##############################################################################
 import doctor
+import doctor_appointment
+import doctor_attentions
+import doctor_data
+import doctor_invoice
+import doctor_person
+import doctor_product
+import doctor_sales_order
