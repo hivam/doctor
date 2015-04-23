@@ -156,8 +156,9 @@
                         </fieldset>
                     </group>
                     <group>
-                        <field name="photo"  nolabel="1" widget="image"/>
+                        <field class="oe_left oe_avatar" name="photo" options="{&quot;preview_image&quot;: &quot;image_medium&quot;}" widget="image" nolabel="1"/>
                     </group>
+
                 <fieldset class="fieldset_margen">
                     <legend class="texto_legend">Insurer</legend>
                     <group >

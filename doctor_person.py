@@ -18,7 +18,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+import logging
+_logger = logging.getLogger(__name__)
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 import time
@@ -115,7 +116,7 @@ class doctor_patient(osv.osv):
     _columns = {
         'patient': fields.many2one('res.partner', 'Patient', required=True, ondelete='restrict',
                                    domain=[('is_company', '=', False)]),
-        'photo': fields.related('patient', 'image_medium', type="binary", relation="res.partner", readonly=True),
+        'photo': fields.related('patient', 'image_medium', type="binary", relation="res.partner", store=True),
         'birth_date': fields.date('Date of Birth', required=True),
         'sex': fields.selection([('m', 'Male'), ('f', 'Female'), ], 'Sex', select=True, required=True),
         'blood_type': fields.selection([('A', 'A'), ('B', 'B'), ('AB', 'AB'), ('O', 'O'), ], 'Blood Type'),
