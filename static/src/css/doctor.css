@@ -64,6 +64,15 @@
 }
 
 .color_destacado{
-  color: #656DA8;
+  color: green;
+}
 
+.texto_legend{
+  font-weight: bold;
+  font-size: 16px;
+  color: #7c7bad;
+}
+
+.fieldset_margen{
+  margin-top:30px;
 }

@@ -142,7 +142,7 @@
                 <field invisible="1" name="id"/>
                 <group >
                     <group col="2" colspan="1">
-                      <field class="oe_left oe_avatar" name="photo" options="{&quot;preview_image&quot;: &quot;image_medium&quot;}" widget="image" nolabel="1"/>
+                      <field class="oe_left oe_avatar" name="photo"  options="{&quot;size&quot;: [200, 190]}" widget="image" nolabel="1"/>
                         <div class="oe_right">
                           <h2>
                             <label class="oe_inline" for="patient" string="Paciente" />
@@ -167,11 +167,11 @@
                       </fieldset>
                     </group>
 
-                <fieldset class="fieldset_margen">
-                    <legend class="texto_legend">Insurer</legend>
-                    <group >
+                <fieldset class="fieldset_margen" >
+                  <legend class="texto_legend">Insurer</legend>
+                      <group >
                         <field name="insurer"/>
-                    </group>
+                      </group>
                 </fieldset>
                     <group >
                         <field name="deceased" ></field>
