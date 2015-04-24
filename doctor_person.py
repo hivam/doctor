@@ -114,7 +114,7 @@ class doctor_patient(osv.osv):
         return super(doctor_patient, self).create(cr, uid, vals, context=context)
 
     _columns = {
-        'patient': fields.many2one('res.partner', 'Patient', required=True, ondelete='restrict',
+        'patient': fields.many2one('res.partner', 'Paciente', required=True, ondelete='restrict',
                                    domain=[('is_company', '=', False)]),
         'photo': fields.related('patient', 'image_medium', type="binary", relation="res.partner", store=True),
         'birth_date': fields.date('Date of Birth', required=True),

@@ -138,25 +138,33 @@
         <field name="model">doctor.patient</field>
         <field name="arch" type="xml">
             <form string="Patient" version="7.0">
+              <sheet>
+                <field invisible="1" name="id"/>
                 <group >
-                    <group >
-                        <group colspan='4' col='2'>
-                        <field name="patient" on_change="onchange_patient_data(patient,photo)"></field>
-                        </group>
+                    <group col="2" colspan="1">
+                      <field class="oe_left oe_avatar" name="photo" options="{&quot;preview_image&quot;: &quot;image_medium&quot;}" widget="image" nolabel="1"/>
+                        <div class="oe_right">
+                          <h2>
+                            <label class="oe_inline" for="patient" string="Paciente" />
+                            <field name="patient" on_change="onchange_patient_data(patient,photo)" class="oe_inline" string="Paciente" style="width: 350px;"></field>
+                          </h2>
+                        </div>
+                        <br></br>
                         <group >
                             <field name="birth_date" ></field>
                             <field name="sex" ></field>
                         </group>
-                        <fieldset class="fieldset_margen">
-                                <legend class="texto_legend">Blood type</legend>
-                        <group>
-                            <field name="blood_type" nolabel="1"></field>
-                            <field name="rh" nolabel="1"></field>
-                        </group>
-                        </fieldset>
+
+
                     </group>
-                    <group>
-                        <field class="oe_left oe_avatar" name="photo" options="{&quot;preview_image&quot;: &quot;image_medium&quot;}" widget="image" nolabel="1"/>
+                    <group col="2" colspan="4">
+                      <fieldset class="fieldset_margen">
+                        <legend class="texto_legend">Blood type</legend>
+                        <group>
+                          <field name="blood_type" nolabel="1"></field>
+                          <field name="rh" nolabel="1"></field>
+                        </group>
+                      </fieldset>
                     </group>
 
                 <fieldset class="fieldset_margen">
@@ -208,6 +216,7 @@
                         </field>
                     </page>
                 </notebook>
+              </sheet>
             </form>
         </field>
     </record>

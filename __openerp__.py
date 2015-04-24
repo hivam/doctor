@@ -24,15 +24,15 @@
     'version' : '1.0',
     'summary': 'Electronics Health Record in the Office Doctor',
     'description': """
-This module allows 
+This module allows
 =================================================================
 
 """,
     'category' : 'Specific Industry Applications',
     'author' : 'TIX SAS',
-    'website': 'http://www.tix.com.co', 
-    'license': 'AGPL-3',     
-    'depends' : ['product','sale'],            
+    'website': 'http://www.tix.com.co',
+    'license': 'AGPL-3',
+    'depends' : ['base','product','sale'],            
     'data' : ['security/doctor_security.xml',
               'security/ir.model.access.csv',
               'doctor_sequence.xml',
