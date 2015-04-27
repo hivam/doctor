@@ -143,16 +143,16 @@
                 <group >
                     <group col="2" colspan="1">
                       <field class="oe_left oe_avatar" name="photo"  options="{&quot;size&quot;: [200, 190]}" widget="image" nolabel="1"/>
-                        <div class="oe_right">
+                        <div class="&quot;padding-left&quot;: 10px;">
                           <h2>
                             <label class="oe_inline" for="patient" string="Paciente" />
                             <field name="patient" on_change="onchange_patient_data(patient,photo)" class="oe_inline" string="Paciente" style="width: 350px;"></field>
                           </h2>
                         </div>
-                        <br></br>
-                        <group >
-                            <field name="birth_date" ></field>
-                            <field name="sex" ></field>
+                        <separator string="Datos Personales" col="3" colspan="2"/>
+                        <group name="datos_personales" colspan="3">
+                            <field name="birth_date" string="Fecha Nacimiento"/>
+                            <field name="sex" string="Sexo"/>
                         </group>
 
 
