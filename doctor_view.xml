@@ -141,7 +141,7 @@
               <field invisible="1" name="id"/>
               <sheet>
                   <div class="oe_right oe_button_box">
-                    <button class="oe_highlight" help="Atender Paciente." icon="terp-personal" name="verificar_bdua" string="Atender" type="object"/>
+                    <button class="oe_highlight" help="Atender Paciente." icon="terp-personal" name="doctor.action_patient2attention" string="Atender" type="action" groups="doctor.group_doctor_physician"/>
                   </div>
 
                   <field class="oe_left oe_avatar" name="photo"  options="{&quot;size&quot;: [200, 190]}" widget="image" nolabel="1"/>
@@ -149,7 +149,7 @@
                     <h1>
                     <label class="oe_edit_only" for="patient" string="Paciente" />
                     <field name="patient" on_change="onchange_patient_data(patient,photo)" class="oe_inline" string="Paciente" style="width: 350px;"></field>
-                    </h1>
+                  </h1>
                   </div>
                   <br></br>
                    <group name="datos_personales_y_direccion">
