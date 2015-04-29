@@ -186,10 +186,7 @@
                         <field name="death_cause" attrs="{'invisible':[('deceased', '!=', True)]}"></field>
                         <field name="death_date" attrs="{'invisible':[('deceased', '!=', True)]}"></field>
                     </group>
-                    <group>
-                        <button string="Attend" name="doctor.action_patient2attention" type="action" class="oe_highlight" groups="doctor.group_doctor_physician"/>
-                    </group>
-
+                    
                 <notebook colspan="4">
                     <page string="Attentions">
                         <field name="attentions_ids" nolabel="1" readonly="1">
