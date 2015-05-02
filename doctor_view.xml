@@ -167,10 +167,10 @@
                 <group>
                      <fieldset class="fieldset_margen">
                         <legend class="texto_legend">Blood type</legend>
-                      <group col="2">
-                        <field name="blood_type" nolabel="1"></field>
-                        <field name="rh" nolabel="1"></field>
-                      </group>
+                      <div>
+                        <field name="blood_type" nolabel="1" style="width: 10%%"></field>
+                        <field name="rh" nolabel="1" style="width: 10%%"></field>
+                      </div>
                      </fieldset>
 
 
