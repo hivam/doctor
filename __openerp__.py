@@ -32,7 +32,7 @@ This module allows
     'author' : 'TIX SAS',
     'website': 'http://www.tix.com.co',
     'license': 'AGPL-3',
-    'depends' : ['base','product','sale'],            
+    'depends' : ['base','product','sale'],
     'data' : ['security/doctor_security.xml',
               'security/ir.model.access.csv',
               'doctor_sequence.xml',
@@ -41,6 +41,7 @@ This module allows
     'css': ['static/src/css/doctor.css'],
     "js": [
         "static/src/js/search.js",
+        "static/src/js/chrome.js",
     ],
     'installable': True,
 }
