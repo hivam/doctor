@@ -19,7 +19,7 @@
 #
 ##############################################################################
 import time
-import pooler
+from openerp import pooler
 from datetime import date, datetime, timedelta
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
@@ -46,7 +46,7 @@ import doctor_attentions
 import doctor_invoice
 import doctor_sales_order
 import doctor_data
-import netsvc
+from openerp import netsvc
 
 
 class doctor_schedule(osv.osv):

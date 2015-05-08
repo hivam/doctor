@@ -91,7 +91,7 @@ doctor_professional()
 class doctor_patient(osv.osv):
     _name = "doctor.patient"
     _description = "Information about the patient"
-    _rec_name = 'patient'
+    #_rec_name = 'nombre'
 
     def write(self, cr, uid, ids, vals, context=None):
         if context is None:
@@ -111,12 +111,22 @@ class doctor_patient(osv.osv):
             current_date = time.strftime('%Y-%m-%d')
             if birth_date > current_date:
                 raise osv.except_osv(_('Warning !'), _("Birth Date Can not be a future date "))
+
+
+        vals.update({'name' : "%s %s %s %s" % (vals['lastname'] , vals['surname'] or '' , vals['firstname'] , vals['middlename'] or '')})
+        vals.update({'nombre' : vals['name']})
+        self.pool.get('res.partner').create(cr, uid, {'ref': vals['ref'], 'tdoc': vals['tdoc'], 'middlename' : vals['middlename'] or '', 'surname' : vals['surname'] or '',  'lastname': vals['lastname'], 'firtsname': vals['firstname'], 'name': vals['name'], 'image': vals['photo']}, context)
+        
         return super(doctor_patient, self).create(cr, uid, vals, context=context)
 
     _columns = {
-        'patient': fields.many2one('res.partner', 'Paciente', required=True, ondelete='restrict',
+        'patient': fields.many2one('res.partner', 'Paciente', ondelete='cascade',
                                    domain=[('is_company', '=', False)]),
-        'photo': fields.related('patient', 'image_medium', type="binary", relation="res.partner", store=True),
+        'firstname' : fields.char('Primer Nombre', size=15, required=True),
+        'middlename' : fields.char('Segundo Nombre', size=15),
+        'lastname' : fields.char('Primer Apellido', size=15, required=True),
+        'surname' : fields.char('Segundo Apellido', size=15),
+        'photo': fields.binary('patient'),
         'birth_date': fields.date('Date of Birth', required=True),
         'sex': fields.selection([('m', 'Male'), ('f', 'Female'), ], 'Sex', select=True, required=True),
         'blood_type': fields.selection([('A', 'A'), ('B', 'B'), ('AB', 'AB'), ('O', 'O'), ], 'Blood Type'),
@@ -129,13 +139,19 @@ class doctor_patient(osv.osv):
         'appointments_ids': fields.one2many('doctor.appointment', 'patient_id', 'Attentions'),
     }
 
-    def name_get(self, cr, uid, ids, context={}):
-        if not len(ids):
-            return []
-        rec_name = 'patient'
-        res = [(r['id'], r[rec_name][1])
-               for r in self.read(cr, uid, ids, [rec_name], context)]
-        return res
+    def name_get(self,cr,uid,ids,context=None):
+		if context is None:
+			context = {}
+		if not ids:
+			return []
+		if isinstance(ids,(long,int)):
+			ids=[ids]
+		res=[]
+
+		for record in self.browse(cr,uid,ids):
+			res.append((record['id'],record.nombre or ''))
+
+		return res
 
     def onchange_patient_data(self, cr, uid, ids, patient, photo, context=None):
         values = {}

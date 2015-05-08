@@ -148,7 +148,7 @@
                   <div class="oe_title">
                     <group col="1" colspan="2">
                       <h1>
-                        <label class="oe_edit_only" for="patient" string="Paciente" />
+                        <label class="oe_edit_only" for="patient" string="Paciente" invisible="1"/>
                         <field name="patient" on_change="onchange_patient_data(patient,photo)" class="oe_inline" string="Paciente"></field>
                       </h1>
                     </group>
@@ -232,7 +232,6 @@
         <field name="model">doctor.patient</field>
         <field name="arch" type="xml">
             <tree string='Patient'>
-                <field name="patient"></field>
                 <field name="sex"></field>
                 <field name="birth_date" ></field>
                 <field name="insurer"/>
