@@ -47,7 +47,7 @@
         <field name="model">doctor.professional</field>
         <field name="arch" type="xml">
             <form string="Healthcare Professional">
-                <group>
+                <group name="global">
                     <group>
                         <field name="professional" on_change="onchange_photo(professional,photo)"></field>
                         <field name="username" on_change="onchange_username(username)"></field>
@@ -144,7 +144,7 @@
                     <button class="oe_highlight" help="Atender Paciente." icon="terp-personal" name="doctor.action_patient2attention" string="Atender" type="action" groups="doctor.group_doctor_physician"/>
                   </div>
 
-                  <field class="oe_left oe_avatar" name="photo"  options="{&quot;size&quot;: [170, 160]}" widget="image" nolabel="1"/>
+                  <field class="oe_left oe_avatar" name="photo"  options="{&quot;size&quot;: [170, 150]}" widget="image" nolabel="1"/>
 
                   <div class="oe_title">
                     <group col="1" colspan="2">
@@ -162,19 +162,15 @@
                          <field name="birth_date" string="Fecha Nacimiento"/>
                          <field name="sex" string="Sexo"/>
                        </group>
+                       <div>
+                         <label for="blood_type" string="Tipo de sangre"/>
+                         <field name="blood_type" class="left-margin" style="width: 15%%"></field>
+                         <field name="rh" style="width: 15%%"></field>
+                       </div>
                      </fieldset>
                    </group>
 
                 <group>
-                     <fieldset class="fieldset_margen">
-                        <legend class="texto_legend">Blood type</legend>
-                      <div>
-                        <field name="blood_type" nolabel="1" style="width: 10%%"></field>
-                        <field name="rh" nolabel="1" style="width: 10%%"></field>
-                      </div>
-                     </fieldset>
-
-
                      <fieldset class="fieldset_margen" >
                        <legend class="texto_legend">Insurer</legend>
                        <group col="2" >

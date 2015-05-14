@@ -33,10 +33,10 @@ class doctor_professional(osv.osv):
     _description = "Information about the healthcare professional"
     _rec_name = 'professional'
     _columns = {
-        'professional': fields.many2one('res.partner', 'Healthcare Professional', required=True, ondelete='restrict',
+        'professional': fields.many2one('res.partner', 'Healthcare Professional', ondelete='cascade',
                                         domain=[('is_company', '=', False)]),
         'username': fields.char('Username', size=64, required=True),
-        'photo': fields.related('professional', 'image_medium', type="binary", relation="res.partner", readonly=True),
+        'photo': fields.binary('patient'),
         'speciality_id': fields.many2one('doctor.speciality', 'Speciality', required=True),
         'professional_card': fields.char('Professional card', size=64, required=True),
         'authority': fields.char('Authority', size=64, required=True),
@@ -112,11 +112,14 @@ class doctor_patient(osv.osv):
             if birth_date > current_date:
                 raise osv.except_osv(_('Warning !'), _("Birth Date Can not be a future date "))
 
-
+        vals.update({'middlename': vals['middlename'].upper() })
+        vals.update({'surname': vals['surname'].upper() })
+        vals.update({'lastname': vals['lastname'].upper() })
+        vals.update({'firstname': vals['firstname'].upper() })
         vals.update({'name' : "%s %s %s %s" % (vals['lastname'] , vals['surname'] or '' , vals['firstname'] , vals['middlename'] or '')})
-        vals.update({'nombre' : vals['name']})
-        self.pool.get('res.partner').create(cr, uid, {'ref': vals['ref'], 'tdoc': vals['tdoc'], 'middlename' : vals['middlename'] or '', 'surname' : vals['surname'] or '',  'lastname': vals['lastname'], 'firtsname': vals['firstname'], 'name': vals['name'], 'image': vals['photo']}, context)
-        
+        vals.update({'nombre' : vals['name'].upper()})
+        self.pool.get('res.partner').create(cr, uid, {'ref': vals['ref'], 'tdoc': vals['tdoc'], 'middlename' : vals['middlename'] or '', 'surname' : vals['surname'] or '',  'lastname': vals['lastname'], 'firtsname': vals['firstname'], 'name': vals['name'], 'image': vals['photo'], 'city_id': vals['city_id'], 'state_id': vals['state_id'], 'street': vals['street'], 'phone': vals['telefono'], 'mobile': vals['movil'], 'email': vals['email'],'es_paciente': True}, context)
+
         return super(doctor_patient, self).create(cr, uid, vals, context=context)
 
     _columns = {
