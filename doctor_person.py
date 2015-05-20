@@ -26,12 +26,10 @@ import time
 
 
 class doctor_professional(osv.osv):
-    _inherits = {
-        'res.users': 'user_id',
-    }
     _name = "doctor.professional"
     _description = "Information about the healthcare professional"
-    _rec_name = 'professional'
+    _rec_name = 'username'
+
     _columns = {
         'professional': fields.many2one('res.partner', 'Healthcare Professional', ondelete='cascade',
                                         domain=[('is_company', '=', False)]),
@@ -43,7 +41,7 @@ class doctor_professional(osv.osv):
         'work_phone': fields.char('Work Phone', size=64),
         'work_mobile': fields.char('Work Mobile', size=64),
         'work_email': fields.char('Work Email', size=240),
-        'user_id': fields.many2one('res.users', 'User', help='Related user name', required=True, ondelete='restrict'),
+        'user_id': fields.many2one('res.users', 'User', help='Related user name', required=False, ondelete='cascade'),
         'active': fields.boolean('Active'),
         'procedures_ids': fields.many2many('product.product', id1='professional_ids', id2='procedures_ids',
                                            string='My health procedures', required=False, ondelete='restrict'),
@@ -58,7 +56,7 @@ class doctor_professional(osv.osv):
             return []
         rec_name = 'professional'
         res = [(r['id'], r[rec_name][1])
-               for r in self.read(cr, uid, ids, [rec_name], context)]
+            for r in self.read(cr, uid, ids, [rec_name], context)]
         return res
 
     def onchange_photo(self, cr, uid, ids, professional, photo, context=None):
