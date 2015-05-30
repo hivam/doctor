@@ -110,8 +110,10 @@ class doctor_patient(osv.osv):
             if birth_date > current_date:
                 raise osv.except_osv(_('Warning !'), _("Birth Date Can not be a future date "))
 
-        vals.update({'middlename': vals['middlename'].upper() })
-        vals.update({'surname': vals['surname'].upper() })
+        if vals['middlename']:
+            vals.update({'middlename': vals['middlename'].upper() })
+        if vals['surname']:
+            vals.update({'surname': vals['surname'].upper() })
         vals.update({'lastname': vals['lastname'].upper() })
         vals.update({'firstname': vals['firstname'].upper() })
         vals.update({'name' : "%s %s %s %s" % (vals['lastname'] , vals['surname'] or '' , vals['firstname'] , vals['middlename'] or '')})
