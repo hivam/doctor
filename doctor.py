@@ -26,6 +26,8 @@ from openerp.tools.translate import _
 import openerp.addons.decimal_precision as dp
 from pytz import timezone
 import pytz
+import logging
+_logger = logging.getLogger(__name__)
 
 #~ import logging
 from dateutil import parser
@@ -57,6 +59,8 @@ class doctor_schedule(osv.osv):
     _rec_name = 'professional_id'
 
 
+
+
     def _date_to_dateuser(self, cr, uid, ids, date_begin):
         date_begin_user = datetime.strptime(date_begin, "%Y-%m-%d %H:%M:%S")
 
@@ -86,7 +90,7 @@ class doctor_schedule(osv.osv):
         for record in self.browse(cr, uid, ids, context=context):
             date_begin = record.date_begin
             date_end = record.date_end
-            display_name = record.professional_id.professional['name'] + ' (' + self._date_to_dateuser(cr, uid, ids,
+            display_name = record.professional_id['firtsname'] +' '+ record.professional_id['lastname'] + ' (' + self._date_to_dateuser(cr, uid, ids,
                                     date_begin) + ' - ' + self._date_end_to_dateuser( cr, uid, ids, date_end) + ')'
             res.append((record['id'], display_name))
         return res
