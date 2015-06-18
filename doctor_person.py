@@ -118,8 +118,8 @@ class doctor_patient(osv.osv):
         vals.update({'name' : "%s %s %s %s" % (vals['lastname'] , vals['surname'] or '' , vals['firstname'] , vals['middlename'] or '')})
         vals.update({'nombre' : vals['name'].upper()})
         if not vals['es_profesionalsalud']:
-            self.pool.get('res.partner').create(cr, uid, {'ref': vals['ref'], 'tdoc': vals['tdoc'], 'middlename' : vals['middlename'] or '', 'surname' : vals['surname'] or '',  'lastname': vals['lastname'], 'firtsname': vals['firstname'], 'name': vals['name'], 'image': vals['photo'], 'city_id': vals['city_id'], 'state_id': vals['state_id'], 'street': vals['street'], 'phone': vals['telefono'], 'mobile': vals['movil'], 'email': vals['email'],'es_paciente': True}, context)
-
+            id_tercero = self.pool.get('res.partner').create(cr, uid, {'ref': vals['ref'], 'tdoc': vals['tdoc'], 'middlename' : vals['middlename'] or '', 'surname' : vals['surname'] or '',  'lastname': vals['lastname'], 'firtsname': vals['firstname'], 'name': vals['name'], 'image': vals['photo'], 'city_id': vals['city_id'], 'state_id': vals['state_id'], 'street': vals['street'], 'phone': vals['telefono'], 'mobile': vals['movil'], 'email': vals['email'],'es_paciente': True}, context)
+            vals.update({'patient' : id_tercero}) #una vez creamos el tercero podemos añadir el partner al campo patient.
         return super(doctor_patient, self).create(cr, uid, vals, context=context)
 
     _columns = {
