@@ -89,7 +89,6 @@ doctor_professional()
 class doctor_patient(osv.osv):
     _name = "doctor.patient"
     _description = "Information about the patient"
-    #_rec_name = 'nombre'
 
     def write(self, cr, uid, ids, vals, context=None):
         if context is None:
