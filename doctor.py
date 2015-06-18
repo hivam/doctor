@@ -119,7 +119,7 @@ class doctor_schedule(osv.osv):
     _columns = {
         'professional_id': fields.many2one('doctor.professional', 'Doctor'),
         'date_begin': fields.datetime('Start date', required=True),
-        'schedule_duration': fields.integer('Duration (in hours)', required=True),
+        'schedule_duration': fields.float('Duration (in hours)', required=True),
         'date_end': fields.datetime('End date', required=True),
         'patients_count': fields.function(_get_register, string='Number of patients', multi='register_numbers'),
         'appointment_ids': fields.one2many('doctor.appointment', 'schedule_id', 'Appointments'),
