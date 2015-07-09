@@ -207,7 +207,7 @@
                     </page>
                     <page string="Appointments">
                         <field name="appointments_ids" nolabel="1" readonly="1">
-                            <tree string="Appointments" >
+                            <tree string="Appointments">
                                 <field name="number"/>
                                 <field name="schedule_id"/>
                                 <field name="type_id"/>
@@ -268,7 +268,7 @@
                     <notebook>
                         <page string="Appointment" >
                             <field name="appointment_ids" colspan="4" nolabel="1" context="{'schedule_id' : id}">
-                                <tree string="Appointment">
+                                <tree string="Appointment" create="false" edit="false" delete="false">
                                     <field name="schedule_id" invisible="True" on_change="onchange_start_time(schedule_id, time_begin)"/>
                                     <field name="patient_id" on_change="onchange_patient(patient_id, insurer_id)"/>
                                     <field name="insurer_id" />
