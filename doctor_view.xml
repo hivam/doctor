@@ -1080,21 +1080,28 @@
 		<field name="arch" type="xml">
 
 
-
-
 			<field name="partner_ids" position="replace"/>
+            <label string="Recipients" position="attributes">
+	            <attribute name="string">Recomendaciones</attribute>
+	        </label>
+			
 
 			
             <field name="subject" position="after">
-                <field name="professional_id" string="Doctor" col="2"/>
-            </field>
-
-             <field name="professional_id" position="before">
-                <field name="patient_id" string="Paciente" col="2"/>
+                <field name="professional_id" string="Doctor" nolabel="1"/>
+                <label for="professional_id" string="Doctor"/>
             </field>
 
             <field name="subject" position="replace"/>
-			
+
+             <field name="professional_id" position="before">
+                <field name="patient_id" string="Paciente" nolabel="1"/>
+                <label for="patient_id" string="Paciente"/>
+            </field>
+
+            
+
+            <div groups="base.group_user" position="replace"/>
 
 
            
