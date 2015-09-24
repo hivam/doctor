@@ -29,6 +29,24 @@ class doctor_attentions(osv.osv):
     _rec_name = 'number'
     _order = "date_attention desc"
 
+    external_cause = [
+        ('01','Accidente de trabajo'),
+        ('02',u'Accidente de tránsito'),
+        ('03',u'Accidente rábico'),
+        ('04',u'Accidente ofídico'),
+        ('05','Otro tipo de accidente'),
+        ('06',u'Evento Catastrófico'),
+        ('07',u'Lesión por agresión'),
+        ('08',u'Lesión auto infligida'),
+        ('09',u'Sospecha de maltrato físico'),
+        ('10','Sospecha de abuso sexual'),
+        ('11','Sospecha de violencia sexual'),
+        ('12','Sospecha de maltrato emocional'),
+        ('13','Enfermedad general'),
+        ('14','Enfermedad profesional'),
+        ('15','Otra'),
+    ]
+
     def create(self, cr, uid, vals, context=None):
         # Set appointment number if empty
         if not vals.get('number'):
@@ -147,7 +165,27 @@ class doctor_attentions(osv.osv):
         'disability_ids': fields.one2many('doctor.attentions.disability', 'attentiont_id', 'Disability',
                                           ondelete='restrict', states={'closed': [('readonly', True)]}),
         'state': fields.selection([('open', 'Open'), ('closed', 'Closed')], 'Status', readonly=True, required=True),
+        
+   
+        'external_cause': fields.selection(external_cause, 'Causa Externa'),
+
     }
+
+    def action_next(self, cr, uid, ids, context=None):
+        for record in self.browse(cr,uid,ids,context=context):
+            return {
+                'type': 'ir.actions.act_window',
+                'res_model': 'mail.compose.message',
+                'view_mode': 'form',
+                'view_type': 'form',
+                'views': [(False, 'form')],
+                'target': 'new',
+                'context':  {
+                        'default_patient_id' : record.patient_id.id,
+                        'default_professional_id' : record.professional_id.id,
+                    },
+            }
+
 
     def name_get(self, cr, uid, ids, context={}):
         if not len(ids):
@@ -231,6 +269,20 @@ class doctor_attentions(osv.osv):
 
 doctor_attentions()
 
+class wizzard(osv.osv):
+
+    _name = "mail.compose.message"
+
+    _inherit = 'mail.compose.message'
+
+    _columns = {
+        'attentiont_id': fields.many2one('doctor.attentions', 'Attention', ondelete='restrict'),
+        'patient_id': fields.many2one('doctor.patient', 'Patient', ondelete='restrict'),
+        'professional_id': fields.many2one('doctor.professional', 'Doctor'),
+    }
+
+
+wizzard()
 
 class doctor_attentions_past(osv.osv):
     _name = "doctor.attentions.past"
