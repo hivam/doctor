@@ -7,7 +7,7 @@ access_doctor_atc,doctor.atc,model_doctor_atc,doctor.group_doctor_configuration,
 access_doctor_atc_physician,doctor.atc_physician,model_doctor_atc,doctor.group_doctor_physician,1,0,0,0
 access_doctor_atc_past,doctor.atc.past,model_doctor_atc_past,doctor.group_doctor_physician,1,1,1,1
 access_doctor_attentions_disability,doctor.attentions.disability,model_doctor_attentions_disability,doctor.group_doctor_physician,1,0,1,1
-access_doctor_attentions_diseases,doctor.attentions.diseases,model_doctor_attentions_diseases,doctor.group_doctor_physician,1,0,1,1
+access_doctor_attentions_diseases,doctor.attentions.diseases,model_doctor_attentions_diseases,doctor.group_doctor_physician,1,1,1,1
 access_doctor_attentions_exam,doctor.attentions.exam,model_doctor_attentions_exam,doctor.group_doctor_physician,1,1,1,1
 access_doctor_attentions_past,doctor.attentions.past,model_doctor_attentions_past,doctor.group_doctor_physician,1,1,1,1
 access_doctor_attentions_procedures,doctor.attentions.procedures,model_doctor_attentions_procedures,doctor.group_doctor_physician,1,0,1,1
