@@ -246,25 +246,11 @@ class doctor_attentions(osv.osv):
             registros_examenes_fisicos.append((0,0,{'exam_category' : i.id}))
         #fin carga item examanes fisicos
 
-        #con esto cargamos items antecedentes patologicos
-        ids_patologicos = self.pool.get('doctor.diseases').search(cr,uid,[],context=context)
-        registros_patologicos = []
-        for i in self.pool.get('doctor.diseases').browse(cr,uid,ids_examenes_fisicos,context=context):
-            registros_patologicos.append((0,0,{'diseases_id' : i.id}))
-        #fin carga item antecedentes patologicos
-
-         #con esto cargamos items antecedentes farmacologicos
-        ids_farmacologicos = self.pool.get('doctor.atc').search(cr,uid,[],context=context)
-        registros_farmacologicos = []
-        for i in self.pool.get('doctor.atc').browse(cr,uid,ids_farmacologicos,context=context):
-            registros_farmacologicos.append((0,0,{'atc_id' : i.id}))
-        #fin carga item antecedentes farmcologicos
 
         res['review_systems_id'] = registros
         res['attentions_past_ids'] = registros_antecedentes
         res['attentions_exam_ids'] = registros_examenes_fisicos
-        res['pathological_past'] = registros_patologicos
-        res['drugs_past'] = registros_farmacologicos
+
 
         return res
 
