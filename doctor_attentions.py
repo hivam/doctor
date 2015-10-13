@@ -248,7 +248,7 @@ class doctor_attentions(osv.osv):
 
 
         res['review_systems_id'] = registros
-        res['attentions_past_ids'] = registros_antecedentes
+        #res['attentions_past_ids'] = registros_antecedentes
         res['attentions_exam_ids'] = registros_examenes_fisicos
 
 
