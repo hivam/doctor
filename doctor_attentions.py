@@ -417,5 +417,4 @@ class doctor_attentions_disability(osv.osv):
                for r in self.read(cr, uid, ids, [rec_name], context)]
         return res
 
-
 doctor_attentions_disability()
