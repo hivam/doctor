@@ -141,7 +141,7 @@
               <field invisible="1" name="id"/>
               <sheet>
                   <div  name="div_atenderpaciente" class="oe_right oe_button_box">
-                    <button class="oe_highlight" help="Atender Paciente." icon="terp-personal" name="doctor.action_patient2attention" string="Atender" type="action" groups="doctor.group_doctor_physician"/>
+                    <button class="oe_highlight" help="Atender Paciente." icon="terp-personal" name="doctor.action_patient2attention" string="Atender" type="action" groups="doctor.group_doctor_physician" context="{'patient' : patient}"/>
                   </div>
 
                   <field class="oe_left oe_avatar" name="photo"  options="{&quot;size&quot;: [170, 150]}" widget="image" nolabel="1"/>
@@ -219,6 +219,7 @@
                     </page>
                 </notebook>
               </sheet>
+              <field invisible="1" name="patient"/>
             </form>
         </field>
     </record>
