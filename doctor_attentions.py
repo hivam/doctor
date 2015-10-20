@@ -18,13 +18,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 from datetime import datetime
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 import logging
 _logger = logging.getLogger(__name__)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 715f4989438c10e8f5e4c4f1b869dd64dbdd7fd4
 
 class doctor_attentions(osv.osv):
     _name = "doctor.attentions"
@@ -183,6 +185,7 @@ class doctor_attentions(osv.osv):
         drugs_past = self.pool.get('doctor.atc.past').search(cr, uid, [('patient_id', '=', patient_id)], order='id asc')
         patient_data = self.pool.get('doctor.patient').browse(cr, uid, patient_id, context=context)
         photo_patient = patient_data.photo
+
         patient_birth_date = patient_data.birth_date
         current_date = datetime.today()
         st_birth_date = datetime.strptime(patient_birth_date, '%Y-%m-%d')
@@ -200,9 +203,8 @@ class doctor_attentions(osv.osv):
             age_attention = age,
             age_unit = '2'
 
-        elif age > 365:
-            age = age / 365
-            age = int(age)
+        elif age >= 365:
+            age = int((current_date.year-st_birth_date.year-1) + (1 if (current_date.month, current_date.day) >= (st_birth_date.month, st_birth_date.day) else 0))
             age_attention = age,
             age_unit = '1'
 
@@ -257,7 +259,6 @@ class doctor_attentions(osv.osv):
 
         return res
 
-
     _defaults = {
         'patient_id': lambda self, cr, uid, context: context.get('patient_id', False),
         'date_attention': lambda *a: datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S"),
@@ -274,7 +275,7 @@ class doctor_attentions_past(osv.osv):
     _rec_name = 'attentiont_id'
     _columns = {
         'attentiont_id': fields.many2one('doctor.attentions', 'Attention', ondelete='restrict'),
-        'patient_id': fields.many2one('doctor.patient', 'Patient', required=True, ondelete='restrict'),
+        'patient_id': fields.many2one('doctor.patient', 'Patient', ondelete='restrict'),
         'past_category': fields.many2one('doctor.past.category', 'Past category', required=True, ondelete='restrict'),
         'past': fields.text('Past', required=True),
     }
@@ -419,6 +420,5 @@ class doctor_attentions_disability(osv.osv):
         res = [(r['id'], r[rec_name][1])
                for r in self.read(cr, uid, ids, [rec_name], context)]
         return res
-
 
 doctor_attentions_disability()

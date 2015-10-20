@@ -141,7 +141,7 @@
               <field invisible="1" name="id"/>
               <sheet>
                   <div  name="div_atenderpaciente" class="oe_right oe_button_box">
-                    <button class="oe_highlight" help="Atender Paciente." icon="terp-personal" name="doctor.action_patient2attention" string="Atender" type="action" groups="doctor.group_doctor_physician"/>
+                    <button class="oe_highlight" help="Atender Paciente." icon="terp-personal" name="doctor.action_patient2attention" string="Atender" type="action" groups="doctor.group_doctor_physician" context="{'patient' : patient}"/>
                   </div>
 
                   <field class="oe_left oe_avatar" name="photo"  options="{&quot;size&quot;: [170, 150]}" widget="image" nolabel="1"/>
@@ -219,6 +219,7 @@
                     </page>
                 </notebook>
               </sheet>
+              <field invisible="1" name="patient"/>
             </form>
         </field>
     </record>
@@ -249,7 +250,7 @@
         <field name="src_model">doctor.patient</field>
         <field name="res_model">doctor.attentions</field>
         <field name="view_mode">form</field>
-        <field name="context">{'default_patient_id': active_id}</field>
+        <field name="context">{'default_patient_id': active_id, 'default_professional_id': 1, 'default_sent_from_button' : True}</field>
     </record>
 
     <!-- schedule Form View -->
@@ -460,7 +461,7 @@
                     <button string="Confirm" name="button_confirm" states="draft" type="object" groups="doctor.group_doctor_assistant" class="oe_highlight"/>
                     <button string="Cancel" name="button_cancel" states="draft,confirm" type="object" groups="doctor.group_doctor_assistant"/>
                     <button string="Assists" name="button_assists" type="object" class="oe_highlight" groups="doctor.group_doctor_assistant" attrs="{'invisible':['|','|',('appointment_today','!=',True),('attended','=',True),('state','!=','confirm')]}"/>
-                    <button string="Attend" name="generate_attentiont" type="object" class="oe_highlight" groups="doctor.group_doctor_physician" attrs="{'invisible':['|','|',('attended','=',True),('state','=','draft'),('appointment_today','!=',True)]}"/>
+                    <button string="Attend" name="generate_attentiont" type="object" class="oe_highlight" groups="doctor.group_doctor_physician" attrs="{'invisible':['|','|',('attended','=',True),('state','=','draft'),('appointment_today','!=',True)]}" context="{'patient_id' : patient_id}"/>
                     <button string="Generate order" name="generate_order" states="assists,attending" type="object" groups="doctor.group_doctor_assistant" class="oe_highlight"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirm,assists,attending,invoiced"/>
                 </header>
@@ -553,7 +554,9 @@
                                         <li><field name="time_end"/></li>
                                     </ul>
                                     <button string="Assists" name="button_assists" type="object" class="oe_highlight" groups="doctor.group_doctor_assistant" attrs="{'invisible':['|','|',('appointment_today','!=',True),('attended','=',True),('state','!=','confirm')]}" confirm="Patient in waiting room?">Assist</button>
-                                    <button string="Attend" name="generate_attentiont" type="object" class="oe_highlight" groups="doctor.group_doctor_physician" attrs="{'invisible':['|','|',('attended','=',True),('state','=','draft'),('appointment_today','!=',True)]}" confirm="Patient in waiting room?">Attend</button>
+                                    
+                                    <button string="Attend" name="generate_attentiont" type="object" class="oe_highlight" groups="doctor.group_doctor_physician" attrs="{'invisible':['|','|',('attended','=',True),('state','=','draft'),('appointment_today','!=',True)]}"  confirm="Patient in waiting room?" context="{'patient_id' : 1}">Attend</button>
+
                                 </div>
 
                                 <div class="oe_kanban_footer_left">
