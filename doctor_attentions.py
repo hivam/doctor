@@ -23,6 +23,7 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
+
 class doctor_attentions(osv.osv):
     _name = "doctor.attentions"
     _rec_name = 'number'
@@ -235,7 +236,6 @@ class doctor_attentions(osv.osv):
         age_unit = ''
         if age < 30:
             age_unit = '3'
-
         elif age > 30 and age < 365:
             age_unit = '2'
 
@@ -244,6 +244,13 @@ class doctor_attentions(osv.osv):
 
         return age_unit
 
+    def _get_professional_id(self, cr, uid, user_id):
+        try:
+            professional_id= self.pool.get('doctor.professional').browse(cr, uid, self.pool.get('doctor.professional').search(cr, uid, [( 'user_id',  '=', uid)]))[0].id
+            return professional_id
+        except Exception as e:
+            raise osv.except_osv(_('Error!'),
+                                 _('El usuario del sistema no es profesional de la salud.'))
 
     def default_get(self, cr, uid, fields, context=None):
         res = super(doctor_attentions,self).default_get(cr, uid, fields, context=context)
