@@ -23,10 +23,7 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 import logging
 _logger = logging.getLogger(__name__)
-<<<<<<< HEAD
 
-=======
->>>>>>> 715f4989438c10e8f5e4c4f1b869dd64dbdd7fd4
 
 class doctor_attentions(osv.osv):
     _name = "doctor.attentions"
