@@ -21,8 +21,7 @@
 from datetime import datetime
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-import logging
-_logger = logging.getLogger(__name__)
+
 
 class doctor_attentions(osv.osv):
     _name = "doctor.attentions"
@@ -66,6 +65,11 @@ class doctor_attentions(osv.osv):
         for datos in self.browse(cr, uid, ids):
             res[datos.id] = self._previous(cr, uid, datos.patient_id, 'drugs', datos.id)
         return res
+
+    def _fun_calcular_edad(self, cr, uid, ids, field_name, args, context=None):
+        res = {}
+        for datos in self.browse(cr,uid,ids):
+            _logger.info(context)
 
     _columns = {
         'patient_id': fields.many2one('doctor.patient', 'Patient', ondelete='restrict', readonly=True),
@@ -182,9 +186,25 @@ class doctor_attentions(osv.osv):
         patient_data = self.pool.get('doctor.patient').browse(cr, uid, patient_id, context=context)
         photo_patient = patient_data.photo
 
-        patient_birth_date = patient_data.birth_date
+        values.update({
+            'patient_photo': photo_patient,
+            'past_ids': past,
+            'pathological_past_ids': phatological_past,
+            'drugs_past_ids': drugs_past,
+        })
+        return {'value': values}
+
+    def _get_professional_id(self, cr, uid, user_id):
+        try:
+            professional_id= self.pool.get('doctor.professional').browse(cr, uid, self.pool.get('doctor.professional').search(cr, uid, [( 'user_id',  '=', uid)]))[0].id
+        except Exception as e:
+            raise osv.except_osv(_('Error!'),
+                                 _('El usuario del sistema no es profesional de la salud.'))
+
+
+    def calcular_edad(self,fecha_nacimiento):
         current_date = datetime.today()
-        st_birth_date = datetime.strptime(patient_birth_date, '%Y-%m-%d')
+        st_birth_date = datetime.strptime(fecha_nacimiento, '%Y-%m-%d')
         re = current_date - st_birth_date
         dif_days = re.days
         age = dif_days
@@ -203,28 +223,41 @@ class doctor_attentions(osv.osv):
             age = int((current_date.year-st_birth_date.year-1) + (1 if (current_date.month, current_date.day) >= (st_birth_date.month, st_birth_date.day) else 0))
             age_attention = age,
             age_unit = '1'
+        
+        return age
 
-        values.update({
-            'patient_photo': photo_patient,
-            'age_attention': age,
-            'age_unit': age_unit,
-            'past_ids': past,
-            'pathological_past_ids': phatological_past,
-            'drugs_past_ids': drugs_past,
-        })
-        return {'value': values}
+    def calcular_age_unit(self,fecha_nacimiento):
+        current_date = datetime.today()
+        st_birth_date = datetime.strptime(fecha_nacimiento, '%Y-%m-%d')
+        re = current_date - st_birth_date
+        dif_days = re.days
+        age = dif_days
+        age_unit = ''
+        if age < 30:
+            age_unit = '3'
 
-    def _get_professional_id(self, cr, uid, user_id):
-        try:
-            professional_id= self.pool.get('doctor.professional').browse(cr, uid, self.pool.get('doctor.professional').search(cr, uid, [( 'user_id',  '=', uid)]))[0].id
-        except Exception as e:
-            raise osv.except_osv(_('Error!'),
-                                 _('El usuario del sistema no es profesional de la salud.'))
+        elif age > 30 and age < 365:
+            age_unit = '2'
 
+        elif age >= 365:
+            age_unit = '1'
+
+        return age_unit
 
 
     def default_get(self, cr, uid, fields, context=None):
         res = super(doctor_attentions,self).default_get(cr, uid, fields, context=context)
+
+        if context.get('active_model') == "doctor.patient":
+            id_paciente = context.get('default_patient_id')
+        else:
+            id_paciente = context.get('patient_id')
+
+        if id_paciente:    
+            fecha_nacimiento = self.pool.get('doctor.patient').browse(cr,uid,id_paciente,context=context).birth_date
+            res['age_attention'] = self.calcular_edad(fecha_nacimiento)
+            res['age_unit'] = self.calcular_age_unit(fecha_nacimiento)
+
         #con esto cargams los items de revision por sistemas
         ids = self.pool.get('doctor.systems.category').search(cr,uid,[('active','=',True)],context=context)
         registros = []
