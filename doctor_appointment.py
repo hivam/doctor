@@ -304,14 +304,18 @@ class doctor_appointment(osv.osv):
         # Get other attentiont values from appointment partner
         attentiont.update(
             doctor_attentions.onchange_patient(attentiont_obj, cr, uid, [], doctor_appointment.patient_id.id)['value'])
+        
         attentiont.update(
             doctor_attentions.onchange_professional(attentiont_obj, cr, uid, [], doctor_appointment.professional_id.id)[
                 'value'])
+        
+        context['patient_id'] = doctor_appointment.patient_id.id
         attentiont_id = attentiont_obj.create(cr, uid, attentiont, context=context)
         # Create number attentiont record
         attentiont_number = {
             'attentiont_id': attentiont_id,
         }
+
         self.pool.get('doctor.appointment').write(cr, uid, [doctor_appointment.id], attentiont_number, context=context)
 
         return attentiont_id
@@ -321,7 +325,6 @@ class doctor_appointment(osv.osv):
         Method that creates an attentiont
         """
         doctor_appointment = self.browse(cr, uid, ids, context=context)[0]
-
         attentiont_id = self.create_attentiont(cr, uid, doctor_appointment, context=context)
         # Update appointment state
         appointment_state = doctor_appointment.state
@@ -333,17 +336,17 @@ class doctor_appointment(osv.osv):
         result = data_obj._get_id(cr, uid, 'doctor', 'view_doctor_attentions_form')
         view_id = data_obj.browse(cr, uid, result).res_id
         # Return view with attentiont created
+
         return {
             'view_type': 'form',
             'view_mode': 'form',
             'res_model': 'doctor.attentions',
-            'context': context,
             'res_id': attentiont_id,
             'view_id': [view_id],
             'type': 'ir.actions.act_window',
-            'nodestroy': True
+            'context' : context,
+            'nodestroy': True,
         }
-
 
 doctor_appointment()
 
