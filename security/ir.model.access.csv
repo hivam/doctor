@@ -49,4 +49,4 @@ access_doctor_appointment_procedures__physician,doctor.appointment.procedures_ph
 access_doctor_insurer,doctor.insurer,model_doctor_insurer,doctor.group_doctor_configuration,1,1,1,0
 access_doctor_insurer_assistant,doctor.insurer_assistant,model_doctor_insurer,doctor.group_doctor_assistant,1,0,0,0
 access_doctor_insurer_physician,doctor.insurer_physician,model_doctor_insurer,doctor.group_doctor_physician,1,0,0,0
-
+access_doctor_pharmaceutical_form_physician,doctor.pharmaceutical.form_physician,model_doctor_pharmaceutical_form,doctor.group_doctor_physician,1,0,1,0
