@@ -1490,10 +1490,10 @@
                 <notebook>
                     <page string="Health Procedure" attrs="{'invisible':[('is_health_procedure', '!=', True)]}">
                         <group>
-                            <field name="procedure_code" attrs="{'required':[('is_health_procedure', '!=', True)]}"/>
+                            <field name="procedure_code" attrs="{'required':[('is_health_procedure', '=', True)]}"/>
                             <field name="procedure_description" />
                             <field name="complexity_level" />
-                            <field name="procedure_type" attrs="{'required':[('is_health_procedure', '!=', True)]}"/>
+                            <field name="procedure_type" attrs="{'required':[('is_health_procedure', '=', True)]}"/>
                         </group>
                     </page>
                 </notebook>
