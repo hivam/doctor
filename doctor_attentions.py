@@ -168,6 +168,7 @@ class doctor_attentions(osv.osv):
         if not professional_id:
             return values
         professional_data = self.pool.get('doctor.professional').browse(cr, uid, professional_id, context=context)
+        _logger.info(professional_data.speciality_id)
         professional_img = professional_data.photo
         if professional_data.speciality_id.id:
             professional_speciality = professional_data.speciality_id.id
