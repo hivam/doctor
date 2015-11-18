@@ -170,9 +170,13 @@ class doctor_attentions(osv.osv):
         professional_data = self.pool.get('doctor.professional').browse(cr, uid, professional_id, context=context)
         professional_img = professional_data.photo
         professional_speciality = professional_data.speciality_id.id
+        if professional_speciality:
+            values.update({
+                'speciality': professional_speciality,
+            })
+
         values.update({
             'professional_photo': professional_img,
-            'speciality': professional_speciality,
         })
         return {'value': values}
 
