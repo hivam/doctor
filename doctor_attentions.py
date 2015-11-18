@@ -178,6 +178,7 @@ class doctor_attentions(osv.osv):
         values.update({
             'professional_photo': professional_img,
         })
+        _logger.info(values)
         return {'value': values}
 
     def onchange_patient(self, cr, uid, ids, patient_id, context=None):
