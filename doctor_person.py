@@ -30,6 +30,30 @@ class doctor_professional(osv.osv):
 	_description = "Information about the healthcare professional"
 	_rec_name = 'username'
 
+	def write(self, cr, uid, ids, vals, context=None):
+		datos = {'lastname': '', 'surname': '', 'firstname': '', 'middlename': ''}
+		nombre = ''
+		if context is None:
+			context = {}
+		for professional in self.browse(cr, uid, ids, context=context):
+			if 'lastname' in vals:
+				datos['lastname'] = vals['lastname'] or ' '
+
+			if 'surname' in vals:
+				datos['surname'] = vals['surname'] or ' '
+			
+			if 'firstname' in vals:
+				datos['firstname'] = vals['firstname']	or ' '
+
+			if 	'middlename' in vals:
+				datos['middlename'] = vals['middlename'] or ' '
+
+			nombre = "%s %s %s %s" % (datos['lastname'] or professional.lastname, datos['surname'] or professional.surname or '',
+					 datos['firstname'] or professional.firtsname , datos['middlename'] or professional.middlename or '')
+
+		vals['nombreUsuario'] = nombre.upper()
+		return super(doctor_professional, self).write(cr, uid, ids, vals, context=context)
+
 	_columns = {
 		'professional': fields.many2one('res.partner', 'Healthcare Professional', ondelete='cascade',
 										domain=[('is_company', '=', False)]),
