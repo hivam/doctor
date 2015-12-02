@@ -174,8 +174,10 @@ class doctor_patient(osv.osv):
 		res = {}
 		for datos in self.browse(cr, uid, ids):
 			doctor_id = self.pool.get('doctor.professional').search(cr,uid,[('user_id','=',uid)],context=context)
-			res[datos.id] = doctor_id[0]
-		_logger.info(res)
+			if doctor_id:
+				res[datos.id] = doctor_id[0]
+			else:
+				res[datos.id] = False	
 		return res
 
 	_columns = {
