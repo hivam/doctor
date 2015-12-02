@@ -139,9 +139,10 @@
         <field name="arch" type="xml">
             <form string="Patient" version="7.0">
               <field invisible="1" name="id"/>
+              <field invisible="1" name="get_professional_id"/>
               <sheet>
                   <div  name="div_atenderpaciente" class="oe_right oe_button_box">
-                    <button class="oe_highlight" help="Atender Paciente." icon="terp-personal" name="doctor.action_patient2attention" string="Atender" type="action" groups="doctor.group_doctor_physician" context="{'patient' : patient}"/>
+                    <button class="oe_highlight" help="Atender Paciente." icon="terp-personal" name="doctor.action_patient2attention" string="Atender" type="action" groups="doctor.group_doctor_physician" context="{'patient' : patient, 'professional_id' : get_professional_id}"/>
                   </div>
 
                   <field class="oe_left oe_avatar" name="photo"  options="{&quot;size&quot;: [170, 150]}" widget="image" nolabel="1"/>
@@ -250,7 +251,7 @@
         <field name="src_model">doctor.patient</field>
         <field name="res_model">doctor.attentions</field>
         <field name="view_mode">form</field>
-        <field name="context">{'default_patient_id': active_id, 'default_professional_id': 1, 'default_sent_from_button' : True}</field>
+        <field name="context">{'default_patient_id': active_id, 'default_sent_from_button' : True}</field>
     </record>
 
     <!-- schedule Form View -->

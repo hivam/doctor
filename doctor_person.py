@@ -170,6 +170,14 @@ class doctor_patient(osv.osv):
 
 		return super(doctor_patient, self).create(cr, uid, vals, context=context)
 
+	def _get_profesional_id(self, cr, uid, ids, field_name, arg, context=None):
+		res = {}
+		for datos in self.browse(cr, uid, ids):
+			doctor_id = self.pool.get('doctor.professional').search(cr,uid,[('user_id','=',uid)],context=context)
+			res[datos.id] = doctor_id[0]
+		_logger.info(res)
+		return res
+
 	_columns = {
 		'patient': fields.many2one('res.partner', 'Paciente', ondelete='cascade',
 								   domain=[('is_company', '=', False)]),
@@ -188,6 +196,8 @@ class doctor_patient(osv.osv):
 		'death_cause': fields.many2one('doctor.diseases', 'Cause of Death'),
 		'attentions_ids': fields.one2many('doctor.attentions', 'patient_id', 'Attentions'),
 		'appointments_ids': fields.one2many('doctor.appointment', 'patient_id', 'Attentions'),
+		'get_professional_id': fields.function(_get_profesional_id, type="integer", store= False, 
+								readonly=True, method=True),
 	}
 
 	def name_get(self,cr,uid,ids,context=None):
