@@ -541,6 +541,11 @@ msgid "Patient"
 msgstr "Paciente"
 
 #. module: doctor
+#: field:account.invoice,account_patient:0
+msgid "Account patient"
+msgstr "Cuenta paciente"
+
+#. module: doctor
 #: view:doctor.dose.unit:0
 #: model:ir.actions.act_window,name:doctor.action_doctor_dose_unit
 #: model:ir.ui.menu,name:doctor.menu_doctor_dose_unit
