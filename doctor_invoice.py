@@ -134,6 +134,7 @@ class doctor_invoice(osv.osv):
                     'partner_id': invoice_browse.patient_id.patient.id,
                     'journal_id': invoice_browse.journal_id.id,
                     'account_id': account,
+                    'account_patient': account,
                     'invoice': invoice_browse.id,
                     'debit': total_patient,
                     'credit': 0.0,
