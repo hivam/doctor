@@ -546,6 +546,11 @@ msgid "Account patient"
 msgstr "Cuenta paciente"
 
 #. module: doctor
+#: help:account.invoice,account_patient:0
+msgid "The patient account used for this invoice."
+msgstr "La cuenta del paciente usada para esta factura."
+
+#. module: doctor
 #: view:doctor.dose.unit:0
 #: model:ir.actions.act_window,name:doctor.action_doctor_dose_unit
 #: model:ir.ui.menu,name:doctor.menu_doctor_dose_unit
