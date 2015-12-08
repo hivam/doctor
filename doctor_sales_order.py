@@ -139,6 +139,7 @@ class doctor_sales_order(osv.osv):
             'type': 'out_invoice',
             'reference': order.client_order_ref or order.name,
             'account_id': order.partner_id.property_account_receivable.id,
+            'account_patient': order.partner_id.property_account_receivable.id,
             'partner_id': order.partner_invoice_id.id,
             'patient_id': order.patient_id.id,
             'journal_id': journal_ids[0],
