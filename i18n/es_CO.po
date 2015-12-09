@@ -853,6 +853,16 @@ msgstr "Citas del día"
 
 #. module: doctor
 #: view:account.invoice:0
+msgid "Send by Email"
+msgstr "Enviar Por Email"
+
+#. module: doctor
+#: view:account.invoice:0
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: doctor
+#: view:account.invoice:0
 msgid "Payment patient"
 msgstr "Pago Paciente"
 
