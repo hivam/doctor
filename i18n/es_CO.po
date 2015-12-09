@@ -546,6 +546,16 @@ msgid "Account patient"
 msgstr "Cuenta paciente"
 
 #. module: doctor
+#: field:account.invoice,period_id:0
+msgid "Accounting Period"
+msgstr "Periodo contable"
+
+#. module: doctor
+#: field:account.invoice,amount_patient:0
+msgid "Amount patient"
+msgstr "Monto paciente"
+
+#. module: doctor
 #: help:account.invoice,account_patient:0
 msgid "The patient account used for this invoice."
 msgstr "La cuenta del paciente usada para esta factura."
@@ -840,6 +850,31 @@ msgstr "Tipo de procedimiento"
 #: view:doctor.appointment:0
 msgid "Appointmemnt today"
 msgstr "Citas del día"
+
+#. module: doctor
+#: view:account.invoice:0
+msgid "Payment patient"
+msgstr "Pago Paciente"
+
+#. module: doctor
+#: view:account.invoice:0
+msgid "Refund Invoice"
+msgstr "Reembolso Paciente"
+
+#. module: doctor
+#: view:account.invoice:0
+msgid "Invoice Lines"
+msgstr "Líneas Factura"
+
+#. module: doctor
+#: view:account.invoice:0
+msgid "Other Info"
+msgstr "Otra Información"
+
+#. module: doctor
+#: view:account.invoice:0
+msgid "Payments"
+msgstr "Pagos"
 
 #. module: doctor
 #: view:doctor.professional:0
