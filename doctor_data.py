@@ -52,7 +52,7 @@ class doctor_insurer(osv.osv):
                for r in self.read(cr, uid, ids, [rec_name], context)]
         return res
 
-    _sql_constraints = [('code_uniq', 'unique (code)', 'The insurer code must be unique')]
+    #_sql_constraints = [('code_uniq', 'unique (code)', 'The insurer code must be unique')]
 
 
 doctor_insurer()
@@ -116,7 +116,7 @@ class doctor_measuring_unit(osv.osv):
         'name': fields.char('Measuring unit', size=128, required=True),
     }
 
-    _sql_constraints = [('code_uniq', 'unique (code)', 'The Measuring unit code must be unique')]
+    #_sql_constraints = [('code_uniq', 'unique (code)', 'The Measuring unit code must be unique')]
 
 
 doctor_measuring_unit()
