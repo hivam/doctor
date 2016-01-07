@@ -346,6 +346,7 @@ class doctor_appointment(osv.osv):
             'type': 'ir.actions.act_window',
             'context' : context,
             'nodestroy': True,
+            'target' : 'inline',
         }
 
 doctor_appointment()
