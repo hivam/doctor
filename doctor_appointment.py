@@ -28,7 +28,7 @@ from doctor_attentions import doctor_attentions
 class doctor_appointment_type(osv.osv):
     _name = "doctor.appointment.type"
     _columns = {
-        'name': fields.char('Type', size=10, required=True),
+        'name': fields.char('Type', size=30, required=True),
         'duration': fields.integer('Duration', required=True),
     }
 
