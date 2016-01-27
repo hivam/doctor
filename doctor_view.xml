@@ -173,7 +173,7 @@
 
                 <group>
                      <fieldset class="fieldset_margen" >
-                       <legend class="texto_legend">EPS</legend>
+                       <legend class="texto_legend">ASEGURADORA</legend>
                        <group col="2" >
                         <field name="insurer"/>
                       </group>
