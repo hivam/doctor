@@ -117,9 +117,11 @@ class doctor_patient(osv.osv):
 	def write(self, cr, uid, ids, vals, context=None):
 		datos = {'lastname': '', 'surname': '', 'firstname': '', 'middlename': ''}
 		nombre = ''
+		u = {}
 		if context is None:
 			context = {}
 		for patient in self.browse(cr, uid, ids, context=context):
+			partner_id = patient.patient
 			if 'birth_date' in vals:
 				birth_date = vals['birth_date']
 				current_date = time.strftime('%Y-%m-%d')
@@ -138,11 +140,21 @@ class doctor_patient(osv.osv):
 			if 	'middlename' in vals:
 				datos['middlename'] = vals['middlename'] or ' '
 
+
+
 			nombre = "%s %s %s %s" % (datos['lastname'] or patient.lastname, datos['surname'] or patient.surname or '',
 					 datos['firstname'] or patient.firstname , datos['middlename'] or patient.middlename or '')
 
-		vals['nombre'] = nombre.upper()
+			u['name'] = nombre.upper()
+			u['firtsname'] = str(vals['firstname'] if 'firstname' in vals else partner_id.firtsname).upper()
+			u['lastname'] = str(vals['lastname'] if 'lastname' in vals else partner_id.lastname).upper()
+			u['surname'] = str(vals['surname'] if 'surname' in vals else partner_id.surname).upper()
+			u['middlename'] = str(vals['middlename'] if 'middlename' in vals else partner_id.middlename).upper()
+			u['display_name'] = nombre.upper()
 
+		vals['nombre'] = nombre.upper()
+		
+		self.pool.get('res.partner').write(cr, uid, partner_id.id, u, context=context)
 		return super(doctor_patient, self).write(cr, uid, ids, vals, context=context)
 
 
