@@ -799,7 +799,7 @@
                             </field>
                         </page>
                     </notebook>
-                    <notebook colspan="4" col='4'>
+                    <notebook colspan="4" col='4' groups="doctor.group_doctor_physician"> 
                         <page string="Vital signs">
                             <group colspan='4' col='3'>
                                 <fieldset class="fieldset_margen">
@@ -952,7 +952,7 @@
                                 </form>
                             </field>
                         </page>
-                        <page string="Diagnostic support" >
+                        <page string="Diagnostic support" groups="doctor.group_doctor_physician">
                             <separator string="Diagnostic images" colspan="4"/>
                             <field name="diagnostic_images_ids" colspan="4" nolabel="1">
                                 <tree string="Diagnostic images" editable="bottom">
@@ -984,7 +984,7 @@
                                 </form>
                             </field>
                         </page>
-                        <page string="Surgical" >
+                        <page string="Surgical" groups="doctor.group_doctor_physician">
                             <field name="surgical_procedure_ids" colspan="4" nolabel="1">
                                 <tree string="Surgical procedure" editable="bottom">
                                     <field name="procedures_id" domain="[('procedure_type', '=', 2)]"/>
@@ -1000,7 +1000,7 @@
                                 </form>
                             </field>
                         </page>
-                        <page string="Therapeutic" >
+                        <page string="Therapeutic" groups="doctor.group_doctor_physician">
                             <field name="therapeutic_procedure_ids" colspan="4" nolabel="1">
                                 <tree string="Therapeutic procedure" editable="bottom">
                                     <field name="procedures_id" domain="[('procedure_type', '=', 5)]"/>
@@ -1016,7 +1016,7 @@
                                 </form>
                             </field>
                         </page>
-                        <page string="Other procedures" >
+                        <page string="Other procedures" groups="doctor.group_doctor_physician">
                             <field name="other_procedure_ids" colspan="4" nolabel="1">
                                 <tree string="Other procedures" editable="bottom">
                                     <field name="procedures_id" domain="['|',('procedure_type', '=', 1), '|', ('procedure_type', '=', 6), ('procedure_type', '=', 7)]"/>
