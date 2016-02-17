@@ -888,7 +888,7 @@
                             </field>
                         </page>
                         <page string="Drugs prescription" >
-                            <field name="drugs_ids" colspan="4" nolabel="1">
+                            <field name="drugs_ids" colspan="4" nolabel="1" groups="doctor.group_doctor_physician">
                                 <tree string="Drugs prescription">
                                     <field name="drugs_id"/>
                                     <field name="total_quantity"/>
