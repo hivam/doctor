@@ -84,6 +84,7 @@ access_doctor_schedule_psicologo,doctor.schedule.physician,model_doctor_schedule
 access_doctor_appointment_procedures_psicologo,doctor.appointment.procedures_physician,model_doctor_appointment_procedures,doctor.group_doctor_psicologo,1,1,1,0
 access_doctor_insurer_psicologo,doctor.insurer_physician,model_doctor_insurer,doctor.group_doctor_psicologo,1,0,0,0
 access_doctor_pharmaceutical_form_psicologo,doctor.pharmaceutical.form_physician,model_doctor_pharmaceutical_form,doctor.group_doctor_psicologo,1,0,1,0
+access_doctor_attentions_disability_psicologo,doctor.attentions.disability,model_doctor_attentions_disability,doctor.group_doctor_psicologo,1,0,1,1
 
 
 
