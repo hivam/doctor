@@ -683,8 +683,23 @@
                         <label for="actual_disease" string="Actual disease" groups="doctor.group_doctor_physician"/>
                         <label for="actual_disease" string="Historia Actual" groups="doctor.group_doctor_psicologo"/>
                         <field name='actual_disease' nolabel="1" placeholder="Actual_disease"/>
-                    </group>                    <notebook colspan="2" col='2'>
-                        <page string="Review systems">
+                    </group>                    
+                    <notebook colspan="2" col='2'>
+                        <page string="Review systems" groups="doctor.group_doctor_physician">
+                            <field name="review_systems_id" nolabel="1">
+                                <tree string="Review systems" editable="top">
+                                    <field name="system_category"/>
+                                    <field name="review_systems"/>
+                                </tree>
+                                <form string="Review systems">
+                                    <group>
+                                        <field name="system_category"/>
+                                        <field name="review_systems"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Sintomas (Cuestionarios-Entrevistas)" groups="doctor.group_doctor_psicologo">
                             <field name="review_systems_id" nolabel="1">
                                 <tree string="Review systems" editable="top">
                                     <field name="system_category"/>
@@ -867,7 +882,8 @@
                         <field name='analysis' nolabel="1" placeholder="Analysis" />
                     </group>
                     <group colspan="2" col='1'>
-                        <label for="conduct" string="Conduct"/>
+                        <label for="conduct" string="Conduct" groups="doctor.group_doctor_physician"/>
+                        <label for="conduct" string="Conducta(Plan de manejo)" groups="doctor.group_doctor_psicologo"/>
                         <field name='conduct' nolabel="1" placeholder="Conduct" />
                     </group>
                     <notebook colspan="4">
