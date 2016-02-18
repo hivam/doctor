@@ -699,20 +699,6 @@
                                 </form>
                             </field>
                         </page>
-                        <page string="Sintomas (Cuestionarios-Entrevistas)" groups="doctor.group_doctor_psicologo">
-                            <field name="review_systems_id" nolabel="1">
-                                <tree string="Review systems" editable="top">
-                                    <field name="system_category"/>
-                                    <field name="review_systems"/>
-                                </tree>
-                                <form string="Review systems">
-                                    <group>
-                                        <field name="system_category"/>
-                                        <field name="review_systems"/>
-                                    </group>
-                                </form>
-                            </field>
-                        </page>
                     </notebook>
                     <notebook colspan="2" col='2'>
                         <page string="Past">
