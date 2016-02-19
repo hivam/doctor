@@ -682,7 +682,8 @@
                     <group colspan="2" col='1'>
                         <label for="actual_disease" string="Actual disease" groups="doctor.group_doctor_physician"/>
                         <label for="actual_disease" string="Historia Actual" groups="doctor.group_doctor_psicologo"/>
-                        <field name='actual_disease' nolabel="1" placeholder="Actual_disease"/>
+                        <field name='actual_disease' nolabel="1" placeholder="Actual_disease" groups="doctor.group_doctor_physician"/>
+                        <field name='actual_disease' nolabel="1" placeholder="Historia Actual" groups="doctor.group_doctor_psicologo"/>
                     </group>                    
                     <notebook colspan="2" col='2'>
                         <page string="Review systems">
