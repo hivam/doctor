@@ -23,7 +23,7 @@ _logger = logging.getLogger(__name__)
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 import time
-
+import unicodedata
 
 class doctor_professional(osv.osv):
 	_name = "doctor.professional"
@@ -145,15 +145,15 @@ class doctor_patient(osv.osv):
 			nombre = "%s %s %s %s" % (datos['lastname'] or patient.lastname, datos['surname'] or patient.surname or '',
 					 datos['firstname'] or patient.firstname , datos['middlename'] or patient.middlename or '')
 
-			u['name'] = nombre.upper()
-			u['firtsname'] = str(vals['firstname'] if 'firstname' in vals else partner_id.firtsname).upper()
-			u['lastname'] = str(vals['lastname'] if 'lastname' in vals else partner_id.lastname).upper()
-			u['surname'] = str(vals['surname'] if 'surname' in vals else partner_id.surname).upper()
-			u['middlename'] = str(vals['middlename'] if 'middlename' in vals else partner_id.middlename).upper()
-			u['display_name'] = nombre.upper()
+			u['name'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
+			u['firtsname'] =  unicodedata.normalize('NFKD', vals['firstname'] if 'firstname' in vals else partner_id.firtsname).encode('ASCII', 'ignore').upper()
+			u['lastname'] = unicodedata.normalize('NFKD', vals['lastname'] if 'lastname' in vals else partner_id.lastname).encode('ASCII', 'ignore').upper()
+			u['surname'] = unicodedata.normalize('NFKD', vals['surname'] if 'surname' in vals else partner_id.surname).encode('ASCII', 'ignore').upper()
+			u['middlename'] = unicodedata.normalize('NFKD', vals['middlename'] if 'middlename' in vals else partner_id.middlename).encode('ASCII', 'ignore').upper()
+			u['display_name'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
 
-		vals['nombre'] = nombre.upper()
-		
+		vals['nombre'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
+		_logger.info(u)
 		self.pool.get('res.partner').write(cr, uid, partner_id.id, u, context=context)
 		return super(doctor_patient, self).write(cr, uid, ids, vals, context=context)
 
