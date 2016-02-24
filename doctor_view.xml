@@ -194,7 +194,7 @@
                                 <field name="speciality"/>
                                 <field name="state"/>
                             </tree>
-                            <form string="Attentions" nolabel="1" readonly="1" groups="doctor.group_doctor_physician">
+                            <form string="Attentions" nolabel="1" readonly="1" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
                                 <group>
                                     <field name="date_attention"/>
                                     <field name="number"/>
@@ -462,7 +462,7 @@
                     <button string="Confirm" name="button_confirm" states="draft" type="object" groups="doctor.group_doctor_assistant" class="oe_highlight"/>
                     <button string="Cancel" name="button_cancel" states="draft,confirm" type="object" groups="doctor.group_doctor_assistant"/>
                     <button string="Assists" name="button_assists" type="object" class="oe_highlight" groups="doctor.group_doctor_assistant" attrs="{'invisible':['|','|',('appointment_today','!=',True),('attended','=',True),('state','!=','confirm')]}"/>
-                    <button string="Attend" name="generate_attentiont" type="object" class="oe_highlight" groups="doctor.group_doctor_physician" attrs="{'invisible':['|','|',('attended','=',True),('state','=','draft'),('appointment_today','!=',True)]}" context="{'patient_id' : patient_id}"/>
+                    <button string="Attend" name="generate_attentiont" type="object" class="oe_highlight" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo" attrs="{'invisible':['|','|',('attended','=',True),('state','=','draft'),('appointment_today','!=',True)]}" context="{'patient_id' : patient_id}"/>
                     <button string="Generate order" name="generate_order" states="assists,attending" type="object" groups="doctor.group_doctor_assistant" class="oe_highlight"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirm,assists,attending,invoiced"/>
                 </header>
@@ -556,7 +556,7 @@
                                     </ul>
                                     <button string="Assists" name="button_assists" type="object" class="oe_highlight" groups="doctor.group_doctor_assistant" attrs="{'invisible':['|','|',('appointment_today','!=',True),('attended','=',True),('state','!=','confirm')]}" confirm="Patient in waiting room?">Assist</button>
                                     
-                                    <button string="Attend" name="generate_attentiont" type="object" class="oe_highlight" groups="doctor.group_doctor_physician" attrs="{'invisible':['|','|',('attended','=',True),('state','=','draft'),('appointment_today','!=',True)]}"  confirm="Patient in waiting room?" >Attend</button>
+                                    <button string="Attend" name="generate_attentiont" type="object" class="oe_highlight" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo" attrs="{'invisible':['|','|',('attended','=',True),('state','=','draft'),('appointment_today','!=',True)]}"  confirm="Patient in waiting room?" >Attend</button>
 
                                 </div>
 
@@ -1431,7 +1431,7 @@
     </record>
 
     <!-- measuring unit form Menu -->
-    <menuitem id="menu_doctor_measuring_unit" name="Drugs measuring unit" parent="menu_doctor_drugs_config" action="doctor.action_doctor_measuring_unit" groups="doctor.group_doctor_physician"/>
+    <menuitem id="menu_doctor_measuring_unit" name="Drugs measuring unit" parent="menu_doctor_drugs_config" action="doctor.action_doctor_measuring_unit" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo"/>
 
     <!-- doctor drugs Form View -->
     <record model="ir.ui.view" id="view_doctor_drugs_form">
