@@ -155,14 +155,8 @@ class doctor_patient(osv.osv):
 			vals['nombre'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
 
 
-			_logger.info(type(vals['firstname'] if 'firstname' in vals else partner_id.firtsname) is unicode)
-			_logger.info(type(vals['lastname'] if 'lastname' in vals else partner_id.lastname) is unicode)
-			_logger.info(type(vals['surname'] if 'surname' in vals else partner_id.surname) is unicode)
-			_logger.info(type(vals['middlename'] if 'middlename' in vals else partner_id.middlename) is unicode)
-
-
 			if(type(firstname) is unicode):
-				u['firtsname'] =  unicodedata.normalize('NFKD', firtsname).encode('ASCII', 'ignore').upper()
+				u['firtsname'] =  unicodedata.normalize('NFKD', firstname).encode('ASCII', 'ignore').upper()
 			elif(type(firstname) is str):
 				u['firtsname'] =  firtsname.upper()
 
