@@ -146,13 +146,30 @@ class doctor_patient(osv.osv):
 					 datos['firstname'] or patient.firstname , datos['middlename'] or patient.middlename or '')
 
 			u['name'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
-			u['firtsname'] =  unicodedata.normalize('NFKD', vals['firstname'] if 'firstname' in vals else partner_id.firtsname).encode('ASCII', 'ignore').upper()
-			u['lastname'] = unicodedata.normalize('NFKD', vals['lastname'] if 'lastname' in vals else partner_id.lastname).encode('ASCII', 'ignore').upper()
-			u['surname'] = unicodedata.normalize('NFKD', vals['surname'] if 'surname' in vals else partner_id.surname).encode('ASCII', 'ignore').upper()
-			u['middlename'] = unicodedata.normalize('NFKD', vals['middlename'] if 'middlename' in vals else partner_id.middlename).encode('ASCII', 'ignore').upper()
 			u['display_name'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
+			vals['nombre'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
 
-		vals['nombre'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
+
+			_logger.info(type(vals['firstname'] if 'firstname' in vals else partner_id.firtsname) is unicode)
+			_logger.info(type(vals['lastname'] if 'lastname' in vals else partner_id.lastname) is unicode)
+			_logger.info(type(vals['surname'] if 'surname' in vals else partner_id.surname) is unicode)
+			_logger.info(type(vals['middlename'] if 'middlename' in vals else partner_id.middlename) is unicode)
+
+
+			if(type(vals['firstname'] if 'firstname' in vals else partner_id.firtsname) is unicode):
+				u['firtsname'] =  unicodedata.normalize('NFKD', vals['firstname'] if 'firstname' in vals else partner_id.firtsname).encode('ASCII', 'ignore').upper()
+			
+			if(type(vals['lastname'] if 'lastname' in vals else partner_id.lastname) is unicode):	
+				u['lastname'] = unicodedata.normalize('NFKD', vals['lastname'] if 'lastname' in vals else partner_id.lastname).encode('ASCII', 'ignore').upper()
+			
+			if(type(vals['surname'] if 'surname' in vals else partner_id.surname) is unicode):	
+				u['surname'] = unicodedata.normalize('NFKD', vals['surname'] if 'surname' in vals else partner_id.surname).encode('ASCII', 'ignore').upper()
+			
+			if(type(vals['middlename'] if 'middlename' in vals else partner_id.middlename) is unicode):	
+				u['middlename'] = unicodedata.normalize('NFKD', vals['middlename'] if 'middlename' in vals else partner_id.middlename).encode('ASCII', 'ignore').upper()
+			
+
+		
 		_logger.info(u)
 		self.pool.get('res.partner').write(cr, uid, partner_id.id, u, context=context)
 		return super(doctor_patient, self).write(cr, uid, ids, vals, context=context)
