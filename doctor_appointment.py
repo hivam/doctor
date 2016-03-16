@@ -133,12 +133,20 @@ class doctor_appointment(osv.osv):
 
     def _check_appointment(self, cr, uid, ids, context=None):
         for record in self.browse(cr, uid, ids, context=context):
-            appointment_ids = self.search(cr, uid,
-                                          [('time_begin', '<', record.time_end), ('time_end', '>', record.time_begin),
-                                           ('aditional', '=', record.aditional), ('state', '=', record.state),
-                                           ('id', '<>', record.id)])
-            if appointment_ids:
-                return False
+            modulo_instalado = self.pool.get('ir.module.module').search(cr,uid,[('name', '=', 'l10n_co_doctor'), ('state', '=', 'installed')],context=context)
+            if modulo_instalado:
+                if record.schedule_id.multi_paciente:
+                    return True
+                else:
+                    return False
+            else:
+                appointment_ids = self.search(cr, uid,
+                                              [('time_begin', '<', record.time_end), ('time_end', '>', record.time_begin),
+                                               ('aditional', '=', record.aditional), ('state', '=', record.state),
+                                               ('id', '<>', record.id)])
+                if appointment_ids:
+                    return False
+        
         return True
 
     def _check_closing_time(self, cr, uid, ids, context=None):
