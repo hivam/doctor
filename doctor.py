@@ -59,7 +59,7 @@ class doctor_schedule(osv.osv):
     _rec_name = 'professional_id'
 
 
-
+    
 
     def _date_to_dateuser(self, cr, uid, ids, date_begin):
         date_begin_user = datetime.strptime(date_begin, "%Y-%m-%d %H:%M:%S")
