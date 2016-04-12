@@ -266,6 +266,10 @@
                         <field name="schedule_duration" attrs="{'readonly':[('patients_count','>','0')]}" on_change="onchange_start_date(date_begin,schedule_duration,date_end)"/>
                         <field name="date_end" attrs="{'readonly':[('patients_count','>','0')]}"/>
                         <field name="patients_count"/>
+
+                    </group>
+                    <group>
+                        <button string="Próxima Cita" name="calcular_proxima_cita" type="object" groups="doctor.group_doctor_assistant" class="oe_highlight"/>
                     </group>
                     <notebook>
                         <page string="Appointment" >
