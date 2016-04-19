@@ -20,6 +20,12 @@
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
+    <record id="group_aux_enfermeria" model="res.groups">
+        <field name="name">Aux. enfermeria</field>
+        <field name="category_id" ref="module_category_doctor"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
     <record id="group_doctor_asistente_admin" model="res.groups">
         <field name="name">Asistente Administrativo</field>
         <field name="category_id" ref="module_category_doctor"/>
