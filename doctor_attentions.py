@@ -256,8 +256,6 @@ class doctor_attentions(osv.osv):
     def _get_professional_id(self, cr, uid, user_id):
         try:
             professional_id= self.pool.get('doctor.professional').browse(cr, uid, self.pool.get('doctor.professional').search(cr, uid, [( 'user_id',  '=', uid)]))[0].id
-            _logger.info("-ID DE PROFESIONAL DE LA SALUD QUE ATIENDE------")
-            _logger.info(professional_id)
             return professional_id
         except Exception as e:
             raise osv.except_osv(_('Error!'),
@@ -265,6 +263,15 @@ class doctor_attentions(osv.osv):
 
     def default_get(self, cr, uid, fields, context=None):
         res = super(doctor_attentions,self).default_get(cr, uid, fields, context=context)
+
+        modelo_permisos = self.pool.get('res.groups')
+        nombre_permisos = []
+        cr.execute("SELECT gid FROM res_groups_users_rel WHERE uid = %s" %(uid))
+
+        for i in cr.fetchall():
+            grupo_id = modelo_permisos.browse(cr, uid, i[0], context=context).name
+            nombre_permisos.append(grupo_id)
+
 
         if context.get('active_model') == "doctor.patient":
             id_paciente = context.get('default_patient_id')
@@ -298,9 +305,11 @@ class doctor_attentions(osv.osv):
         #fin carga item examanes fisicos
 
 
-        res['review_systems_id'] = registros
-        res['attentions_past_ids'] = registros_antecedentes
-        res['attentions_exam_ids'] = registros_examenes_fisicos
+        if 'Aux. enfermeria' not in nombre_permisos:
+            res['review_systems_id'] = registros
+            res['attentions_past_ids'] = registros_antecedentes
+            res['attentions_exam_ids'] = registros_examenes_fisicos
+
 
 
         return res

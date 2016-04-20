@@ -27,7 +27,15 @@
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
+<<<<<<< HEAD
 
+=======
+    <record id="group_aux_enfermeria" model="res.groups">
+        <field name="name">Aux. enfermeria</field>
+        <field name="category_id" ref="module_category_doctor"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+>>>>>>> 284406aa6c224362bd50e6fa44a10881cdf7e50c
 
     <record id="group_doctor_asistente_admin" model="res.groups">
         <field name="name">Asistente Administrativo</field>
