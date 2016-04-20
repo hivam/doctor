@@ -116,3 +116,39 @@ access_doctor_attentions_disability_psicologo,doctor.attentions.disability,model
 
 
 
+
+
+
+
+
+access_doctor_attentions,doctor.attentions,model_doctor_attentions,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_atc_physician,doctor.atc_physician,model_doctor_atc,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_atc_past,doctor.atc.past,model_doctor_atc_past,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_attentions_disability,doctor.attentions.disability,model_doctor_attentions_disability,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_administration_route_physician,doctor.administration.route_physician,model_doctor_administration_route,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_attentions_diseases,doctor.attentions.diseases,model_doctor_attentions_diseases,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_attentions_exam,doctor.attentions.exam,model_doctor_attentions_exam,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_attentions_diseases,doctor.attentions.diseases,model_doctor_attentions_diseases,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_attentions_past,doctor.attentions.past,model_doctor_attentions_past,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_attentions_procedures,doctor.attentions.procedures,model_doctor_attentions_procedures,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_attentions_referral,doctor.attentions.referral,model_doctor_attentions_referral,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_diseases_physician,doctor.diseases_physician,model_doctor_diseases,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_diseases_past,doctor.diseases.past,model_doctor_diseases_past,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_dose_unit_physician,doctor.dose.unit_physician,model_doctor_dose_unit,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_drugs_physician,doctor.drugs_physician,model_doctor_drugs,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_exam_category,doctor.exam.category,model_doctor_exam_category,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_measuring_unit,doctor.measuring.unit,model_doctor_measuring_unit,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_past_category,doctor.past.category,model_doctor_past_category,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_patient_physician,doctor.patient_physician,model_doctor_patient,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_prescription,doctor.prescription,model_doctor_prescription,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_professional_physician,doctor.professional_physician,model_doctor_professional,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_review_systems,doctor.review.systems,model_doctor_review_systems,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_speciality_physician,doctor.speciality_physician,model_doctor_speciality,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_systems_category,doctor.systems.category,model_doctor_systems_category,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_appointment___physician,doctor.appointment__physician,model_doctor_appointment,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_schedule_physician,doctor.schedule.physician,model_doctor_schedule,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_appointment_procedures__physician,doctor.appointment.procedures_physician,model_doctor_appointment_procedures,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_insurer_physician,doctor.insurer_physician,model_doctor_insurer,doctor.group_doctor_inactivo,1,0,0,0
+access_doctor_pharmaceutical_form_physician,doctor.pharmaceutical.form_physician,model_doctor_pharmaceutical_form,doctor.group_doctor_inactivo,1,0,0,0
+
+
