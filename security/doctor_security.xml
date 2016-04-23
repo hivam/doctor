@@ -9,7 +9,13 @@
     </record>
 
     <record id="group_doctor_inactivo" model="res.groups">
-        <field name="name">Doctor Inactivo</field>
+        <field name="name">Profesional en la Salud Inactivo</field>
+        <field name="category_id" ref="module_category_doctor"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_doctor_psicolog_inactivo" model="res.groups">
+        <field name="name">Psicologo Inactivo</field>
         <field name="category_id" ref="module_category_doctor"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>

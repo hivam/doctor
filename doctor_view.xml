@@ -260,8 +260,8 @@
         <field name="model">doctor.schedule</field>
         <field name="arch" type="xml">
             <form string="Schedule" version="7.0">
-                <div name="div_mensaje" class="oe_form_box_info oe_text_center" groups="doctor.group_doctor_inactivo">
-                    <b> <span class="oe_e">c</span>Apreciado Usuario se han bloqueado las funcionalidades del portal. A la fecha no se ha registrado pago.</b>
+                <div name="div_mensaje" class="oe_form_box_info oe_text_center" groups="doctor.group_doctor_inactivo,doctor.group_doctor_psicolog_inactivo">
+                    <b> <span class="oe_e">c</span>Apreciado Usuario se han bloqueado las funcionalidades del portal. A la fecha no se ha registrado el pago.</b>
                   </div>
                     <group>
                         <field name="professional_id" attrs="{'readonly':[('patients_count','>','0')]}"/>
@@ -465,8 +465,8 @@
         <field name="model">doctor.appointment</field>
         <field name="arch" type="xml">
             <form string="Appointment" version="7.0">
-                <div name="div_mensaje" class="oe_form_box_info oe_text_center" groups="doctor.group_doctor_inactivo">
-                    <b> <span class="oe_e">c</span>Apreciado Usuario se han bloqueado las funcionalidades del portal. A la fecha no se ha registrado ningún pago.</b>
+                <div name="div_mensaje" class="oe_form_box_info oe_text_center" groups="doctor.group_doctor_inactivo,doctor.group_doctor_psicolog_inactivo">
+                    <b> <span class="oe_e">c</span>Apreciado Usuario se han bloqueado las funcionalidades del portal. A la fecha no se ha registrado ningún el pago.</b>
                 </div>
                 <separator/>
                 <separator/>
