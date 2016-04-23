@@ -138,6 +138,9 @@
         <field name="model">doctor.patient</field>
         <field name="arch" type="xml">
             <form string="Patient" version="7.0">
+                <div name="div_mensaje" class="oe_form_box_info oe_text_center" groups="doctor.group_doctor_inactivo,doctor.group_doctor_psicolog_inactivo">
+                    <b> <span class="oe_e">c</span>Apreciado Usuario se han bloqueado las funcionalidades del portal. A la fecha no se ha registrado el pago.</b>
+                </div>
               <field invisible="1" name="id"/>
               <field invisible="1" name="get_professional_id"/>
               <sheet>
@@ -262,7 +265,7 @@
             <form string="Schedule" version="7.0">
                 <div name="div_mensaje" class="oe_form_box_info oe_text_center" groups="doctor.group_doctor_inactivo,doctor.group_doctor_psicolog_inactivo">
                     <b> <span class="oe_e">c</span>Apreciado Usuario se han bloqueado las funcionalidades del portal. A la fecha no se ha registrado el pago.</b>
-                  </div>
+                </div>
                     <group>
                         <field name="professional_id" attrs="{'readonly':[('patients_count','>','0')]}"/>
                         <field name="date_begin" attrs="{'readonly':[('patients_count','>','0')]}" on_change="onchange_start_date(date_begin,schedule_duration,date_end)"/>
@@ -467,7 +470,7 @@
         <field name="arch" type="xml">
             <form string="Appointment" version="7.0">
                 <div name="div_mensaje" class="oe_form_box_info oe_text_center" groups="doctor.group_doctor_inactivo,doctor.group_doctor_psicolog_inactivo">
-                    <b> <span class="oe_e">c</span>Apreciado Usuario se han bloqueado las funcionalidades del portal. A la fecha no se ha registrado ningún el pago.</b>
+                    <b> <span class="oe_e">c</span>Apreciado Usuario se han bloqueado las funcionalidades del portal. A la fecha no se ha registrado el pago.</b>
                 </div>
                 <separator/>
                 <separator/>
@@ -636,6 +639,9 @@
         <field name="model">doctor.attentions</field>
         <field name="arch" type="xml">
             <form string="Attentions" version="7.0" create="false">
+                <div name="div_mensaje" class="oe_form_box_info oe_text_center" groups="doctor.group_doctor_inactivo,doctor.group_doctor_psicolog_inactivo">
+                    <b> <span class="oe_e">c</span>Apreciado Usuario se han bloqueado las funcionalidades del portal. A la fecha no se ha registrado el pago.</b>
+                </div>
                 <header>
                     <button string="Finish attention" name="button_closed" states="open" type="object" class="oe_highlight"/>
                     <field name="state" widget="statusbar" statusbar_visible="open,closed"/>
