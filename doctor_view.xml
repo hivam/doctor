@@ -642,6 +642,8 @@
                 <div name="div_mensaje" class="oe_form_box_info oe_text_center" groups="doctor.group_doctor_inactivo,doctor.group_doctor_psicolog_inactivo">
                     <b> <span class="oe_e">c</span>Apreciado Usuario se han bloqueado las funcionalidades del portal. A la fecha no se ha registrado el pago.</b>
                 </div>
+                <separator/>
+                <separator/>
                 <header>
                     <button string="Finish attention" name="button_closed" states="open" type="object" class="oe_highlight"/>
                     <field name="state" widget="statusbar" statusbar_visible="open,closed"/>
