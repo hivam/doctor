@@ -271,8 +271,9 @@
                         <field name="patients_count"/>
 
                     </group>
+                    <field invisible="1" name="id"/>
                     <group>
-                        <button string="Próxima Cita" name="calcular_proxima_cita" type="object" groups="doctor.group_doctor_assistant" class="oe_highlight"/>
+                        <button string="Próxima Cita" name="calcular_proxima_cita" type="object" groups="doctor.group_doctor_assistant" class="oe_highlight" attrs="{'invisible': [('id', '=', False)]}"/>
                     </group>
                     <notebook>
                         <page string="Appointment" >
