@@ -260,6 +260,9 @@
         <field name="model">doctor.schedule</field>
         <field name="arch" type="xml">
             <form string="Schedule" version="7.0">
+                <div name="div_mensaje" class="oe_form_box_info oe_text_center" groups="doctor.group_doctor_inactivo">
+                    <b> <span class="oe_e">c</span>Apreciado Usuario se han bloqueado las funcionalidades del portal. A la fecha no se ha registrado pago.</b>
+                  </div>
                     <group>
                         <field name="professional_id" attrs="{'readonly':[('patients_count','>','0')]}"/>
                         <field name="date_begin" attrs="{'readonly':[('patients_count','>','0')]}" on_change="onchange_start_date(date_begin,schedule_duration,date_end)"/>
@@ -462,6 +465,11 @@
         <field name="model">doctor.appointment</field>
         <field name="arch" type="xml">
             <form string="Appointment" version="7.0">
+                <div name="div_mensaje" class="oe_form_box_info oe_text_center" groups="doctor.group_doctor_inactivo">
+                    <b> <span class="oe_e">c</span>Apreciado Usuario se han bloqueado las funcionalidades del portal. A la fecha no se ha registrado ningún pago.</b>
+                </div>
+                <separator/>
+                <separator/>
                 <header>
                     <button string="Confirm" name="button_confirm" states="draft" type="object" groups="doctor.group_doctor_assistant" class="oe_highlight"/>
                     <button string="Cancel" name="button_cancel" states="draft,confirm" type="object" groups="doctor.group_doctor_assistant"/>
