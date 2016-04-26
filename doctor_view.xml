@@ -463,11 +463,11 @@
         <field name="arch" type="xml">
             <form string="Appointment" version="7.0">
                 <header>
-                    <button string="Confirm" name="button_confirm" states="draft" type="object" groups="doctor.group_doctor_assistant" class="oe_highlight"/>
-                    <button string="Cancel" name="button_cancel" states="draft,confirm" type="object" groups="doctor.group_doctor_assistant"/>
-                    <button string="Assists" name="button_assists" type="object" class="oe_highlight" groups="doctor.group_doctor_assistant" attrs="{'invisible':['|','|',('appointment_today','!=',True),('attended','=',True),('state','!=','confirm')]}"/>
+                    <button string="Confirm" name="button_confirm" states="draft" type="object" groups="doctor.group_doctor_assistant,doctor.group_doctor_asistente_admin" class="oe_highlight"/>
+                    <button string="Cancel" name="button_cancel" states="draft,confirm" type="object" groups="doctor.group_doctor_assistant,doctor.group_doctor_asistente_admin"/>
+                    <button string="Assists" name="button_assists" type="object" class="oe_highlight" groups="doctor.group_doctor_assistant,doctor.group_doctor_asistente_admin" attrs="{'invisible':['|','|',('appointment_today','!=',True),('attended','=',True),('state','!=','confirm')]}"/>
                     <button string="Attend" name="generate_attentiont" type="object" class="oe_highlight" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo" attrs="{'invisible':['|','|',('attended','=',True),('state','=','draft'),('appointment_today','!=',True)]}" context="{'patient_id' : patient_id}"/>
-                    <button string="Generate order" name="generate_order" states="assists,attending" type="object" groups="doctor.group_doctor_assistant,doctor.group_doctor_facturador" class="oe_highlight"/>
+                    <button string="Generate order" name="generate_order" states="assists,attending" type="object" groups="doctor.group_doctor_assistant,doctor.group_doctor_asistente_admin" class="oe_highlight"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirm,assists,attending,invoiced"/>
                 </header>
                 <group>
