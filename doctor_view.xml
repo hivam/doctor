@@ -889,6 +889,7 @@
                         <field name='analysis' nolabel="1" placeholder="Analysis" />
                     </group>
                     <group colspan="2" col='1' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo" id="group_conduct">
+                        <label for="conduct" string="Conduct" groups="doctor.group_doctor_physician"/>
                         <label for="conduct" string="Conducta(Plan de manejo)" groups="doctor.group_doctor_psicologo"/>
                         <field name='conduct' nolabel="1" placeholder="Conduct" />
                     </group>
