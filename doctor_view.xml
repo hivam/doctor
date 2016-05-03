@@ -629,6 +629,20 @@
         <field name="args" eval="'()'"/>
     </record>
 
+
+    <record forcecreate="True" id="ir_cron_appointment_state_false" model="ir.cron">
+            <field name="name">Cambiar estado citas antiguas</field>
+            <field name="active" eval="True"/>
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="True"/>
+            <field name="model" eval="'doctor.appointment'"/>
+            <field name="function" eval="'cambiar_estado_citas'"/>
+            <field name="args" eval="'()'"/>
+        </record>
+
     <!-- appointment Menu -->
     <menuitem name="Waiting room" id="menu_doctor_appointment" action="doctor.action_doctor_appointment" parent="menu_doctor_process" sequence="10" />
 
