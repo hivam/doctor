@@ -126,10 +126,14 @@ class doctor_appointment(osv.osv):
     }
 
     def update_appointment_today(self, cr, uid, ids=False, context=None):
+        fecha_hora_actual = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:00")
+        fecha_hora_actual = datetime.strptime(fecha_hora_actual, "%Y-%m-%d %H:%M:00")
+        fecha_usuario_ini = fecha_hora_actual.strftime('%Y-%m-%d 00:00:00')
+        fecha_usuario_fin = fecha_hora_actual.strftime('%Y-%m-%d 23:59:59')
         if context is None:
             context = {}
         if not ids:
-            ids = self.search(cr, uid, [], context=None)
+            ids = self.search(cr, uid, [('time_begin', '>', fecha_usuario_ini), ('time_end', '<', fecha_usuario_fin)], context=None)
         return super(doctor_appointment, self).write(cr, uid, ids, {'appointment_today': 'True'}, context=context)
 
 
