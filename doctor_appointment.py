@@ -24,7 +24,8 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 import pytz
 from doctor_attentions import doctor_attentions
-
+import logging
+_logger = logging.getLogger(__name__)
 class doctor_appointment_type(osv.osv):
     _name = "doctor.appointment.type"
     _columns = {
@@ -125,12 +126,27 @@ class doctor_appointment(osv.osv):
     }
 
     def update_appointment_today(self, cr, uid, ids=False, context=None):
+        fecha_hora_actual = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:00")
+        fecha_hora_actual = datetime.strptime(fecha_hora_actual, "%Y-%m-%d %H:%M:00")
+        fecha_usuario_ini = fecha_hora_actual.strftime('%Y-%m-%d 00:00:00')
+        fecha_usuario_fin = fecha_hora_actual.strftime('%Y-%m-%d 23:59:59')
         if context is None:
             context = {}
         if not ids:
-            ids = self.search(cr, uid, [], context=None)
+            ids = self.search(cr, uid, [('time_begin', '>', fecha_usuario_ini), ('time_end', '<', fecha_usuario_fin)], context=None)
         return super(doctor_appointment, self).write(cr, uid, ids, {'appointment_today': 'True'}, context=context)
 
+
+    def cambiar_estado_citas(self, cr, uid, ids=False, context=None):
+        if context is None:
+            context = {}
+        if not ids:
+            fecha_hora_actual = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:00")
+            fecha_hora_actual = datetime.strptime(fecha_hora_actual, "%Y-%m-%d %H:%M:00")
+            fecha_usuario_ini = fecha_hora_actual.strftime('%Y-%m-%d 00:00:00')
+            ids = self.search(cr, uid, [('time_begin', '<', fecha_usuario_ini), ('appointment_today', '<>', False)], context=None)
+        return super(doctor_appointment, self).write(cr, uid, ids, {'appointment_today': 'False'}, context=context)
+    
     def _check_appointment(self, cr, uid, ids, context=None):
         for record in self.browse(cr, uid, ids, context=context):
             modulo_instalado = self.pool.get('ir.module.module').search(cr,uid,[('name', '=', 'doctor_multiroom'), ('state', '=', 'installed')],context=context)
@@ -154,12 +170,17 @@ class doctor_appointment(osv.osv):
         return True
 
     def _check_date_appointment(self, cr, uid, ids, context=None):
+        fecha_hora_actual = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:00")
+        fecha_hora_actual = datetime.strptime(fecha_hora_actual, "%Y-%m-%d %H:%M:00")
+        fecha_usuario_ini = fecha_hora_actual.strftime('%Y-%m-%d 00:00:00')
         for record in self.browse(cr, uid, ids, context=context):
             schedule_begin = record.schedule_id.date_begin
             schedule_end = record.schedule_id.date_end
             time_begin = record.time_begin
             time_end = record.time_end
-            if time_begin < schedule_begin or time_end > schedule_end:
+            if record.time_begin < fecha_usuario_ini:
+                return True
+            elif time_begin < schedule_begin or time_end > schedule_end:
                 return False
         return True
 
