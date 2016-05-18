@@ -114,24 +114,6 @@ access_doctor_pharmaceutical_form_psicologo,doctor.pharmaceutical.form_physician
 access_doctor_attentions_disability_psicologo,doctor.attentions.disability,model_doctor_attentions_disability,doctor.group_doctor_psicologo,1,0,1,1
 
 
-access_doctor_attentions_aux,doctor.attentions,model_doctor_attentions,doctor.group_aux_enfermeria,1,1,1,0
-access_doctor_patient_aux,doctor.patient_aux,model_doctor_patient,doctor.group_aux_enfermeria,1,0,0,0
-access_doctor_professional_aux,doctor.professional_aux,model_doctor_professional,doctor.group_aux_enfermeria,1,0,0,0
-access_doctor_speciality_aux,doctor.speciality_aux,model_doctor_speciality,doctor.group_aux_enfermeria,1,0,0,0
-access_doctor_appointment_aux,doctor.appointment_aux,model_doctor_appointment,doctor.group_aux_enfermeria,1,1,0,0
-access_doctor_systems_category_aux,doctor.systems.category,model_doctor_systems_category,doctor.group_aux_enfermeria,1,0,1,1
-access_doctor_past_category_aux,doctor.past.category,model_doctor_past_category,doctor.group_aux_enfermeria,1,0,1,1
-access_doctor_exam_category_aux,doctor.exam.category,model_doctor_exam_category,doctor.group_aux_enfermeria,1,0,1,1
-access_doctor_attentions_aux_psicologo,doctor.attentions.past,model_doctor_attentions_past,doctor.group_aux_enfermeria,1,1,1,1`
-access_doctor_diseases_past_aux,doctor.diseases.past,model_doctor_diseases_past,doctor.group_aux_enfermeria,1,1,1,1
-access_doctor_atc_past_aux,doctor.atc.past,model_doctor_atc_past,doctor.group_aux_enfermeria,1,1,1,1
-access_doctor_attentions_exam_aux,doctor.attentions.exam,model_doctor_attentions_exam,doctor.group_aux_enfermeria,1,1,1,1
-
-
-
-
-
-
 restriction_doctor_attentions,doctor.attentions,model_doctor_attentions,doctor.group_doctor_inactivo,1,0,0,0
 restriction_doctor_atc_physician,doctor.atc_physician,model_doctor_atc,doctor.group_doctor_inactivo,1,0,0,0
 restriction_doctor_atc_past,doctor.atc.past,model_doctor_atc_past,doctor.group_doctor_inactivo,1,0,0,0
@@ -194,3 +176,9 @@ restriction_doctor_appointment_procedures_psicologo,doctor.appointment.procedure
 restriction_doctor_insurer_psicologo,doctor.insurer_physician,model_doctor_insurer,doctor.group_doctor_psicolog_inactivo,1,0,0,0
 restriction_doctor_pharmaceutical_form_psicologo,doctor.pharmaceutical.form_physician,model_doctor_pharmaceutical_form,doctor.group_doctor_psicolog_inactivo,1,0,0,0
 restriction_doctor_attentions_disability_psicologo,doctor.attentions.disability,model_doctor_attentions_disability,doctor.group_doctor_psicolog_inactivo,1,0,0,0
+
+
+access_doctor_professional_aux,doctor.professional_aux,model_doctor_professional,doctor.group_aux_enfermeria,1,0,0,0
+access_doctor_attentions_aux,doctor.attentions_aux,model_doctor_attentions,doctor.group_aux_enfermeria,1,0,0,0
+access_doctor_appointment_aux,doctor.appointment_aux,model_doctor_appointment,doctor.group_aux_enfermeria,1,0,0,0
+access_doctor_speciality_aux,doctor.speciality_aux,model_doctor_speciality,doctor.group_aux_enfermeria,1,0,0,0
