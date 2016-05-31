@@ -444,6 +444,10 @@
                     <separator/>
                     <filter string="Today" name="appointment_today" domain="[('appointment_today','=',True)]" help="Appointmemnt today"/>
 
+                    <filter string="Próximas Citas" name="next_appointment" domain="[('time_begin','&gt;=', (context_today()).strftime('%%Y-%%m-%%d'))]" help="Próxima Cita"/>
+
+                    <filter string="Próximas Cita" name="next_appointme" domain="[('time_begin','>=', (context_today()).strftime('%%Y-%%m-%%d'))]" help="Próxima Cita"/>
+
                     <separator/>
                     <filter string="Actives" name="appointment_actives" domain="[('state','!=','cancel')]" help="Appointmemnt actives"/>
 
