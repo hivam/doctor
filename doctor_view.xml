@@ -444,6 +444,8 @@
                     <separator/>
                     <filter string="Today" name="appointment_today" domain="[('appointment_today','=',True)]" help="Appointmemnt today"/>
 
+                    <filter string="Próximas Citas" name="next_appointment" domain="[('time_begin','&gt;=', (context_today()).strftime('%%Y-%%m-%%d'))]" help="Próximas Citas"/>
+
                     <separator/>
                     <filter string="Actives" name="appointment_actives" domain="[('state','!=','cancel')]" help="Appointmemnt actives"/>
 
@@ -1482,6 +1484,7 @@
                     <field name="administration_route"/>
                     <field name="pharmaceutical_form"/>
                     <field name="drugs_concentration"/>
+                    <field name="indication_drug"/>
                 </group>
             </form>
         </field>
@@ -1498,6 +1501,7 @@
                 <field name="administration_route"/>
                 <field name="pharmaceutical_form"/>
                 <field name="drugs_concentration"/>
+                <field name="indication_drug"/>
             </tree>
         </field>
     </record>

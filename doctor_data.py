@@ -133,6 +133,7 @@ class doctor_drugs(osv.osv):
         'drugs_concentration': fields.char('Drugs concentration', size=64, required=True),
         'administration_route': fields.many2one('doctor.administration.route', 'Administration route', required=True,
                                                 ondelete='restrict'),
+        'indication_drug':fields.text('Indicaciones', size=300, help='Agregar indicaciones al medicamento'),
     }
 
     def name_get(self, cr, uid, ids, context={}):
