@@ -30,7 +30,7 @@ class doctor_speciality(osv.osv):
         'name': fields.char('Speciality', size=64, required=True),
     }
 
-    _sql_constraints = [('code_uniq', 'unique (code)', 'The Medical Speciality code must be unique')]
+    #_sql_constraints = [('code_uniq', 'unique (code)', 'The Medical Speciality code must be unique')]
 
 
 doctor_speciality()
