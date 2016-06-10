@@ -145,7 +145,7 @@
               <field invisible="1" name="get_professional_id"/>
               <sheet>
                   <div  name="div_atenderpaciente" class="oe_right oe_button_box">
-                    <button class="oe_highlight" help="Atender Paciente." icon="terp-personal" name="doctor.action_patient2attention" string="Atender" type="action" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo,doctor.group_aux_enfermeria" context="{'patient' : patient, 'professional_id' : get_professional_id}"/>
+                    <button class="oe_highlight" help="Atender Paciente." icon="terp-personal" name="doctor.action_patient2attention" string="Atender" type="action" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo" context="{'patient' : patient, 'professional_id' : get_professional_id}"/>
                   </div>
 
                   <field class="oe_left oe_avatar" name="photo"  options="{&quot;size&quot;: [170, 150]}" widget="image" nolabel="1"/>
@@ -256,6 +256,8 @@
         <field name="view_mode">form</field>
         <field name="context">{'default_patient_id': active_id, 'default_sent_from_button' : True}</field>
     </record>
+
+
 
     <!-- schedule Form View -->
     <record model="ir.ui.view" id="view_doctor_schedule_form">
@@ -441,6 +443,8 @@
 
                     <separator/>
                     <filter string="Today" name="appointment_today" domain="[('appointment_today','=',True)]" help="Appointmemnt today"/>
+
+                    <filter string="Próximas Citas" name="next_appointment" domain="[('time_begin','&gt;=', (context_today()).strftime('%%Y-%%m-%%d'))]" help="Próximas Citas"/>
 
                     <separator/>
                     <filter string="Actives" name="appointment_actives" domain="[('state','!=','cancel')]" help="Appointmemnt actives"/>
@@ -835,7 +839,7 @@
                             </field>
                         </page>
                     </notebook>
-                    <notebook colspan="4" col='4' groups="doctor.group_doctor_physician,doctor.group_aux_enfermeria"> 
+                    <notebook colspan="4" col='4' groups="doctor.group_doctor_physician"> 
                         <page string="Vital signs">
                             <group colspan='4' col='3'>
                                 <fieldset class="fieldset_margen">
@@ -1480,6 +1484,7 @@
                     <field name="administration_route"/>
                     <field name="pharmaceutical_form"/>
                     <field name="drugs_concentration"/>
+                    <field name="indication_drug"/>
                 </group>
             </form>
         </field>
@@ -1496,6 +1501,7 @@
                 <field name="administration_route"/>
                 <field name="pharmaceutical_form"/>
                 <field name="drugs_concentration"/>
+                <field name="indication_drug"/>
             </tree>
         </field>
     </record>
