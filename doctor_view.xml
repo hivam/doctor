@@ -997,13 +997,13 @@
                             <separator string="Diagnostic images" colspan="4"/>
                             <field name="diagnostic_images_ids" colspan="4" nolabel="1">
                                 <tree string="Diagnostic images" editable="bottom">
-                                    <field name="procedures_id" domain="[('procedure_type', '=', 3)]"/>
+                                    <field name="procedures_id" domain="[('procedure_type', '=', 3)]" context="{'diagnostic_images':'1'}"/>
                                     <field name="quantity"/>
                                     <field name="indications"/>
                                 </tree>
                                 <form string="Diagnostic images">
                                     <group>
-                                        <field name="procedures_id" domain="[('procedure_type', '=', 3)]"/>
+                                        <field name="procedures_id" domain="[('procedure_type', '=', 3)]" context="{'diagnostic_images':'1'}"/>
                                         <field name="quantity"/>
                                         <field name="indications"/>
                                     </group>
@@ -1012,13 +1012,13 @@
                             <separator string="Clinical laboratory" colspan="4"/>
                             <field name="clinical_laboratory_ids" colspan="4" nolabel="1">
                                 <tree string="Clinical laboratory" editable="bottom">
-                                    <field name="procedures_id" domain="[('procedure_type', '=', 4)]"/>
+                                    <field name="procedures_id" domain="[('procedure_type', '=', 4)]" context="{'clinical_laboratory':'1'}"/>
                                     <field name="quantity"/>
                                     <field name="indications"/>
                                 </tree>
                                 <form string="Clinical laboratory">
                                     <group>
-                                        <field name="procedures_id" domain="[('procedure_type', '=', 4)]"/>
+                                        <field name="procedures_id" domain="[('procedure_type', '=', 4)]" context="{'clinical_laboratory':'1'}"/>
                                         <field name="quantity"/>
                                         <field name="indications"/>
                                     </group>
@@ -1141,7 +1141,7 @@
     </record>
 
     <!-- attentions Menu -->
-    <menuitem name="Attentions" id="menu_doctor_attentions" action="doctor.action_doctor_attentions" parent="menu_doctor_process" sequence="40" />
+    <menuitem name="Attentions" id="menu_doctor_attentions" action="doctor.action_doctor_attentions" parent="menu_doctor_process" sequence="40"/>
 
 <!-- Review sistems categories -->
         <record id="view_doctor_systems_category_form" model="ir.ui.view">
