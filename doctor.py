@@ -176,18 +176,6 @@ class doctor_schedule(osv.osv):
         return False
 
 
-    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
-        
-        res = super(doctor_schedule, self).fields_view_get(cr, uid, view_id=view_id, view_type=view_type, context=context, toolbar=toolbar, submenu=submenu)
-        doc = etree.XML(res['arch'])
-        for node in doc.xpath("//field[@name='appointment_ids']"):
-            dominio=[('state','!=','cancel'),]
-            node.set('domain', repr(dominio))
-            res['arch'] = etree.tostring(doc)
-        _logger.info(res)
-                
-        return res
-
     _defaults = {
         'professional_id': _get_professional_id if _get_professional_id != False else False,
         'schedule_duration': 4,
