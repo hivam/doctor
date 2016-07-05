@@ -36,6 +36,33 @@
         <field name="view_mode">tree,form</field>
     </record>
 
+        <!-- doctor disability Form View -->
+    <record model="ir.ui.view" id="view_doctor_attentions_disability_form">
+        <field name="name">Incapacidad</field>
+        <field name="model">doctor.attentions.disability</field>
+        <field name="arch" type="xml">
+            <form string="Incapacidad" version="7.0">
+                <group>
+                    <field name="disability_ids"/>
+                    <field name="duration" string= "Duración (en días)"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- doctor disability Form View -->
+    <record model="ir.ui.view" id="view_doctor_attentions_disability_tree">
+        <field name="name">Incapacidad</field>
+        <field name="model">doctor.attentions.disability</field>
+        <field name="arch" type="xml">
+            <tree string="Incapacidad" version="7.0" editable="bottom">
+                    <field name="disability_ids"/>
+                    <field name="duration" string= "Duración (en días)"/>
+            </tree>
+        </field>
+    </record>
+
     <!-- doctor Menu -->
     <menuitem id="menu_doctor" name="Doctor" />
     <menuitem id="menu_doctor_config" name="Doctor Configuration" parent="menu_doctor" sequence="20"/>
@@ -1093,18 +1120,7 @@
                             </field>
 
                             <separator string="Disability" colspan="4"/>
-                            <field name="disability_ids" colspan="4" nolabel="1">
-                                <tree string="Disability" editable="bottom">
-                                    <field name="disability_ids"/>
-                                    <field name="duration" string= "Duration (in days)"/>
-                                </tree>
-                                <form string="Disability">
-                                    <group>
-                                        <field name="disability_ids"/>
-                                        <field name="duration" string= "Duration (in days)"/>
-                                    </group>
-                                </form>
-                            </field>
+                            <field name="disability_ids" colspan="4" nolabel="1"/>
                         </page>
                     </notebook>
                 </group>

@@ -26,6 +26,7 @@ from openerp.tools.translate import _
 import openerp.addons.decimal_precision as dp
 from pytz import timezone
 import pytz
+from lxml import etree
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -122,7 +123,7 @@ class doctor_schedule(osv.osv):
         'schedule_duration': fields.float('Duration (in hours)', required=True),
         'date_end': fields.datetime('End date', required=True),
         'patients_count': fields.function(_get_register, string='Number of patients', multi='register_numbers'),
-        'appointment_ids': fields.one2many('doctor.appointment', 'schedule_id', 'Appointments'),
+        'appointment_ids': fields.one2many('doctor.appointment', 'schedule_id', 'Appointments', domain=[('state', '!=', 'cancel')]),
     }
 
     def _check_schedule(self, cr, uid, ids):
@@ -174,10 +175,14 @@ class doctor_schedule(osv.osv):
             return self.pool.get('doctor.professional').browse(cr, uid, doctor)[0].id
         return False
 
+
     _defaults = {
         'professional_id': _get_professional_id if _get_professional_id != False else False,
         'schedule_duration': 4,
     }
+
+
+
 
 
 doctor_schedule()
