@@ -44,16 +44,15 @@ class doctor_insurer(osv.osv):
         'code': fields.char('Code', size=6, required=True),
     }
 
-#    def name_get(self, cr, uid, ids, context={}):
-#        if not len(ids):
-#            return []
-#        rec_name = 'insurer'
-#        res = [(r['id'], r[rec_name][1])
-#               for r in self.read(cr, uid, ids, [rec_name], context)]
-#        return res
+    def name_get(self, cr, uid, ids, context={}):
+        if not len(ids):
+            return []
+        rec_name = 'insurer'
+        res = [(r['id'], r[rec_name][1])
+               for r in self.read(cr, uid, ids, [rec_name], context)]
+        return res
 
-    #_sql_constraints = [('code_uniq', 'unique (code)', 'The insurer code must be unique')]
-
+    _sql_constraints = [('code_uniq', 'unique (code)', 'The insurer code must be unique')]
 
 doctor_insurer()
 
