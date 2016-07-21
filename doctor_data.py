@@ -21,7 +21,8 @@
 
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-
+import logging
+_logger = logging.getLogger(__name__)
 
 class doctor_speciality(osv.osv):
     _name = "doctor.speciality"
@@ -48,8 +49,10 @@ class doctor_insurer(osv.osv):
         if not len(ids):
             return []
         rec_name = 'insurer'
-        res = [(r['id'], r[rec_name][1])
-               for r in self.read(cr, uid, ids, [rec_name], context)]
+        if type(rec_name) != 'bool':
+
+            res = [(r['id'], r[rec_name][1])
+                   for r in self.read(cr, uid, ids, [rec_name], context)]
         return res
 
     _sql_constraints = [('code_uniq', 'unique (code)', 'The insurer code must be unique')]
