@@ -741,7 +741,7 @@
 
                     <separator string="Health records" colspan="4" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo"/>
                     
-                        <notebook>
+                        <notebook colspan="4" col='4' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
                             <page string="Anamnesis">
                                     <notebook colspan="4" col='4' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
                                         <page string="Motivo de Consulta y Enfermedad Actual">
