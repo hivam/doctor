@@ -33,7 +33,6 @@ class doctor_speciality(osv.osv):
 
 	_sql_constraints = [('code_uniq', 'unique (code)', 'The Medical Speciality code must be unique')]
 
-
 doctor_speciality()
 
 
