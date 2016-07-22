@@ -740,389 +740,424 @@
                     </group>
 
                     <separator string="Health records" colspan="4" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo"/>
+                    
+                        <notebook>
+                            <page string="Anamnesis">
+                                    <notebook colspan="4" col='4' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
+                                        <page string="Motivo de Consulta y Enfermedad Actual">
+                                            <group colspan="2" col='1' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
+                                                <label for="reason_consultation" string="Reason consultation"/>
+                                                <field name='reason_consultation' nolabel="1" placeholder="Reason consultation" widget="many2many_tags" />
+                                            </group>
 
-                    <group colspan="2" col='1' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
-                        <label for="reason_consultation" string="Reason consultation"/>
-                        <field name='reason_consultation' nolabel="1" placeholder="Reason consultation" widget="many2many_tags" />
-                    </group>
-                    <group colspan="2" col='1' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
-                        <label for="actual_disease" string="Actual disease" groups="doctor.group_doctor_physician"/>
-                        <label for="actual_disease" string="Historia Actual" groups="doctor.group_doctor_psicologo"/>
-                        <field name='actual_disease' nolabel="1" placeholder="Actual_disease"/>
-                    </group>                    
-                    <notebook colspan="2" col='2' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
-                        <page string="Review systems">
-                            <field name="review_systems_id" nolabel="1">
-                                <tree string="Review systems" editable="top">
-                                    <field name="system_category"/>
-                                    <field name="review_systems"/>
-                                </tree>
-                                <form string="Review systems">
-                                    <group>
-                                        <field name="system_category"/>
-                                        <field name="review_systems"/>
-                                    </group>
-                                </form>
-                            </field>
-                        </page>
-                    </notebook>
-                    <notebook colspan="2" col='2' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
-                        <page string="Past">
-                            <field name="past_ids" nolabel="1" readonly="1" context="{'patient_id' : patient_id}">
-                                <tree string="Past" editable="top">
-                                    <field name="attentiont_id" invisible="True" domain="[('attentiont_id', '&lt;', active_id)]"/>
-                                    <field name="patient_id" invisible="True"/>
-                                    <field name="past_category"/>
-                                    <field name="past"/>
-                                </tree>
-                                <form string="Past">
-                                    <group>
-                                        <field name="attentiont_id" invisible="True" domain="[('attentiont_id', '&lt;', active_id)]"/>
-                                        <field name="patient_id" invisible="True"/>
-                                        <field name="past_category"/>
-                                        <field name="past"/>
-                                    </group>
-                                </form>
-                            </field>
-                        </page>
-                        <page string="Add Past">
-                            <field name="attentions_past_ids" nolabel="1" context="{'patient_id' : patient_id}">
-                                <tree string="Add Past" editable="top">
-                                    <field name="patient_id" invisible="True"/>
-                                    <field name="past_category"/>
-                                    <field name="past"/>
-                                </tree>
-                                <form string="Add Past">
-                                    <group>
-                                        <field name="patient_id" invisible="True"/>
-                                        <field name="past_category"/>
-                                        <field name="past"/>
-                                    </group>
-                                </form>
-                            </field>
-                        </page>
-                    </notebook>
-                    <notebook colspan="2" col='2' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
-                        <page string="Pathological past">
-                            <field name="pathological_past_ids" nolabel="1" readonly="1" context="{'patient_id' : patient_id}">
-                                <tree string="Pathological past" editable="top">
-                                    <field name="attentiont_id" invisible="True" domain="[('attentiont_id', '&lt;', active_id)]"/>
-                                    <field name="patient_id" invisible="True"/>
-                                    <field name="diseases_id"/>
-                                </tree>
-                                <form string="Pathological past">
-                                    <group>
-                                        <field name="attentiont_id" invisible="True" domain="[('attentiont_id', '&lt;', active_id)]"/>
-                                        <field name="patient_id" invisible="True"/>
-                                        <field name="diseases_id"/>
-                                    </group>
-                                </form>
-                            </field>
-                        </page>
-                        <page string="Add past">
-                            <field name="pathological_past" nolabel="1" context="{'patient_id' : patient_id}">
-                                <tree string="Add Past" editable="top">
-                                    <field name="patient_id" invisible="True"/>
-                                    <field name="diseases_id"/>
-                                </tree>
-                                <form string="Add Past">
-                                    <group>
-                                        <field name="patient_id" invisible="True"/>
-                                        <field name="diseases_id"/>
-                                    </group>
-                                </form>
-                            </field>
-                        </page>
-                    </notebook>
-                    <notebook colspan="2" col='2' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
-                        <page string="Drugs past">
-                            <field name="drugs_past_ids" nolabel="1" readonly="1" context="{'patient_id' : patient_id}">
-                                <tree string="Drugs past" editable="top">
-                                    <field name="attentiont_id" invisible="True" domain="[('attentiont_id', '&lt;', active_id)]"/>
-                                    <field name="patient_id" invisible="True"/>
-                                    <field name="atc_id"/>
-                                </tree>
-                                <form string="Drugs past">
-                                    <group>
-                                        <field name="attentiont_id" invisible="True" domain="[('attentiont_id', '&lt;', active_id)]"/>
-                                        <field name="patient_id" invisible="True"/>
-                                        <field name="atc_id"/>
-                                    </group>
-                                </form>
-                            </field>
-                        </page>
-                        <page string="Add Past">
-                            <field name="drugs_past" nolabel="1" context="{'patient_id' : patient_id}">
-                                <tree string="Add Past" editable="top">
-                                    <field name="patient_id" invisible="True"/>
-                                    <field name="atc_id"/>
-                                </tree>
-                                <form string="Add Past">
-                                    <group>
-                                        <field name="patient_id" invisible="True"/>
-                                        <field name="atc_id"/>
-                                    </group>
-                                </form>
-                            </field>
-                        </page>
-                    </notebook>
-                    <notebook colspan="4" col='4' groups="doctor.group_doctor_physician"> 
-                        <page string="Vital signs">
-                            <group colspan='4' col='3'>
-                                <fieldset class="fieldset_margen">
-                                <legend class="texto_legend">Height and weight</legend>
-                                    <group >
-                                        <label for="weight" string="Weight (kg)"/>
-                                        <field name='weight' nolabel='1' style="width:5%%"/>
-                                        <label for="height" string="Height (cm)"/>
-                                        <field name='height' nolabel='1' style="width:5%%"/>
-                                        <label for="body_mass_index" string="Body mass"/>
-                                        <field name='body_mass_index' nolabel='1' style="width:5%%"/>
-                                    </group>
-                                </fieldset>
-                                <fieldset class="fieldset_margen">
-                                <legend class="texto_legend">Vital signs</legend>
-                                    <group >
-                                        <label for="heart_rate" string="Heart rate"/>
-                                        <field name='heart_rate' nolabel='1' style="width:5%%"/>
-                                        <label for="respiratory_rate" string="Respiratory"/>
-                                        <field name='respiratory_rate' nolabel='1' style="width:5%%"/>
-                                    </group>
-                                </fieldset>
-                                <fieldset class="fieldset_margen">
-                                <legend class="texto_legend">Blood pressure</legend>
-                                    <group>
-                                        <label for="systolic" string="Systolic"/>
-                                        <field name='systolic' nolabel='1' style="width:5%%"/>
-                                        <label for="diastolic" string="Diastolic"/>
-                                        <field name='diastolic' nolabel='1' style="width:5%%"/>
-                                    </group>
-                                </fieldset>
-                                <fieldset class="fieldset_margen">
-                                <legend class="texto_legend">Temperature</legend>
-                                    <group >
-                                        <label for="temperature" string="Temperature"/>
-                                        <field name='temperature' nolabel='1' style="width:5%%"/>
-                                    </group>
-                                </fieldset>
-                                <fieldset class="fieldset_margen">
-                                <legend class="texto_legend">SpO2</legend>
-                                    <group >
-                                        <label for="pulsioximetry" string="Pulsioximetry"/>
-                                        <field name='pulsioximetry' nolabel='1' style="width:5%%"/>
-                                    </group>
-                                </fieldset>
-                            </group>
-                        </page>
-                        <page string="Exam">
-                            <field name="attentions_exam_ids" nolabel="1">
-                                <tree string="Exam" editable="top">
-                                    <field name="exam_category"/>
-                                    <field name="exam"/>
-                                </tree>
-                                <form string="Exam">
-                                    <group>
-                                        <field name="exam_category"/>
-                                        <field name="exam"/>
-                                    </group>
-                                </form>
-                            </field>
-                        </page>
-                    </notebook>
-                    <group colspan="2" col='1' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
-                        <label for="analysis" string="Analysis"/>
-                        <field name='analysis' nolabel="1" placeholder="Analysis" />
-                    </group>
-                    <group colspan="2" col='1' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo" id="group_conduct">
-                        <label for="conduct" string="Conduct" groups="doctor.group_doctor_physician"/>
-                        <label for="conduct" string="Conducta(Plan de manejo)" groups="doctor.group_doctor_psicologo"/>
-                        <field name='conduct' nolabel="1" placeholder="Conduct" />
-                    </group>
-                    <notebook colspan="4" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
-                        <page string="Diseases" >
-                            <field name="diseases_ids" colspan="4" nolabel="1">
-                                <tree string="Diseases" editable="bottom">
-                                    <field name="diseases_id" />
-                                    <field name="status"/>
-                                    <field name="diseases_type"/>
-                                </tree>
-                                <form string="Diseases">
-                                    <group>
-                                        <field name="diseases_id"/>
-                                        <field name="status"/>
-                                        <field name="diseases_type"/>
-                                    </group>
-                                </form>
-                            </field>
-                        </page>
-                        <page string="Drugs prescription" >
-                            <field name="drugs_ids" colspan="4" nolabel="1" groups="doctor.group_doctor_physician">
-                                <tree string="Drugs prescription">
-                                    <field name="drugs_id"/>
-                                    <field name="total_quantity"/>
-                                    <field name="measuring_unit_qt" string="Measuring unit"/>
-                                    <field name="administration_route_id" string="Route"/>
-                                </tree>
-                                <form string="Drugs prescription">
-                                    <group>
-                                        <group>
-                                            <group colspan='3' col='2'>
-                                                <field name="drugs_id" />
-                                            </group>
-                                            <group colspan='3' col='3'>
-                                                <div>
-                                                    <label for="total_quantity" string="Total quantity"/>
-                                                    <field name="total_quantity" style="width:15%%"/>
-                                                    <field name="measuring_unit_qt" nolabel='1' style="width:30%%"/>
-                                                </div>
-                                            </group>
-                                        </group>
-                                        <separator string="Normal prescription" colspan="4"/>
-                                        <group >
-                                            <group colspan='3' col='3'>
-                                                <div>
-                                                    <field name="action_id" nolabel='1' style="width:25%%"/>
-                                                    <field name="quantity" nolabel='1' style="width:15%%"/>
-                                                    <field name="measuring_unit_q" nolabel='1' style="width:25%%"/>
-                                                </div>
-                                            </group>
-                                            <group colspan='3' col='6'>
-                                                <div>
-                                                    <label for="frequency" string="Each"/>
-                                                    <field name="frequency" string="Each" style="width:15%%"/>
-                                                    <field name="frequency_unit_n" nolabel='1' style="width:15%%"/>
-                                                    <label for="duration" string="During"/>
-                                                    <field name="duration" string="During" style="width:15%%"/>
-                                                    <field name="duration_period_n" nolabel='1' style="width:15%%"/>
-                                                </div>
-                                            </group>
-                                            <group>
-                                                <div>
-                                                    <label for="administration_route_id" string="Route"/>
-                                                    <field name="administration_route_id" string="Route" style="width:35%%"/>
-                                                </div>
-                                            </group>
-                                        </group>
-                                        <separator string="Technical prescription" colspan="4"/>
-                                        <group>
-                                            <group colspan='3' col='3'>
-                                                <div>
-                                                    <label for="dose" string="Dose"/>
-                                                    <field name="dose" style="width:15%%"/>
-                                                    <field name="dose_unit_id" nolabel='1' style="width:25%%"/>
-                                                </div>
-                                            </group>
-                                            <group>
-                                                <field name="indications"/>
-                                            </group>
-                                        </group>
-                                    </group>
-                                </form>
-                            </field>
-                        </page>
-                        <page string="Diagnostic support" groups="doctor.group_doctor_physician">
-                            <separator string="Diagnostic images" colspan="4"/>
-                            <field name="diagnostic_images_ids" colspan="4" nolabel="1">
-                                <tree string="Diagnostic images" editable="bottom">
-                                    <field name="procedures_id" domain="[('procedure_type', '=', 3)]" context="{'diagnostic_images':'1'}"/>
-                                    <field name="quantity"/>
-                                    <field name="indications"/>
-                                </tree>
-                                <form string="Diagnostic images">
-                                    <group>
-                                        <field name="procedures_id" domain="[('procedure_type', '=', 3)]" context="{'diagnostic_images':'1'}"/>
-                                        <field name="quantity"/>
-                                        <field name="indications"/>
-                                    </group>
-                                </form>
-                            </field>
-                            <separator string="Clinical laboratory" colspan="4"/>
-                            <field name="clinical_laboratory_ids" colspan="4" nolabel="1">
-                                <tree string="Clinical laboratory" editable="bottom">
-                                    <field name="procedures_id" domain="[('procedure_type', '=', 4)]" context="{'clinical_laboratory':'1'}"/>
-                                    <field name="quantity"/>
-                                    <field name="indications"/>
-                                </tree>
-                                <form string="Clinical laboratory">
-                                    <group>
-                                        <field name="procedures_id" domain="[('procedure_type', '=', 4)]" context="{'clinical_laboratory':'1'}"/>
-                                        <field name="quantity"/>
-                                        <field name="indications"/>
-                                    </group>
-                                </form>
-                            </field>
-                        </page>
-                        <page string="Surgical" groups="doctor.group_doctor_physician">
-                            <field name="surgical_procedure_ids" colspan="4" nolabel="1">
-                                <tree string="Surgical procedure" editable="bottom">
-                                    <field name="procedures_id" domain="[('procedure_type', '=', 2)]"/>
-                                    <field name="quantity"/>
-                                    <field name="indications"/>
-                                </tree>
-                                <form string="Surgical procedure">
-                                    <group>
-                                        <field name="procedures_id" domain="[('procedure_type', '=', 2)]"/>
-                                        <field name="quantity"/>
-                                        <field name="indications"/>
-                                    </group>
-                                </form>
-                            </field>
-                        </page>
-                        <page string="Therapeutic" groups="doctor.group_doctor_physician">
-                            <field name="therapeutic_procedure_ids" colspan="4" nolabel="1">
-                                <tree string="Therapeutic procedure" editable="bottom">
-                                    <field name="procedures_id" domain="[('procedure_type', '=', 5)]"/>
-                                    <field name="quantity"/>
-                                    <field name="indications"/>
-                                </tree>
-                                <form string="Therapeutic procedure">
-                                    <group>
-                                        <field name="procedures_id" domain="[('procedure_type', '=', 5)]"/>
-                                        <field name="quantity"/>
-                                        <field name="indications"/>
-                                    </group>
-                                </form>
-                            </field>
-                        </page>
-                        <page string="Other procedures" groups="doctor.group_doctor_physician">
-                            <field name="other_procedure_ids" colspan="4" nolabel="1">
-                                <tree string="Other procedures" editable="bottom">
-                                    <field name="procedures_id" domain="['|',('procedure_type', '=', 1), '|', ('procedure_type', '=', 6), ('procedure_type', '=', 7)]"/>
-                                    <field name="quantity"/>
-                                    <field name="indications"/>
-                                </tree>
-                                <form string="Other procedures">
-                                    <group>
-                                        <field name="procedures_id" domain="['|',('procedure_type', '=', 1), '|', ('procedure_type', '=', 6), ('procedure_type', '=', 7)]"/>
-                                        <field name="quantity"/>
-                                        <field name="indications"/>
-                                    </group>
-                                </form>
-                            </field>
-                        </page>
-                        <page string="Others" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo" >
-                            <separator string="Referral and interconsultation" colspan="4"/>
-                            <field name="referral_ids" colspan="4" nolabel="1">
-                                <tree string="Referral" >
-                                    <field name="referral_ids"/>
-                                    <field name="speciality_id"/>
-                                    <field name="interconsultation" />
-                                    <field name="cause"/>
-                                </tree>
-                                <form string="Referral">
-                                    <group>
-                                        <field name="referral_ids"/>
-                                        <field name="speciality_id"/>
-                                        <field name="interconsultation" />
-                                        <field name="cause"/>
-                                    </group>
-                                </form>
-                            </field>
+                                            <group colspan="2" col='1' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
+                                                <label for="actual_disease" string="Actual disease" groups="doctor.group_doctor_physician"/>
+                                                <label for="actual_disease" string="Historia Actual" groups="doctor.group_doctor_psicologo"/>
+                                                <field name='actual_disease' nolabel="1" placeholder="Actual_disease"/>
+                                            </group> 
+                                        </page>
 
-                            <separator string="Disability" colspan="4"/>
-                            <field name="disability_ids" colspan="4" nolabel="1"/>
-                        </page>
-                    </notebook>
+                                        <page string="Revisión por Sistemas">
+                                            <field name="review_systems_id" nolabel="1">
+                                                <tree string="Review systems" editable="top">
+                                                    <field name="system_category"/>
+                                                    <field name="review_systems"/>
+                                                </tree>
+                                                <form string="Review systems">
+                                                    <group>
+                                                        <field name="system_category"/>
+                                                        <field name="review_systems"/>
+                                                    </group>
+                                                </form>
+                                            </field>
+                                        </page>
+
+                                        <page string="Antecedentes">
+                                            <notebook>
+                                                <page string="Past">
+                                                    <field name="past_ids" nolabel="1" readonly="1" context="{'patient_id' : patient_id}">
+                                                        <tree string="Past" editable="top">
+                                                            <field name="attentiont_id" invisible="True" domain="[('attentiont_id', '&lt;', active_id)]"/>
+                                                            <field name="patient_id" invisible="True"/>
+                                                            <field name="past_category"/>
+                                                            <field name="past"/>
+                                                        </tree>
+                                                        <form string="Past">
+                                                            <group>
+                                                                <field name="attentiont_id" invisible="True" domain="[('attentiont_id', '&lt;', active_id)]"/>
+                                                                <field name="patient_id" invisible="True"/>
+                                                                <field name="past_category"/>
+                                                                <field name="past"/>
+                                                            </group>
+                                                        </form>
+                                                    </field>
+                                                </page>
+
+                                                <page string="Add Past">
+                                                    <field name="attentions_past_ids" nolabel="1" context="{'patient_id' : patient_id}">
+                                                        <tree string="Add Past" editable="top">
+                                                            <field name="patient_id" invisible="True"/>
+                                                            <field name="past_category"/>
+                                                            <field name="past"/>
+                                                        </tree>
+                                                        <form string="Add Past">
+                                                            <group>
+                                                                <field name="patient_id" invisible="True"/>
+                                                                <field name="past_category"/>
+                                                                <field name="past"/>
+                                                            </group>
+                                                        </form>
+                                                    </field>
+                                                </page>
+                                            </notebook>
+                                            <page string="Antecedentes Patológicos y Farmacológicos">
+                                                <notebook colspan="2" col="4" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
+                                                    <page string="Pathological past">
+                                                        <field name="pathological_past_ids" nolabel="1" readonly="1" context="{'patient_id' : patient_id}">
+                                                            <tree string="Pathological past" editable="top">
+                                                                <field name="attentiont_id" invisible="True" domain="[('attentiont_id', '&lt;', active_id)]"/>
+                                                                <field name="patient_id" invisible="True"/>
+                                                                <field name="diseases_id"/>
+                                                            </tree>
+                                                            <form string="Pathological past">
+                                                                <group>
+                                                                    <field name="attentiont_id" invisible="True" domain="[('attentiont_id', '&lt;', active_id)]"/>
+                                                                    <field name="patient_id" invisible="True"/>
+                                                                    <field name="diseases_id"/>
+                                                                </group>
+                                                            </form>
+                                                        </field>
+                                                    </page>
+                                                    <page string="Add past">
+                                                        <field name="pathological_past" nolabel="1" context="{'patient_id' : patient_id}">
+                                                            <tree string="Add Past" editable="top">
+                                                                <field name="patient_id" invisible="True"/>
+                                                                <field name="diseases_id"/>
+                                                            </tree>
+                                                            <form string="Add Past">
+                                                                <group>
+                                                                    <field name="patient_id" invisible="True"/>
+                                                                    <field name="diseases_id"/>
+                                                                </group>
+                                                            </form>
+                                                        </field>
+                                                    </page>
+                                                </notebook>
+
+
+                                                <notebook colspan="4" col="2" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
+                                                    <page string="Drugs past">
+                                                        <field name="drugs_past_ids" nolabel="1" readonly="1" context="{'patient_id' : patient_id}">
+                                                            <tree string="Drugs past" editable="top">
+                                                                <field name="attentiont_id" invisible="True" domain="[('attentiont_id', '&lt;', active_id)]"/>
+                                                                <field name="patient_id" invisible="True"/>
+                                                                <field name="atc_id"/>
+                                                            </tree>
+                                                            <form string="Drugs past">
+                                                                <group>
+                                                                    <field name="attentiont_id" invisible="True" domain="[('attentiont_id', '&lt;', active_id)]"/>
+                                                                    <field name="patient_id" invisible="True"/>
+                                                                    <field name="atc_id"/>
+                                                                </group>
+                                                            </form>
+                                                        </field>
+                                                    </page>
+                                                    <page string="Add Past">
+                                                        <field name="drugs_past" nolabel="1" context="{'patient_id' : patient_id}">
+                                                            <tree string="Add Past" editable="top">
+                                                                <field name="patient_id" invisible="True"/>
+                                                                <field name="atc_id"/>
+                                                            </tree>
+                                                            <form string="Add Past">
+                                                                <group>
+                                                                    <field name="patient_id" invisible="True"/>
+                                                                    <field name="atc_id"/>
+                                                                </group>
+                                                            </form>
+                                                        </field>
+                                                    </page>
+                                                </notebook>
+                                            </page>
+                                        </page>
+                                    </notebook>
+                                
+                            </page>
+
+                            <page string="Examen Físico">
+                                <notebook colspan="4" col='4' groups="doctor.group_doctor_physician"> 
+                                    <page string="Vital signs">
+                                        <group colspan='4' col='3'>
+                                            <fieldset class="fieldset_margen">
+                                            <legend class="texto_legend">Height and weight</legend>
+                                                <group >
+                                                    <label for="weight" string="Weight (kg)"/>
+                                                    <field name='weight' nolabel='1' style="width:5%%"/>
+                                                    <label for="height" string="Height (cm)"/>
+                                                    <field name='height' nolabel='1' style="width:5%%"/>
+                                                    <label for="body_mass_index" string="Body mass"/>
+                                                    <field name='body_mass_index' nolabel='1' style="width:5%%"/>
+                                                </group>
+                                            </fieldset>
+                                            <fieldset class="fieldset_margen">
+                                            <legend class="texto_legend">Vital signs</legend>
+                                                <group >
+                                                    <label for="heart_rate" string="Heart rate"/>
+                                                    <field name='heart_rate' nolabel='1' style="width:5%%"/>
+                                                    <label for="respiratory_rate" string="Respiratory"/>
+                                                    <field name='respiratory_rate' nolabel='1' style="width:5%%"/>
+                                                </group>
+                                            </fieldset>
+                                            <fieldset class="fieldset_margen">
+                                            <legend class="texto_legend">Blood pressure</legend>
+                                                <group>
+                                                    <label for="systolic" string="Systolic"/>
+                                                    <field name='systolic' nolabel='1' style="width:5%%"/>
+                                                    <label for="diastolic" string="Diastolic"/>
+                                                    <field name='diastolic' nolabel='1' style="width:5%%"/>
+                                                </group>
+                                            </fieldset>
+                                            <fieldset class="fieldset_margen">
+                                            <legend class="texto_legend">Temperature</legend>
+                                                <group >
+                                                    <label for="temperature" string="Temperature"/>
+                                                    <field name='temperature' nolabel='1' style="width:5%%"/>
+                                                </group>
+                                            </fieldset>
+                                            <fieldset class="fieldset_margen">
+                                            <legend class="texto_legend">SpO2</legend>
+                                                <group >
+                                                    <label for="pulsioximetry" string="Pulsioximetry"/>
+                                                    <field name='pulsioximetry' nolabel='1' style="width:5%%"/>
+                                                </group>
+                                            </fieldset>
+                                        </group>
+                                    </page>
+                                    <page string="Exam">
+                                        <field name="attentions_exam_ids" nolabel="1">
+                                            <tree string="Exam" editable="top">
+                                                <field name="exam_category"/>
+                                                <field name="exam"/>
+                                            </tree>
+                                            <form string="Exam">
+                                                <group>
+                                                    <field name="exam_category"/>
+                                                    <field name="exam"/>
+                                                </group>
+                                            </form>
+                                        </field>
+                                    </page>
+                                </notebook>
+                            </page>
+
+
+                            <page string="Análisis y Conducta">
+                                <group colspan='4' col='4'>
+                                    
+                                        <group colspan="2" col='1' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
+                                            <label for="analysis" string="Analysis"/>
+                                            <field name='analysis' nolabel="1" placeholder="Analysis" />
+                                        </group>
+                                    
+                                    <group colspan="2" col='1' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo" id="group_conduct">
+                                        <label for="conduct" string="Conduct" groups="doctor.group_doctor_physician"/>
+                                        <label for="conduct" string="Conducta(Plan de manejo)" groups="doctor.group_doctor_psicologo"/>
+                                        <field name='conduct' nolabel="1" placeholder="Conduct" />
+                                    </group>
+
+                                </group>
+                            </page>
+
+
+                            <page string="Prescripción y Solicitudes">
+                                <group colspan='4' col='4'>
+
+                                    <notebook colspan="4" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
+                                        <page string="Diseases" >
+                                            <field name="diseases_ids" colspan="4" nolabel="1">
+                                                <tree string="Diseases" editable="bottom">
+                                                    <field name="diseases_id" />
+                                                    <field name="status"/>
+                                                    <field name="diseases_type"/>
+                                                </tree>
+                                                <form string="Diseases">
+                                                    <group>
+                                                        <field name="diseases_id"/>
+                                                        <field name="status"/>
+                                                        <field name="diseases_type"/>
+                                                    </group>
+                                                </form>
+                                            </field>
+                                        </page>
+                                        <page string="Drugs prescription" >
+                                            <field name="drugs_ids" colspan="4" nolabel="1" groups="doctor.group_doctor_physician">
+                                                <tree string="Drugs prescription">
+                                                    <field name="drugs_id"/>
+                                                    <field name="total_quantity"/>
+                                                    <field name="measuring_unit_qt" string="Measuring unit"/>
+                                                    <field name="administration_route_id" string="Route"/>
+                                                </tree>
+                                                <form string="Drugs prescription">
+                                                    <group>
+                                                        <group>
+                                                            <group colspan='3' col='2'>
+                                                                <field name="drugs_id" />
+                                                            </group>
+                                                            <group colspan='3' col='3'>
+                                                                <div>
+                                                                    <label for="total_quantity" string="Total quantity"/>
+                                                                    <field name="total_quantity" style="width:15%%"/>
+                                                                    <field name="measuring_unit_qt" nolabel='1' style="width:30%%"/>
+                                                                </div>
+                                                            </group>
+                                                        </group>
+                                                        <separator string="Normal prescription" colspan="4"/>
+                                                        <group >
+                                                            <group colspan='3' col='3'>
+                                                                <div>
+                                                                    <field name="action_id" nolabel='1' style="width:25%%"/>
+                                                                    <field name="quantity" nolabel='1' style="width:15%%"/>
+                                                                    <field name="measuring_unit_q" nolabel='1' style="width:25%%"/>
+                                                                </div>
+                                                            </group>
+                                                            <group colspan='3' col='6'>
+                                                                <div>
+                                                                    <label for="frequency" string="Each"/>
+                                                                    <field name="frequency" string="Each" style="width:15%%"/>
+                                                                    <field name="frequency_unit_n" nolabel='1' style="width:15%%"/>
+                                                                    <label for="duration" string="During"/>
+                                                                    <field name="duration" string="During" style="width:15%%"/>
+                                                                    <field name="duration_period_n" nolabel='1' style="width:15%%"/>
+                                                                </div>
+                                                            </group>
+                                                            <group>
+                                                                <div>
+                                                                    <label for="administration_route_id" string="Route"/>
+                                                                    <field name="administration_route_id" string="Route" style="width:35%%"/>
+                                                                </div>
+                                                            </group>
+                                                        </group>
+                                                        <separator string="Technical prescription" colspan="4"/>
+                                                        <group>
+                                                            <group colspan='3' col='3'>
+                                                                <div>
+                                                                    <label for="dose" string="Dose"/>
+                                                                    <field name="dose" style="width:15%%"/>
+                                                                    <field name="dose_unit_id" nolabel='1' style="width:25%%"/>
+                                                                </div>
+                                                            </group>
+                                                            <group>
+                                                                <field name="indications"/>
+                                                            </group>
+                                                        </group>
+                                                    </group>
+                                                </form>
+                                            </field>
+                                        </page>
+                                        <page string="Diagnostic support" groups="doctor.group_doctor_physician">
+                                            <separator string="Diagnostic images" colspan="4"/>
+                                            <field name="diagnostic_images_ids" colspan="4" nolabel="1">
+                                                <tree string="Diagnostic images" editable="bottom">
+                                                    <field name="procedures_id" domain="[('procedure_type', '=', 3)]" context="{'diagnostic_images':'1'}"/>
+                                                    <field name="quantity"/>
+                                                    <field name="indications"/>
+                                                </tree>
+                                                <form string="Diagnostic images">
+                                                    <group>
+                                                        <field name="procedures_id" domain="[('procedure_type', '=', 3)]" context="{'diagnostic_images':'1'}"/>
+                                                        <field name="quantity"/>
+                                                        <field name="indications"/>
+                                                    </group>
+                                                </form>
+                                            </field>
+                                            <separator string="Clinical laboratory" colspan="4"/>
+                                            <field name="clinical_laboratory_ids" colspan="4" nolabel="1">
+                                                <tree string="Clinical laboratory" editable="bottom">
+                                                    <field name="procedures_id" domain="[('procedure_type', '=', 4)]" context="{'clinical_laboratory':'1'}"/>
+                                                    <field name="quantity"/>
+                                                    <field name="indications"/>
+                                                </tree>
+                                                <form string="Clinical laboratory">
+                                                    <group>
+                                                        <field name="procedures_id" domain="[('procedure_type', '=', 4)]" context="{'clinical_laboratory':'1'}"/>
+                                                        <field name="quantity"/>
+                                                        <field name="indications"/>
+                                                    </group>
+                                                </form>
+                                            </field>
+                                        </page>
+                                        <page string="Surgical" groups="doctor.group_doctor_physician">
+                                            <field name="surgical_procedure_ids" colspan="4" nolabel="1">
+                                                <tree string="Surgical procedure" editable="bottom">
+                                                    <field name="procedures_id" domain="[('procedure_type', '=', 2)]"/>
+                                                    <field name="quantity"/>
+                                                    <field name="indications"/>
+                                                </tree>
+                                                <form string="Surgical procedure">
+                                                    <group>
+                                                        <field name="procedures_id" domain="[('procedure_type', '=', 2)]"/>
+                                                        <field name="quantity"/>
+                                                        <field name="indications"/>
+                                                    </group>
+                                                </form>
+                                            </field>
+                                        </page>
+                                        <page string="Therapeutic" groups="doctor.group_doctor_physician">
+                                            <field name="therapeutic_procedure_ids" colspan="4" nolabel="1">
+                                                <tree string="Therapeutic procedure" editable="bottom">
+                                                    <field name="procedures_id" domain="[('procedure_type', '=', 5)]"/>
+                                                    <field name="quantity"/>
+                                                    <field name="indications"/>
+                                                </tree>
+                                                <form string="Therapeutic procedure">
+                                                    <group>
+                                                        <field name="procedures_id" domain="[('procedure_type', '=', 5)]"/>
+                                                        <field name="quantity"/>
+                                                        <field name="indications"/>
+                                                    </group>
+                                                </form>
+                                            </field>
+                                        </page>
+                                        <page string="Other procedures" groups="doctor.group_doctor_physician">
+                                            <field name="other_procedure_ids" colspan="4" nolabel="1">
+                                                <tree string="Other procedures" editable="bottom">
+                                                    <field name="procedures_id" domain="['|',('procedure_type', '=', 1), '|', ('procedure_type', '=', 6), ('procedure_type', '=', 7)]"/>
+                                                    <field name="quantity"/>
+                                                    <field name="indications"/>
+                                                </tree>
+                                                <form string="Other procedures">
+                                                    <group>
+                                                        <field name="procedures_id" domain="['|',('procedure_type', '=', 1), '|', ('procedure_type', '=', 6), ('procedure_type', '=', 7)]"/>
+                                                        <field name="quantity"/>
+                                                        <field name="indications"/>
+                                                    </group>
+                                                </form>
+                                            </field>
+                                        </page>
+                                        <page string="Others" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo" >
+                                            <separator string="Referral and interconsultation" colspan="4"/>
+                                            <field name="referral_ids" colspan="4" nolabel="1">
+                                                <tree string="Referral" >
+                                                    <field name="referral_ids"/>
+                                                    <field name="speciality_id"/>
+                                                    <field name="interconsultation" />
+                                                    <field name="cause"/>
+                                                </tree>
+                                                <form string="Referral">
+                                                    <group>
+                                                        <field name="referral_ids"/>
+                                                        <field name="speciality_id"/>
+                                                        <field name="interconsultation" />
+                                                        <field name="cause"/>
+                                                    </group>
+                                                </form>
+                                            </field>
+                                            <separator string="Disability" colspan="4"/>
+                                            <field name="disability_ids" colspan="4" nolabel="1"/>
+                                        </page>
+                                    </notebook>
+                                </group>
+                            </page>
+                        </notebook>
                 </group>
             </form>
         </field>
