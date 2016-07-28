@@ -83,3 +83,12 @@
   margin-left:15px;
 
 }
+
+.openerp .oe_notebook > li.ui-tabs-active > a {
+  color: #7c7bad;
+  font-size: 14px;
+  font-weight: bold;
+  position: relative;
+}
+
+

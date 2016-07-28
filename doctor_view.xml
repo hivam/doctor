@@ -746,8 +746,8 @@
                                     <notebook colspan="4" col='4' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
                                         <page string="Motivo de Consulta y Enfermedad Actual">
                                             <group colspan="2" col='1' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
-                                                <label for="reason_consultation" string="Reason consultation"/>
-                                                <field name='reason_consultation' nolabel="1" placeholder="Reason consultation" widget="many2many_tags" />
+                                                <label for="reason_consultation" string="Reason consultation" invisible="True"/>
+                                                <field name='reason_consultation' nolabel="1" placeholder="Reason consultation" widget="many2many_tags" invisible="True"/>
                                             </group>
 
                                             <group colspan="2" col='1' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
@@ -949,6 +949,10 @@
                                 </notebook>
                             </page>
 
+                            <page string="Paraclínicos">
+                                <group colspan="2" col='2' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo" id="group_paraclinical">
+                                </group>
+                            </page>
 
                             <page string="Análisis y Conducta">
                                 <group colspan='4' col='4'>
