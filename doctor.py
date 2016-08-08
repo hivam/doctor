@@ -212,10 +212,14 @@ class doctor_diseases(osv.osv):
     def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=100):
         args = args or []
         ids = []
+        odontologia = context.get('odontologia')
+
         if name:
             ids = self.search(cr, uid, [('code', 'ilike', name)] + args, limit=limit, context=context)
             if not ids:
                 ids = self.search(cr, uid, [('name', operator, name)] + args, limit=limit, context=context)
+        elif odontologia:
+            ids = self.search(cr, uid, [('code','>=','k000'),('code','<=','K149')], limit=limit, context=context)
         else:
             ids = self.search(cr, uid, args, limit=limit, context=context)
         return self.name_get(cr, uid, ids, context)
