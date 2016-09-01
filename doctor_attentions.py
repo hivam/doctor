@@ -201,16 +201,6 @@ class doctor_attentions(osv.osv):
         })
         return {'value': values}
 
-    def _get_professional_id(self, cr, uid, user_id):
-        try:
-            professional_id= self.pool.get('doctor.professional').browse(cr, uid, self.pool.get('doctor.professional').search(cr, uid, [( 'user_id','=', uid)]))[0].id
-            _logger.info("--PROFESSIONAL ID------")
-            _logger.info(professional_id)
-            return professional_id
-        except Exception as e:
-            raise osv.except_osv(_('Error!'),
-                                 _('El usuario del sistema no es profesional de la salud.'))
-
 
     def calcular_edad(self,fecha_nacimiento):
         current_date = datetime.today()
@@ -257,9 +247,8 @@ class doctor_attentions(osv.osv):
         try:
             professional_id= self.pool.get('doctor.professional').browse(cr, uid, self.pool.get('doctor.professional').search(cr, uid, [( 'user_id',  '=', uid)]))[0].id
             return professional_id
-        except Exception as e:
-            raise osv.except_osv(_('Error!'),
-                                 _('El usuario del sistema no es profesional de la salud.'))
+        except:
+            return False
 
     def default_get(self, cr, uid, fields, context=None):
         res = super(doctor_attentions,self).default_get(cr, uid, fields, context=context)
@@ -317,7 +306,7 @@ class doctor_attentions(osv.osv):
     _defaults = {
         'patient_id': lambda self, cr, uid, context: context.get('patient_id', False),
         'date_attention': lambda *a: datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S"),
-        'professional_id': _get_professional_id,
+        'professional_id': _get_professional_id if _get_professional_id != False else False,
         'state': 'open',
     }
 
