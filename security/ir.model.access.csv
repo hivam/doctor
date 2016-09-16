@@ -160,6 +160,11 @@ restriction_doctor_appointment_procedures_od,doctor.appointment.procedures_physi
 restriction_doctor_insurer_od,doctor.insurer_physician,model_doctor_insurer,doctor.group_doctor_inactivo,1,0,0,0
 restriction_doctor_pharmaceutical_form_od,doctor.pharmaceutical.form_physician,model_doctor_pharmaceutical_form,doctor.group_doctor_odontologo,1,1,1,0
 restriction_doctor_attentions_od,doctor.attentions,model_doctor_attentions,doctor.group_doctor_odontologo,1,1,1,0
+access_doctor_dose_unit_od,doctor.dose.unit_physician,model_doctor_dose_unit,doctor.group_doctor_odontologo1,1,1,0
+access_doctor_drugs_od,doctor.drugs_physician,model_doctor_drugs,doctor.group_doctor_odontologo,1,1,1,0
+access_doctor_exam_category_od,doctor.exam.category,model_doctor_exam_category,doctor.group_doctor_odontologo,1,1,1,0
+access_doctor_measuring_unit_od,doctor.measuring.unit,model_doctor_measuring_unit,doctor.group_doctor_odontologo,1,1,1,0
+access_doctor_past_category_od,doctor.past.category,model_doctor_past_category,doctor.group_doctor_odontologo,1,1,1,0
 
 
 
