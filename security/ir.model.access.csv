@@ -147,6 +147,7 @@ restriction_doctor_pharmaceutical_form_physician,doctor.pharmaceutical.form_phys
 
 access_doctor_attentions_past_od,doctor.attentions.past,model_doctor_attentions_past,doctor.group_doctor_odontologo,1,1,1,0
 access_doctor_diseases_past_od,doctor.diseases.past,model_doctor_diseases_past,doctor.group_doctor_odontologo,1,1,1,0
+access_doctor_attentions_diseases_od,doctor.attentions.diseases,model_doctor_attentions_diseases,doctor.group_doctor_odontologo,1,1,1,0
 access_doctor_atc_past_od,doctor.atc.past,model_doctor_atc_past,doctor.group_doctor_odontologo,1,1,1,0
 restriction_doctor_patient_od,doctor.patient_physician,model_doctor_patient,doctor.group_doctor_odontologo,1,1,1,0
 restriction_doctor_prescription_od,doctor.prescription,model_doctor_prescription,doctor.group_doctor_odontologo,1,1,1,0
