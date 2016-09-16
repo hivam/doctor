@@ -603,7 +603,7 @@
                                     </ul>
                                     <button string="Assists" name="button_assists" type="object" class="oe_highlight" groups="doctor.group_doctor_assistant" attrs="{'invisible':['|','|',('appointment_today','!=',True),('attended','=',True),('state','!=','confirm')]}" confirm="Patient in waiting room?">Assist</button>
                                     
-                                    <button string="Attend" name="generate_attentiont" type="object" class="oe_highlight" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo" attrs="{'invisible':['|','|',('attended','=',True),('state','=','draft'),('appointment_today','!=',True)]}"  confirm="Patient in waiting room?" >Attend</button>
+                                    <button string="Attend" name="generate_attentiont" type="object" class="oe_highlight" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo,doctor.group_doctor_odontologo" attrs="{'invisible':['|','|',('attended','=',True),('state','=','draft'),('appointment_today','!=',True)]}"  confirm="Patient in waiting room?" >Attend</button>
 
                                 </div>
 
@@ -1187,7 +1187,7 @@
 
     <!-- attentions Action -->
     <record model="ir.actions.act_window" id="action_doctor_attentions">
-        <field name="name">Attentions</field>
+        <field name="name">Attentions</field>f
         <field name="res_model">doctor.attentions</field>
         <field name="view_type">form</field>
         <field name="domain"></field>
