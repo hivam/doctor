@@ -1187,7 +1187,7 @@
 
     <!-- attentions Action -->
     <record model="ir.actions.act_window" id="action_doctor_attentions">
-        <field name="name">Attentions</field>f
+        <field name="name">Attentions</field>
         <field name="res_model">doctor.attentions</field>
         <field name="view_type">form</field>
         <field name="domain"></field>
