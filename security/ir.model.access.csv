@@ -163,6 +163,7 @@ restriction_doctor_attentions_od,doctor.attentions,model_doctor_attentions,docto
 access_doctor_dose_unit_od,doctor.dose.unit_physician,model_doctor_dose_unit,doctor.group_doctor_odontologo,1,1,1,0
 access_doctor_drugs_od,doctor.drugs_physician,model_doctor_drugs,doctor.group_doctor_odontologo,1,1,1,0
 access_doctor_exam_category_od,doctor.exam.category,model_doctor_exam_category,doctor.group_doctor_odontologo,1,1,1,0
+restriction_doctor_attentions_exam_od,doctor.attentions.exam,model_doctor_attentions_exam,doctor.group_doctor_odontologo,1,1,1,0
 access_doctor_measuring_unit_od,doctor.measuring.unit,model_doctor_measuring_unit,doctor.group_doctor_odontologo,1,1,1,0
 access_doctor_past_category_od,doctor.past.category,model_doctor_past_category,doctor.group_doctor_odontologo,1,1,1,0
 
