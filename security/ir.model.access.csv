@@ -145,7 +145,7 @@ restriction_doctor_insurer_physician,doctor.insurer_physician,model_doctor_insur
 restriction_doctor_pharmaceutical_form_physician,doctor.pharmaceutical.form_physician,model_doctor_pharmaceutical_form,doctor.group_doctor_inactivo,1,0,0,0
 
 
-
+access_doctor_attentions_past_od,doctor.attentions.past,model_doctor_attentions_past,doctor.group_doctor_odontologo,1,1,1,0
 
 
 
