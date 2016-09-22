@@ -574,7 +574,7 @@ class doctor_health_procedures(osv.osv):
         'procedure_type': fields.selection([('1', 'Consultation'), ('2', 'Surgical Procedure'),
                                             ('3', 'Diagnostic Image'), ('4', 'Clinical laboratory'),
                                             ('5', 'Therapeutic Procedure'), ('6', 'Hospitalization'),
-                                            ('7', 'Other')], 'Procedure Type'),
+                                            ('7', 'Odontological'), ('8', 'Other')], 'Procedure Type'),
         'professional_ids': fields.many2many('doctor.professional', id1='procedures_ids', id2='professional_ids',
                                              string='My health procedures', required=False, ondelete='restrict'),
     }

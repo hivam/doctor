@@ -211,6 +211,12 @@ msgid "Surgical Procedure"
 msgstr "Quirúrgicos"
 
 #. module: doctor
+#: field:doctor.attentions,surgical_procedure_ids:0
+#: selection:product.product,procedure_type:0
+msgid "Odontological"
+msgstr "Odontológico"
+
+#. module: doctor
 #: field:doctor.attentions,respiratory_rate:0
 msgid "Respiratory Rate"
 msgstr "Frecuencia respiratoria"
