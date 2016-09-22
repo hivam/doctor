@@ -752,7 +752,7 @@
 
                                             <group colspan="2" col='1'>
                                                 <label for="actual_disease" string="Actual disease"/>
-                                                <label for="actual_disease" string="Historia Actual"/>
+                                                <!--<label for="actual_disease" string="Historia Actual"/>-->
                                                 <field name='actual_disease' nolabel="1" placeholder="Actual_disease"/>
                                             </group> 
                                         </page>
