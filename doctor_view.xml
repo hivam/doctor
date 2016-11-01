@@ -741,11 +741,11 @@
 
                     <separator string="Health records" colspan="4" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo"/>
                     
-                        <notebook colspan="4" col='4' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
+                        <notebook colspan="4" col='4'>
                             <page string="Anamnesis">
-                                    <notebook colspan="4" col='4' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
+                                    <notebook colspan="4" col='4'>
                                         <page string="Motivo de Consulta y Enfermedad Actual">
-                                            <group colspan="2" col='1' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
+                                            <group colspan="2" col='1'>
                                                 <label for="reason_consultation" string="Reason consultation" invisible="True"/>
                                                 <field name='reason_consultation' nolabel="1" placeholder="Reason consultation" widget="many2many_tags" invisible="True"/>
                                             </group>
@@ -753,7 +753,7 @@
                                             <group colspan="2" col='1'>
                                                 <label for="actual_disease" string="Actual disease"/>
                                         
-                                                <field name='actual_disease' nolabel="1" placeholder="Actual_disease" groups="doctor.group_doctor_physician"/>
+                                                <field name='actual_disease' nolabel="1" placeholder="Actual_disease"/>
                                                
                                             </group> 
                                         </page>
