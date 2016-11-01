@@ -750,11 +750,11 @@
                                                 <field name='reason_consultation' nolabel="1" placeholder="Reason consultation" widget="many2many_tags" invisible="True"/>
                                             </group>
 
-                                            <group colspan="2" col='1' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
-                                                <label for="actual_disease" string="Actual disease" groups="doctor.group_doctor_physician"/>
-                                                <label for="actual_disease" string="Historia Actual" groups="doctor.group_doctor_psicologo"/>
+                                            <group colspan="2" col='1'>
+                                                <label for="actual_disease" string="Actual disease"/>
+                                        
                                                 <field name='actual_disease' nolabel="1" placeholder="Actual_disease" groups="doctor.group_doctor_physician"/>
-                                                <field name='actual_disease' nolabel="1" placeholder="Historia Actual" groups="doctor.group_doctor_psicologo"/>
+                                               
                                             </group> 
                                         </page>
 
