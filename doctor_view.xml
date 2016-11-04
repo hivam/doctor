@@ -739,7 +739,7 @@
                         <field name="origin"/>
                     </group>
 
-                    <separator string="Health records" colspan="4"/>
+                    <separator string="Health records" colspan="4" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo"/>
                     
                         <notebook colspan="4" col='4'>
                             <page string="Anamnesis">
@@ -752,8 +752,9 @@
 
                                             <group colspan="2" col='1'>
                                                 <label for="actual_disease" string="Actual disease"/>
-                                                <!--<label for="actual_disease" string="Historia Actual"/>-->
+                                        
                                                 <field name='actual_disease' nolabel="1" placeholder="Actual_disease"/>
+                                               
                                             </group> 
                                         </page>
 
@@ -811,7 +812,7 @@
                                                 </page>
                                             </notebook>
                                             <page string="Antecedentes Patológicos y Farmacológicos">
-                                                <notebook colspan="2" col="4">
+                                                <notebook colspan="2" col="4" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
                                                     <page string="Pathological past">
                                                         <field name="pathological_past_ids" nolabel="1" readonly="1" context="{'patient_id' : patient_id}">
                                                             <tree string="Pathological past" editable="top">
@@ -845,7 +846,7 @@
                                                 </notebook>
 
 
-                                                <notebook colspan="4" col="2">
+                                                <notebook colspan="4" col="2" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
                                                     <page string="Drugs past">
                                                         <field name="drugs_past_ids" nolabel="1" readonly="1" context="{'patient_id' : patient_id}">
                                                             <tree string="Drugs past" editable="top">
@@ -883,7 +884,7 @@
                                 
                             </page>
 
-                            <page string="Examen Físico">
+                            <page string="Examen Físico" groups="doctor.group_doctor_physician">
                                 <notebook colspan="4" col='4'> 
                                     <page string="Vital signs">
                                         <group colspan='4' col='3'>
@@ -949,7 +950,7 @@
                                 </notebook>
                             </page>
 
-                            <page string="Paraclínicos" >
+                            <page string="Paraclínicos" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
                                 <group colspan="2" col='2' id="group_paraclinical">
                                 </group>
                             </page>
@@ -957,12 +958,12 @@
                             <page string="Análisis y Conducta">
                                 <group colspan='4' col='4'>
                                     
-                                        <group colspan="2" col='1'>
+                                        <group colspan="2" col='1' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
                                             <label for="analysis" string="Analysis"/>
                                             <field name='analysis' nolabel="1" placeholder="Analysis" />
                                         </group>
                                     
-                                    <group colspan="2" col='1' id="group_conduct">
+                                    <group colspan="2" col='1' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo" id="group_conduct">
                                         <label for="conduct" string="Conduct"/>
                                         <label for="conduct" string="Conducta(Plan de manejo)" groups="doctor.group_doctor_physician, doctor.group_doctor_psicologo, doctor.group_doctor_assistant, doctor.group_doctor_configuration"/>
                                         <field name='conduct' nolabel="1" placeholder="Conduct" />
@@ -975,7 +976,7 @@
                             <page string="Prescripción y Solicitudes">
                                 <group colspan='4' col='4'>
 
-                                    <notebook colspan="4">
+                                    <notebook colspan="4" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
                                         <page string="Diseases" >
                                             <field name="diseases_ids" colspan="4" nolabel="1">
                                                 <tree string="Diseases" editable="bottom">
@@ -993,7 +994,7 @@
                                             </field>
                                         </page>
                                         <page string="Drugs prescription" >
-                                            <field name="drugs_ids" colspan="4" nolabel="1">
+                                            <field name="drugs_ids" colspan="4" nolabel="1" groups="doctor.group_doctor_physician">
                                                 <tree string="Drugs prescription">
                                                     <field name="drugs_id"/>
                                                     <field name="total_quantity"/>
@@ -1057,7 +1058,7 @@
                                                 </form>
                                             </field>
                                         </page>
-                                        <page string="Diagnostic support">
+                                        <page string="Diagnostic support" groups="doctor.group_doctor_physician">
                                             <separator string="Diagnostic images" colspan="4"/>
                                             <field name="diagnostic_images_ids" colspan="4" nolabel="1">
                                                 <tree string="Diagnostic images" editable="bottom">
@@ -1089,7 +1090,7 @@
                                                 </form>
                                             </field>
                                         </page>
-                                        <page string="Surgical">
+                                        <page string="Surgical" groups="doctor.group_doctor_physician">
                                             <field name="surgical_procedure_ids" colspan="4" nolabel="1">
                                                 <tree string="Surgical procedure" editable="bottom">
                                                     <field name="procedures_id" domain="[('procedure_type', '=', 2)]"/>
@@ -1105,7 +1106,7 @@
                                                 </form>
                                             </field>
                                         </page>
-                                        <page string="Therapeutic">
+                                        <page string="Therapeutic" groups="doctor.group_doctor_physician">
                                             <field name="therapeutic_procedure_ids" colspan="4" nolabel="1">
                                                 <tree string="Therapeutic procedure" editable="bottom">
                                                     <field name="procedures_id" domain="[('procedure_type', '=', 5)]"/>
@@ -1121,7 +1122,7 @@
                                                 </form>
                                             </field>
                                         </page>
-                                        <page string="Other procedures">
+                                        <page string="Other procedures" groups="doctor.group_doctor_physician">
                                             <field name="other_procedure_ids" colspan="4" nolabel="1">
                                                 <tree string="Other procedures" editable="bottom">
                                                     <field name="procedures_id" domain="['|',('procedure_type', '=', 1), '|', ('procedure_type', '=', 6), ('procedure_type', '=', 7)]"/>
@@ -1137,7 +1138,7 @@
                                                 </form>
                                             </field>
                                         </page>
-                                        <page string="Others" >
+                                        <page string="Others" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
                                             <separator string="Referral and interconsultation" colspan="4"/>
                                             <field name="referral_ids" colspan="4" nolabel="1">
                                                 <tree string="Referral" >
