@@ -36,8 +36,8 @@ class doctor_attentions(osv.osv):
             vals['number'] = self.pool.get('ir.sequence').get(cr, uid, 'attention.sequence')
         return super(doctor_attentions, self).create(cr, uid, vals, context=context)
 
-    def b_close_attention(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'closed'}, context=context)
+    def button_closed(self, cr, uid, ids, context=None):
+        return super(doctor_attentions, self).write(cr, uid, ids, {'state':'closed'}, context=context)
 
     def _previous(self, cr, uid, patient_id, type_past, attentiont_id=None):
         condition = [('patient_id', '=', patient_id.id)]

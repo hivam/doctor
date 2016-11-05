@@ -690,7 +690,7 @@
                 <separator/>
                 <separator/>
                 <header>
-                    <button string="Finish attention" name="b_close_attention" states="open" type="object" class="oe_highlight"/>
+                    <button string="Finish attention" name="button_closed" states="open" type="object" class="oe_highlight"/>
                     <field name="state" widget="statusbar" statusbar_visible="open,closed"/>
                 </header>
                 <group colspan='4' col='4'>
