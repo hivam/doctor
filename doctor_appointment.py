@@ -144,7 +144,7 @@ class doctor_appointment(osv.osv):
             fecha_hora_actual = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:00")
             fecha_hora_actual = datetime.strptime(fecha_hora_actual, "%Y-%m-%d %H:%M:00")
             fecha_usuario_ini = fecha_hora_actual.strftime('%Y-%m-%d 00:00:00')
-            ids = self.search(cr, uid, [('time_begin', '<', fecha_usuario_ini), ('appointment_today', '<>', False)], context=None)
+            ids = self.search(cr, uid, [('time_begin', '<', fecha_usuario_ini), ('appointment_today', '<>', False), ('state', '<>', 'attending')], context=None)
         return super(doctor_appointment, self).write(cr, uid, ids, {'appointment_today': 'False', 'state': 'cancel'}, context=context)
     
     def _check_appointment(self, cr, uid, ids, context=None):
