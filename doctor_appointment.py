@@ -146,7 +146,9 @@ class doctor_appointment(osv.osv):
 			fecha_usuario_ini = fecha_hora_actual.strftime('%Y-%m-%d 00:00:00')
 			modulo_instalado = self.pool.get('ir.module.module').search(cr,uid,[('name', '=', 'doctor_multiroom'), ('state', '=', 'installed')],context=context)
 			if modulo_instalado:
-				ids = self.search(cr, uid, [('time_begin', '<', fecha_usuario_ini), ('appointment_today', '<>', False), ('state', '<>', 'attending'), ('schedule_id', '>', 0)], context=None)
+				_logger.info("entra si tiene multi room")
+				_logger.info(fecha_usuario_ini)
+				ids = self.search(cr, uid, [('time_begin', '<', fecha_usuario_ini), ('appointment_today', '!=', False), ('attended', '!=', True), ('schedule_id', '>', 0)], context=None)
 				_logger.info("entra si tiene multi room")
 				_logger.info(ids)
 			else:
