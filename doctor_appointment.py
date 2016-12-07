@@ -34,6 +34,7 @@ class doctor_appointment_type(osv.osv):
 	}
 
 
+
 doctor_appointment_type()
 
 
