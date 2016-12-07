@@ -149,6 +149,7 @@ class doctor_appointment(osv.osv):
 				ids = self.search(cr, uid, [('time_begin', '<', fecha_usuario_ini), ('appointment_today', '<>', False), ('state', '<>', 'attending'), ('schedule_id', '<>', None)], context=None)
 			else:
 				ids = self.search(cr, uid, [('time_begin', '<', fecha_usuario_ini), ('appointment_today', '<>', False), ('state', '<>', 'attending')], context=None) 
+		_logger.info(ids)
 		return super(doctor_appointment, self).write(cr, uid, ids, {'appointment_today': 'False', 'state': 'cancel'}, context=context)
 	
 	def _check_appointment(self, cr, uid, ids, context=None):
