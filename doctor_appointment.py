@@ -148,10 +148,10 @@ class doctor_appointment(osv.osv):
 			if modulo_instalado:
 				_logger.info("entra si tiene multi room")
 				_logger.info(fecha_usuario_ini)
-				appointment_ids = self.search(cr, uid, [('time_begin', '<', fecha_usuario_ini), ('schedule_id', '>', 0), '!' ,('appointment_today', '=', False), '!', ('attended', '=', True)], context=None)
+				appointment_ids = self.search(cr, uid, [('time_begin', '<', fecha_usuario_ini), ('schedule_id', '>', 0),  ('appointment_today', '=', True),  ('attended', '<>', True)], context=None)
 				_logger.info(appointment_ids)
 			else:
-				appointment_ids = self.search(cr, uid, [('time_begin', '<', fecha_usuario_ini), ('appointment_today', '<>', False), ('state', '<>', 'attending')], context=None) 
+				appointment_ids = self.search(cr, uid, [('time_begin', '<', fecha_usuario_ini), ('appointment_today', '=', True), ('attended', '<>', True)], context=None) 
 		
 		return super(doctor_appointment, self).write(cr, uid, appointment_ids, {'appointment_today': 'False', 'state': 'cancel'}, context=context)
 	
