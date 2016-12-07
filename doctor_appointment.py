@@ -148,7 +148,7 @@ class doctor_appointment(osv.osv):
 			if modulo_instalado:
 				_logger.info("entra si tiene multi room")
 				_logger.info(fecha_usuario_ini)
-				appointment_ids = self.search(cr, uid, [('time_begin', '<', fecha_usuario_ini), ('schedule_id', 'not in', [0]),  ('appointment_today', '<>', False),  ('attended', '<>', True)], context=None)
+				appointment_ids = self.search(cr, uid, [('time_begin', '<', fecha_usuario_ini), ('schedule_id', 'not in', [0]),    ('attended', '<>', True)], context=None)
 				_logger.info(appointment_ids)
 			else:
 				appointment_ids = self.search(cr, uid, [('time_begin', '<', fecha_usuario_ini), ('appointment_today', '=', True), ('attended', '<>', True)], context=None) 
