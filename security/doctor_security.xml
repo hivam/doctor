@@ -27,8 +27,21 @@
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
+
+    <record id="group_doctor_physician_configuracion" model="res.groups">
+        <field name="name">Doctor configuración</field>
+        <field name="category_id" ref="module_category_profesionales_salud"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
     <record id="group_doctor_odontologo" model="res.groups">
         <field name="name">Odontólogo</field>
+        <field name="category_id" ref="module_category_profesionales_salud"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_doctor_odontologo_configuracion" model="res.groups">
+        <field name="name">Odontólogo configuración</field>
         <field name="category_id" ref="module_category_profesionales_salud"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
@@ -39,8 +52,20 @@
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
+    <record id="group_doctor_psicologo_configuracion" model="res.groups">
+        <field name="name">Psicologo configuración</field>
+        <field name="category_id" ref="module_category_profesionales_salud"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
     <record id="group_aux_enfermeria" model="res.groups">
         <field name="name">Aux. enfermeria</field>
+        <field name="category_id" ref="module_category_profesionales_salud"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_aux_enfermeria_configuracon" model="res.groups">
+        <field name="name">Aux. enfermeria configuracion</field>
         <field name="category_id" ref="module_category_profesionales_salud"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
@@ -60,6 +85,12 @@
 
     <record id="group_doctor_assistant" model="res.groups">
         <field name="name">Assistant</field>
+        <field name="category_id" ref="module_category_doctor"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_sale_manager')), (4, ref('account.group_account_invoice'))]"/>        
+    </record>
+
+    <record id="group_doctor_assistant_configuracion" model="res.groups">
+        <field name="name">Asistente configuración</field>
         <field name="category_id" ref="module_category_doctor"/>
         <field name="implied_ids" eval="[(4, ref('base.group_sale_manager')), (4, ref('account.group_account_invoice'))]"/>        
     </record>
