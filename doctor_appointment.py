@@ -372,7 +372,7 @@ class doctor_appointment(osv.osv):
 		result = data_obj._get_id(cr, uid, 'doctor', 'view_doctor_attentions_form')
 		view_id = data_obj.browse(cr, uid, result).res_id
 		# Return view with attentiont created
-
+		_logger.info(doctor_appointment.type_id.name)
 		return {
 			'view_type': 'form',
 			'view_mode': 'form',

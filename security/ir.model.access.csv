@@ -200,3 +200,9 @@ access_doctor_past_category_od_confi,doctor.past.category,model_doctor_past_cate
 access_doctor_appointment_type_od_confi,doctor.appointment.type,model_doctor_appointment_type,doctor.group_doctor_odontologo_configuracion,1,1,1,0
 access_doctor_atc_od_confi,doctor.atc_physician,model_doctor_atc,doctor.group_doctor_odontologo_configuracion,1,1,1,0
 access_doctor_administration_route_od_confi,doctor.administration.route,model_doctor_administration_route,doctor.group_doctor_odontologo_configuracion,1,1,1,0
+
+
+access_doctor_attentions_past_psicologo,doctor.attentions.past,model_doctor_attentions_past,doctor.group_doctor_psicologo,1,0,0,0
+access_doctor_diseases_past_psicologo,doctor.diseases.past,model_doctor_diseases_past,doctor.group_doctor_psicologo,1,0,0,0
+access_doctor_atc_past_psicologo,doctor.atc.past,model_doctor_atc_past,doctor.group_doctor_psicologo,1,0,0,0
+access_doctor_attentions_psicologia,doctor.attentions,model_doctor_attentions,doctor.group_doctor_psicologo,1,1,1,0
