@@ -643,7 +643,7 @@
         <field name="view_mode">kanban,tree,form</field>
         <field name="auto_refresh" eval="1" />
         <field name="search_view_id" ref="appointmemnt_filter"/>
-        <field name="context">{'search_default_appointment_today': 1, 'search_default_appointment_actives': 1}</field>
+        <field name="context">{'search_default_next_appointment': 1, 'search_default_assists': 1}</field>
     </record>
 
     <!-- appointment update today -->
