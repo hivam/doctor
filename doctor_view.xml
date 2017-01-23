@@ -1216,13 +1216,13 @@
 
             <filter domain="[('state','=','open')]" help="" name="Atenciones Abiertas" string="Atenciones Abiertas"/>                        
             <filter domain="[('state','=','closed')]" help="" name="Atenciones Cerradas" string="Atenciones Cerradas"/>
-                        
+                   
             <group expand="0" string= "Agrupar Por...">
             
             <filter string="Professional" domain="[]" context="{'group_by' : 'professional_id'}" />
                         
             <separator/>
-                                
+                 
             <filter string="Atenciones Meses" domain="[]" context="{'group_by' : 'date_attention'}" />
             </group>
 
