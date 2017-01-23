@@ -1188,6 +1188,54 @@
         </field>
     </record>
 
+<!--attentions Search View -->
+    <record id="attentions_search_view" model="ir.ui.view">
+    <field name="name">Attentions</field>
+    <field name="model">doctor.attentions</field>
+    <field name="arch" type="xml">
+        <search string="Search Attentions" version="7.0">
+            <field name="patient_id"/>
+            <field name="professional_id"/>
+            <field name="speciality"/>
+            <field name="diseases_ids"/>
+            <field name="date_attention"/>
+            
+            <filter domain="[('tipo_historia','=','hc_general')]" name="tipohistoria_filter" string="At. General"/>
+                        
+            <filter domain="[('date_attention','&gt;=',((context_today()-datetime.timedelta(days=1)).strftime('%%Y-%%m-%%d'))),('date_attention','&lt;=' , (context_today()-datetime.timedelta(days=1)).strftime('%%Y-%%m-%%d'))]" help="Atenciones del dia de ayer." name="Atenciones Ayer" string="Atenciones Ayer"/>                        
+            <filter domain="[('date_attention','&lt;=',time.strftime('%%Y-%%m-%%d 23:59:59')),('date_attention','&gt;=',time.strftime('%%Y-%%m-%%d 00:00:00'))]" help="Atenciones del dia de hoy." name="Atenciones Hoy" string="Atenciones Hoy" />                        
+            <filter domain="[('date_attention','&gt;=',((context_today()-datetime.timedelta(days=1)).strftime('%%Y-%%m-%%d'))),('date_attention','&lt;=' , (context_today()-datetime.timedelta(days=1)).strftime('%%Y-%%m-%%d'))]" help="Atenciones del dia de ayer." name="Atenciones Ayer" string="Atenciones Ayer"/>                        
+            <filter domain="[('date_attention','&lt;=',time.strftime('%%Y-%%m-%%d 23:59:59')),('date_attention','&gt;=',time.strftime('%%Y-%%m-%%d 00:00:00'))]" help="Atenciones del dia de hoy." name="Atenciones Hoy" string="Atenciones Hoy" />
+                        
+            <filter domain="[('date_attention','&gt;=',(context_today()-relativedelta(months=1)).strftime('%%Y-%%m-01')),('date_attention','&lt;',time.strftime('%%Y-%%m-01'))]" help="Atenciones del mes anterior." name="Atenciones mes pasado" string="Atenciones Mes pasado"/>                        
+                        
+            <separator/>
+                        
+            <filter domain="[('date_attention','&lt;=',(context_today()+relativedelta(day=31)).strftime('%%Y-%%m-%%d')),('date_attention','&gt;=',(context_today()-relativedelta(day=1)).strftime('%%Y-%%m-%%d'))]" help="Atenciones programadas para este mes." name="Atenciones mes actual" string="Atenciones Este Mes"/>                        
+                        
+            <separator/>
+
+            <filter domain="[('status','=','open')]" help="" name="Atenciones Abiertas" string="Atenciones Abiertas"/>                        
+            <filter domain="[('status','=','closed')]" help="" name="Atenciones Cerradas" string="Atenciones Cerradas"/>
+                        
+            <group expand="0" string= "Agrupar Por...">
+            
+            <filter string="Professional" domain="[]" context="{'group_by' : 'professional_id'}" />
+                        
+            <separator/>
+
+            <filter string="Atenciones Hoy"
+                name="atenciones_hoy"
+                domain="[('date_attention','&gt;=', (context_today()).strftime('%%m-%%d-%%Y 00:00:00')),('date_attention','&lt;=',(context_today()).strftime('%%m-%%d-%%Y 23:59:59'))]" help="Dia Actual"/>
+                                
+            <filter string="Atenciones Meses" domain="[]" context="{'group_by' : 'date_attention'}" />
+            </group>
+
+            </search>
+        </field>
+    </record>
+
+
     <!-- attentions Action -->
     <record model="ir.actions.act_window" id="action_doctor_attentions">
         <field name="name">Attentions</field>
@@ -1195,7 +1243,7 @@
         <field name="view_type">form</field>
         <field name="domain"></field>
         <field name="view_mode">tree,form</field>
-        <field name="context">{}</field>
+        <field name="context">{"search_default_tipohistoria_filter":1}</field>
     </record>
 
     <!-- attentions Menu -->
