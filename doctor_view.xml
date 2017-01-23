@@ -1199,10 +1199,12 @@
             <field name="diseases_ids"/>
             <field name="date_attention"/>
             
-            <filter domain="[('attention_type','=','hc_general')]" name="tipohistoria_filter" string="At. General"/>
+            <filter domain="[('tipo_historia','=','hc_general')]" name="tipohistoria_filter" string="At. General"/>
                         
             <filter domain="[('date_attention','&gt;=',((context_today()-datetime.timedelta(days=1)).strftime('%%Y-%%m-%%d'))),('date_attention','&lt;=' , (context_today()-datetime.timedelta(days=1)).strftime('%%Y-%%m-%%d'))]" help="Atenciones del dia de ayer." name="Atenciones Ayer" string="Atenciones Ayer"/>                        
             <filter domain="[('date_attention','&lt;=',time.strftime('%%Y-%%m-%%d 23:59:59')),('date_attention','&gt;=',time.strftime('%%Y-%%m-%%d 00:00:00'))]" help="Atenciones del dia de hoy." name="Atenciones Hoy" string="Atenciones Hoy" />                        
+            <filter domain="[('date_attention','&gt;=',((context_today()-datetime.timedelta(days=1)).strftime('%%Y-%%m-%%d'))),('date_attention','&lt;=' , (context_today()-datetime.timedelta(days=1)).strftime('%%Y-%%m-%%d'))]" help="Atenciones del dia de ayer." name="Atenciones Ayer" string="Atenciones Ayer"/>                        
+            <filter domain="[('date_attention','&lt;=',time.strftime('%%Y-%%m-%%d 23:59:59')),('date_attention','&gt;=',time.strftime('%%Y-%%m-%%d 00:00:00'))]" help="Atenciones del dia de hoy." name="Atenciones Hoy" string="Atenciones Hoy" />
                         
             <filter domain="[('date_attention','&gt;=',(context_today()-relativedelta(months=1)).strftime('%%Y-%%m-01')),('date_attention','&lt;',time.strftime('%%Y-%%m-01'))]" help="Atenciones del mes anterior." name="Atenciones mes pasado" string="Atenciones Mes pasado"/>                        
                         
@@ -1212,8 +1214,8 @@
                         
             <separator/>
 
-            <filter domain="[('state','=','open')]" help="" name="Atenciones Abiertas" string="Atenciones Abiertas"/>                        
-            <filter domain="[('state','=','closed')]" help="" name="Atenciones Cerradas" string="Atenciones Cerradas"/>
+            <filter domain="[('status','=','open')]" help="" name="Atenciones Abiertas" string="Atenciones Abiertas"/>                        
+            <filter domain="[('status','=','closed')]" help="" name="Atenciones Cerradas" string="Atenciones Cerradas"/>
                         
             <group expand="0" string= "Agrupar Por...">
             
@@ -1253,6 +1255,7 @@
     <field name="view_mode">form</field>
     <field name="view_id" ref="view_doctor_attentions_form"/>
     <field name="act_window_id" ref="action_doctor_attentions"/>
+
     </record>
 
     <!-- attentions Menu -->
