@@ -151,6 +151,10 @@ class doctor_attentions(osv.osv):
                                                      'Therapeutic Procedure', ondelete='restrict',
                                                      states={'closed': [('readonly', True)]},
                                                      domain=[('procedures_id.procedure_type', '=', 5)]),
+
+        'attention_type' : fields.text(u'Tipo de historia', 
+                                                    help='permite diferenciar el tipo de historia que se está guardando. Ejemplo: psicologia, gral, riesgo biológico ...'),
+        
         'other_procedure_ids': fields.one2many('doctor.attentions.procedures', 'attentiont_id', 'Other Procedure',
                                                ondelete='restrict', states={'closed': [('readonly', True)]},
                                                domain=['|', ('procedures_id.procedure_type', '=', 1), '|',
