@@ -152,6 +152,7 @@ class doctor_patient(osv.osv):
 
 			u['name'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
 			u['display_name'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
+			u['is_company'] = True
 			vals['nombre'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
 
 
@@ -183,7 +184,7 @@ class doctor_patient(osv.osv):
 			else:
 				u['middlename'] = ' '
 
-		_logger.info(u)
+		
 		self.pool.get('res.partner').write(cr, uid, partner_id.id, u, context=context)
 		return super(doctor_patient, self).write(cr, uid, ids, vals, context=context)
 
