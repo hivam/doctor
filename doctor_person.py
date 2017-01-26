@@ -153,38 +153,48 @@ class doctor_patient(osv.osv):
 			u['name'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
 			u['display_name'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
 			u['is_company'] = True
+
 			vals['nombre'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
 
 
-			if(type(firstname) is unicode):
-				u['firtsname'] =  unicodedata.normalize('NFKD', firstname).encode('ASCII', 'ignore').upper()
-			elif(type(firstname) is str):
-				u['firtsname'] =  firstname.upper()
-			else:
-				u['firtsname'] =  ' '
+			if 'ref' in vals:
 
-			if(type(lastname) is unicode):	
-				u['lastname'] = unicodedata.normalize('NFKD', lastname).encode('ASCII', 'ignore').upper()
-			elif(type(lastname) is str):
-				u['lastname'] = lastname.upper()
-			else:
-				u['lastname'] = ' ' 
+				u['ref'] = vals['ref']
 
-			if(type(surname) is unicode):	
-				u['surname'] = unicodedata.normalize('NFKD', surname).encode('ASCII', 'ignore').upper()
-			elif(type(surname) is str) :
-				u['surname'] = surname.upper()
-			else:
-				u['surname'] = ' '
+			if 'firstname' in vals:
+				if(type(firstname) is unicode):
+					u['firtsname'] =  unicodedata.normalize('NFKD', firstname).encode('ASCII', 'ignore').upper()
+				elif(type(firstname) is str):
+					u['firtsname'] =  firstname.upper()
+				else:
+					u['firtsname'] =  ' '
 
-			if(type(middlename) is unicode):	
-				u['middlename'] = unicodedata.normalize('NFKD', middlename).encode('ASCII', 'ignore').upper()
-			elif(type(middlename) is str):
-				u['middlename'] = middlename.upper()
-			else:
-				u['middlename'] = ' '
+			if 'lastname' in vals:
+				if(type(lastname) is unicode):	
+					u['lastname'] = unicodedata.normalize('NFKD', lastname).encode('ASCII', 'ignore').upper()
+				elif(type(lastname) is str):
+					u['lastname'] = lastname.upper()
+				else:
+					u['lastname'] = ' ' 
 
-		
+			if 'surname' in vals:		
+				if(type(surname) is unicode):	
+					u['surname'] = unicodedata.normalize('NFKD', surname).encode('ASCII', 'ignore').upper()
+				elif(type(surname) is str) :
+					u['surname'] = surname.upper()
+				else:
+					u['surname'] = ' '
+
+			if 	'middlename' in vals:		
+				if(type(middlename) is unicode):	
+					u['middlename'] = unicodedata.normalize('NFKD', middlename).encode('ASCII', 'ignore').upper()
+				elif(type(middlename) is str):
+					u['middlename'] = middlename.upper()
+				else:
+					u['middlename'] = ' '
+
+		_logger.info(vals)
+		_logger.info(u)
 		self.pool.get('res.partner').write(cr, uid, partner_id.id, u, context=context)
 		return super(doctor_patient, self).write(cr, uid, ids, vals, context=context)
 
