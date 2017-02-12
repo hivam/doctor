@@ -37,6 +37,14 @@ class doctor_attentions(osv.osv):
         return super(doctor_attentions, self).create(cr, uid, vals, context=context)
 
     def button_closed(self, cr, uid, ids, context=None):
+        ids_attention_past = self.pool.get('doctor.attentions.past').search(cr, uid, [('attentiont_id', '=', ids), ('past', '=', False)], context=context)
+        self.pool.get('doctor.attentions.past').unlink(cr, uid, ids_attention_past, context)
+        
+        ids_review_system = self.pool.get('doctor.review.systems').search(cr, uid, [('attentiont_id', '=', ids), ('review_systems', '=', False)], context=context)
+        self.pool.get('doctor.review.systems').unlink(cr, uid, ids_review_system, context)
+        
+        ids_examen_fisico = self.pool.get('doctor.attentions.exam').search(cr, uid, [('attentiont_id', '=', ids), ('exam', '=', False)], context=context)
+        self.pool.get('doctor.attentions.exam').unlink(cr, uid, ids_examen_fisico, context)
         return super(doctor_attentions, self).write(cr, uid, ids, {'state':'closed'}, context=context)
 
     def _previous(self, cr, uid, patient_id, type_past, attentiont_id=None):
