@@ -306,11 +306,15 @@
                     <field invisible="1" name="id"/>
                     <group>
                         <button string="Próxima Cita" name="calcular_proxima_cita" type="object" groups="doctor.group_doctor_assistant" class="oe_highlight" attrs="{'invisible': [('id', '=', False)]}"/>
+                        <div align="right">
+                            <button string="Actualizar" name="refresh_espacios" type="object" groups="doctor.group_doctor_assistant" class="oe_highlight" attrs="{'invisible': [('id', '=', False)]}"/>
+                        </div>
                     </group>
+
                     <notebook>
                         <page string="Appointment" >
-                            <field name="appointment_ids" colspan="4" nolabel="1" context="{'schedule_id' : id}">
-                                <tree string="Appointment" create="false" edit="false" delete="false">
+                            <field name="appointment_ids" colspan="4" nolabel="1" context="{'schedule_id' : id}" >
+                                <tree string="Appointment" create="false" edit="true" delete="true" domain="[('cita_eliminada', '=', False)]">
                                     <field name="schedule_id" invisible="True" on_change="onchange_start_time(schedule_id, time_begin)"/>
                                     <field name="patient_id" on_change="onchange_patient(patient_id, insurer_id)"/>
                                     <field name="insurer_id" />
@@ -324,6 +328,7 @@
                                     <button string="Confirm" name="button_confirm" states="draft" type="object" groups="doctor.group_doctor_assistant,doctor.group_doctor_asistente_admin" icon="gtk-apply"/>
                                     <button string="Cancel" name="button_cancel" states="draft,confirm" type="object" groups="doctor.group_doctor_assistant,doctor.group_doctor_asistente_admin" icon="gtk-cancel"/>
                                     <field name="aditional"/>
+                                    <button string="Eliminar" name="button_delete_appointment" type="object" icon="STOCK_UNDELETE" attrs="{'invisible': [('id', '=', False)]}" confirm="¿Esta seguro que desea eliminar esta cita?"/>
                                 </tree>
                             </field>
                         </page>

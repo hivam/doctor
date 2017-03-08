@@ -123,7 +123,7 @@ class doctor_schedule(osv.osv):
         'schedule_duration': fields.float('Duration (in hours)', required=True),
         'date_end': fields.datetime('End date', required=True),
         'patients_count': fields.function(_get_register, string='Number of patients', multi='register_numbers'),
-        'appointment_ids': fields.one2many('doctor.appointment', 'schedule_id', 'Appointments', domain=[('state', '!=', 'cancel')]),
+        'appointment_ids': fields.one2many('doctor.appointment', 'schedule_id', 'Appointments', domain=[('state', '!=', 'cancel'), ('cita_eliminada', '!=', True)]),
     }
 
     def _check_schedule(self, cr, uid, ids):
