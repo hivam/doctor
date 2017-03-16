@@ -437,7 +437,7 @@ msgstr "Incapacidad"
 #. module: doctor
 #: field:doctor.professional,work_phone:0
 msgid "Work Phone"
-msgstr "Teléfono - trabajo"
+msgstr "Telefono - trabajo"
 
 #. module: doctor
 #: field:doctor.exam.category,child_ids:0
