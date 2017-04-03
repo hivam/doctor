@@ -884,45 +884,52 @@
                                         <group colspan='4' col='3'>
                                             <fieldset class="fieldset_margen">
                                             <legend class="texto_legend">Height and weight</legend>
-                                                <group >
+                                                <group colspan='3' col='3'>
                                                     <label for="weight" string="Weight (kg)"/>
                                                     <field name='weight' nolabel='1' style="width:5%%"/>
+                                                    <div>kg</div>
                                                     <label for="height" string="Height (cm)"/>
                                                     <field name='height' nolabel='1' style="width:5%%"/>
-                                                    <label for="body_mass_index" string="Body mass"/>
+                                                    
                                                     <field name='body_mass_index' nolabel='1' style="width:5%%"/>
                                                 </group>
                                             </fieldset>
                                             <fieldset class="fieldset_margen">
                                             <legend class="texto_legend">Vital signs</legend>
-                                                <group >
+                                                <group colspan='4' col='3'>
                                                     <label for="heart_rate" string="Heart rate"/>
                                                     <field name='heart_rate' nolabel='1' style="width:5%%"/>
+                                                    <div>L/min</div>
                                                     <label for="respiratory_rate" string="Respiratory"/>
                                                     <field name='respiratory_rate' nolabel='1' style="width:5%%"/>
+                                                    <div>R/min</div>
                                                 </group>
                                             </fieldset>
                                             <fieldset class="fieldset_margen">
                                             <legend class="texto_legend">Blood pressure</legend>
-                                                <group>
+                                                <group colspan='4' col='3'>
                                                     <label for="systolic" string="Systolic"/>
                                                     <field name='systolic' nolabel='1' style="width:5%%"/>
+                                                    <div>mmHg</div>
                                                     <label for="diastolic" string="Diastolic"/>
                                                     <field name='diastolic' nolabel='1' style="width:5%%"/>
+                                                    <div>mmHg</div>
                                                 </group>
                                             </fieldset>
                                             <fieldset class="fieldset_margen">
                                             <legend class="texto_legend">Temperature</legend>
-                                                <group >
+                                                <group colspan='4' col='3'>
                                                     <label for="temperature" string="Temperature"/>
                                                     <field name='temperature' nolabel='1' style="width:5%%"/>
+                                                    <div>°C</div>
                                                 </group>
                                             </fieldset>
                                             <fieldset class="fieldset_margen">
                                             <legend class="texto_legend">SpO2</legend>
-                                                <group >
+                                                <group colspan='4' col='3'>
                                                     <label for="pulsioximetry" string="Pulsioximetry"/>
                                                     <field name='pulsioximetry' nolabel='1' style="width:5%%"/>
+                                                    <div>%%</div>
                                                 </group>
                                             </fieldset>
                                         </group>
