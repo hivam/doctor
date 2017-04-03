@@ -885,10 +885,10 @@
                                             <fieldset class="fieldset_margen">
                                             <legend class="texto_legend">Height and weight</legend>
                                                 <group colspan='3' col='3'>
-                                                    <label for="weight" string="Weight (kg)"/>
+                                                    <label for="weight" string="Weight"/>
                                                     <field name='weight' nolabel='1' style="width:5%%"/>
                                                     <div>kg</div>
-                                                    <label for="height" string="Height (cm)"/>
+                                                    <label for="height" string="Height"/>
                                                     <field name='height' nolabel='1' style="width:5%%"/>
                                                     
                                                     <field name='body_mass_index' nolabel='1' style="width:5%%"/>
