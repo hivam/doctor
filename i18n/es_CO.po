@@ -1272,8 +1272,8 @@ msgstr "Código"
 #. module: doctor
 #: view:doctor.attentions:0
 #: field:doctor.attentions,weight:0
-msgid "Weight (kg)"
-msgstr "Peso (kg)"
+msgid "Weight"
+msgstr "Peso"
 
 #. module: doctor
 #: model:ir.model,name:doctor.model_doctor_dose_unit
@@ -1345,8 +1345,8 @@ msgstr "Minutos"
 #. module: doctor
 #: view:doctor.attentions:0
 #: field:doctor.attentions,height:0
-msgid "Height (cm)"
-msgstr "Altura (cm)"
+msgid "Height"
+msgstr "Altura"
 
 #. module: doctor
 #: help:doctor.attentions,respiratory_rate:0
