@@ -1197,6 +1197,22 @@
         <field name="context">{}</field>
     </record>
 
+    <!-- Integración-->
+    <record model="ir.actions.act_window.view" id="doctor_attention_general_tree">
+    <field eval="1" name="sequence"/>
+    <field name="view_mode">tree</field>
+    <field name="view_id" ref="view_doctor_attentions_tree"/>
+    <field name="act_window_id" ref="action_doctor_attentions"/>
+    </record>
+
+     <!-- Integración-->
+    <record model="ir.actions.act_window.view" id="doctor_attention_general_form">
+    <field eval="2" name="sequence"/>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="view_doctor_attentions_form"/>
+    <field name="act_window_id" ref="action_doctor_attentions"/>
+    </record>
+
     <!-- attentions Menu -->
     <menuitem name="Attentions" id="menu_doctor_attentions" action="doctor.action_doctor_attentions" parent="menu_doctor_process" sequence="40"/>
 
