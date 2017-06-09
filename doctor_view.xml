@@ -956,7 +956,7 @@
                                 </group>
                             </page>
 
-                            <page string="Análisis y Conducta">
+                            <page string="Dx, Análisis y Conducta">
                                 <group colspan='4' col='4'>
                                     
                                         <group colspan="2" col='1' groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
@@ -971,10 +971,7 @@
                                     </group>
 
                                 </group>
-                            </page>
 
-
-                            <page string="Prescripción y Solicitudes">
                                 <group colspan='4' col='4'>
 
                                     <notebook colspan="4" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
@@ -1163,6 +1160,9 @@
                                     </notebook>
                                 </group>
                             </page>
+
+
+
                         </notebook>
                 </group>
             </form>
