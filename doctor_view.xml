@@ -976,7 +976,20 @@
 
                                     <notebook colspan="4" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
                                         <page string="Diseases" >
-                                            
+                                            <field name="diseases_ids" colspan="4" nolabel="1">
+                                                <tree string="Diseases" editable="bottom">
+                                                    <field name="diseases_id" />
+                                                    <field name="status"/>
+                                                    <field name="diseases_type"/>
+                                                </tree>
+                                                <form string="Diseases">
+                                                    <group>
+                                                        <field name="diseases_id"/>
+                                                        <field name="status"/>
+                                                        <field name="diseases_type"/>
+                                                    </group>
+                                                </form>
+                                            </field>                                            
                                         </page>
                                         <page string="Drugs prescription" >
                                             <field name="drugs_ids" colspan="4" nolabel="1" groups="doctor.group_doctor_physician">
