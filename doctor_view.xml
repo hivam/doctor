@@ -989,7 +989,7 @@
                                                         <field name="diseases_type"/>
                                                     </group>
                                                 </form>
-                                            </field>
+                                            </field>                                            
                                         </page>
                                         <page string="Drugs prescription" >
                                             <field name="drugs_ids" colspan="4" nolabel="1" groups="doctor.group_doctor_physician">
