@@ -193,7 +193,12 @@ class doctor_patient(osv.osv):
 				else:
 					u['middlename'] = ' '
 
-		self.pool.get('res.partner').write(cr, uid, partner_id.id, u, context=context)
+		id_partner = self.search(cr, uid, [('id', '=', ids[0])], context=context)
+		if id_partner:
+			for partner in self.browse(cr, uid, id_partner, context=context):
+				id_partner = partner.patient.id
+
+		self.pool.get('res.partner').write(cr, uid, id_partner, u, context=context)
 		return super(doctor_patient, self).write(cr, uid, ids, vals, context=context)
 
 
