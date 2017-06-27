@@ -140,66 +140,67 @@ class doctor_patient(osv.osv):
 			if 	'middlename' in vals:
 				datos['middlename'] = vals['middlename'] or ' '
 
+			if (('lastname' in vals) or ('surname' in vals) or ('firstname' in vals) or ('middlename' in vals)):
 
 
-			nombre = "%s %s %s %s" % (datos['lastname'] or patient.lastname, datos['surname'] or patient.surname or '',
-					 datos['firstname'] or patient.firstname , datos['middlename'] or patient.middlename or '')
+				nombre = "%s %s %s %s" % (datos['lastname'] or patient.lastname, datos['surname'] or patient.surname or '',
+						 datos['firstname'] or patient.firstname , datos['middlename'] or patient.middlename or '')
 
-			firstname = vals['firstname'] if 'firstname' in vals else partner_id.firtsname
-			lastname = vals['lastname'] if 'lastname' in vals else partner_id.lastname
-			surname = vals['surname'] if 'surname' in vals else partner_id.surname
-			middlename = vals['middlename'] if 'middlename' in vals else partner_id.middlename
+				firstname = vals['firstname'] if 'firstname' in vals else partner_id.firtsname
+				lastname = vals['lastname'] if 'lastname' in vals else partner_id.lastname
+				surname = vals['surname'] if 'surname' in vals else partner_id.surname
+				middlename = vals['middlename'] if 'middlename' in vals else partner_id.middlename
 
-			u['name'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
-			u['display_name'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
-		
+				u['name'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
+				u['display_name'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
+			
 
-			vals['nombre'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
+				vals['nombre'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
 
 
-			if 'ref' in vals:
+				if 'ref' in vals:
 
-				u['ref'] = vals['ref']
+					u['ref'] = vals['ref']
 
-			if 'firstname' in vals:
-				if(type(firstname) is unicode):
-					u['firtsname'] =  unicodedata.normalize('NFKD', firstname).encode('ASCII', 'ignore').upper()
-				elif(type(firstname) is str):
-					u['firtsname'] =  firstname.upper()
-				else:
-					u['firtsname'] =  ' '
+				if 'firstname' in vals:
+					if(type(firstname) is unicode):
+						u['firtsname'] =  unicodedata.normalize('NFKD', firstname).encode('ASCII', 'ignore').upper()
+					elif(type(firstname) is str):
+						u['firtsname'] =  firstname.upper()
+					else:
+						u['firtsname'] =  ' '
 
-			if 'lastname' in vals:
-				if(type(lastname) is unicode):	
-					u['lastname'] = unicodedata.normalize('NFKD', lastname).encode('ASCII', 'ignore').upper()
-				elif(type(lastname) is str):
-					u['lastname'] = lastname.upper()
-				else:
-					u['lastname'] = ' ' 
+				if 'lastname' in vals:
+					if(type(lastname) is unicode):	
+						u['lastname'] = unicodedata.normalize('NFKD', lastname).encode('ASCII', 'ignore').upper()
+					elif(type(lastname) is str):
+						u['lastname'] = lastname.upper()
+					else:
+						u['lastname'] = ' ' 
 
-			if 'surname' in vals:		
-				if(type(surname) is unicode):	
-					u['surname'] = unicodedata.normalize('NFKD', surname).encode('ASCII', 'ignore').upper()
-				elif(type(surname) is str) :
-					u['surname'] = surname.upper()
-				else:
-					u['surname'] = ' '
+				if 'surname' in vals:		
+					if(type(surname) is unicode):	
+						u['surname'] = unicodedata.normalize('NFKD', surname).encode('ASCII', 'ignore').upper()
+					elif(type(surname) is str) :
+						u['surname'] = surname.upper()
+					else:
+						u['surname'] = ' '
 
-			if 	'middlename' in vals:		
-				if(type(middlename) is unicode):	
-					u['middlename'] = unicodedata.normalize('NFKD', middlename).encode('ASCII', 'ignore').upper()
-				elif(type(middlename) is str):
-					u['middlename'] = middlename.upper()
-				else:
-					u['middlename'] = ' '
+				if 	'middlename' in vals:		
+					if(type(middlename) is unicode):	
+						u['middlename'] = unicodedata.normalize('NFKD', middlename).encode('ASCII', 'ignore').upper()
+					elif(type(middlename) is str):
+						u['middlename'] = middlename.upper()
+					else:
+						u['middlename'] = ' '
 
-		id_partner = self.search(cr, uid, [('id', '=', ids[0])], context=context)
-		if id_partner:
-			for partner in self.browse(cr, uid, id_partner, context=context):
-				id_partner = partner.patient.id
+		if 'nombre' in vals:
+			id_partner = self.search(cr, uid, [('id', '=', ids[0])], context=context)
+			if id_partner:
+				for partner in self.browse(cr, uid, id_partner, context=context):
+					id_partner = partner.patient.id
+			self.pool.get('res.partner').write(cr, uid, id_partner, u, context=context)
 
-		_logger.info(id_partner)
-		self.pool.get('res.partner').write(cr, uid, id_partner, u, context=context)
 		return super(doctor_patient, self).write(cr, uid, ids, vals, context=context)
 
 
