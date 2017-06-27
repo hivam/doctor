@@ -198,6 +198,7 @@ class doctor_patient(osv.osv):
 			for partner in self.browse(cr, uid, id_partner, context=context):
 				id_partner = partner.patient.id
 
+		_logger.info(id_partner)
 		self.pool.get('res.partner').write(cr, uid, id_partner, u, context=context)
 		return super(doctor_patient, self).write(cr, uid, ids, vals, context=context)
 
