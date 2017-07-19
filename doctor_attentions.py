@@ -165,8 +165,6 @@ class doctor_attentions(osv.osv):
         'disability_ids': fields.one2many('doctor.attentions.disability', 'attentiont_id', 'Disability',
                                           ondelete='restrict', states={'closed': [('readonly', True)]}),
         'state': fields.selection([('open', 'Open'), ('closed', 'Closed')], 'Status', readonly=True, required=True),
-        'tipo_historia' : fields.char('tipo_historia', required=True),
-
     }
 
     def name_get(self, cr, uid, ids, context={}):
@@ -322,7 +320,7 @@ class doctor_attentions(osv.osv):
         'date_attention': lambda *a: datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S"),
         'professional_id': _get_professional_id if _get_professional_id != False else False,
         'state': 'open',
-        'tipo_historia': 'hc_general'
+        'attention_type': 'hc_general'
     }
 
 
