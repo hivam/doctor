@@ -130,9 +130,13 @@ class doctor_appointment(osv.osv):
 		if context is None:
 			context = {}
 		if not ids:
-			ids = self.search(cr, uid, [], context=None)
-		return super(doctor_appointment, self).write(cr, uid, ids, {'appointment_today': 'True'}, context=context)
-
+			hora_de_inicio = datetime.strftime(datetime.now(), "%Y-%m-%d 00:00:00")
+			hora_de_fin = datetime.strftime(datetime.now(), "%Y-%m-%d 23:59:59")
+			ids = self.search(cr, uid, [('time_begin', '>=', hora_de_inicio), ('time_begin', '<=', hora_de_fin)], context=None)
+			_logger.info(ids)
+			if ids:
+				return super(doctor_appointment, self).write(cr, uid, ids, {'appointment_today': 'True'}, context=context)
+		return True
 	
 	def _check_appointment(self, cr, uid, ids, context=None):
 		for record in self.browse(cr, uid, ids, context=context):
