@@ -133,7 +133,6 @@ class doctor_appointment(osv.osv):
 			hora_de_inicio = datetime.strftime(datetime.now(), "%Y-%m-%d 00:00:00")
 			hora_de_fin = datetime.strftime(datetime.now(), "%Y-%m-%d 23:59:59")
 			ids = self.search(cr, uid, [('time_begin', '>=', hora_de_inicio), ('time_begin', '<=', hora_de_fin)], context=None)
-			_logger.info(ids)
 			if ids:
 				return super(doctor_appointment, self).write(cr, uid, ids, {'appointment_today': 'True'}, context=context)
 		return True
@@ -346,15 +345,14 @@ class doctor_appointment(osv.osv):
 		Method that creates an attentiont
 		"""
 
-		modulo_instalado = modulo_instalado = self.pool.get('ir.module.module').search(cr,uid,[('name', '=', 'l10n_co_doctor'), ('state', '=', 'installed')],context=context)
-
-
+		modulo_instalado =  self.pool.get('ir.module.module').search(cr,uid,[('name', '=', 'l10n_co_doctor'), ('state', '=', 'installed')],context=context)
 
 		doctor_appointment = self.browse(cr, uid, ids, context=context)[0]
 
 		if modulo_instalado:
+			_logger.info("#######################################")
 			_logger.info(doctor_appointment)
-			self.pool.get('doctor.doctor').obtener_ultimas_atenciones_paciente(cr, uid, 'doctor.attentiont', 2, doctor_appointment.patient_id.id, doctor_appointment.date_attention, context=context)
+			self.pool.get('doctor.doctor').obtener_ultimas_atenciones_paciente(cr, uid, 'doctor.attentiont', 2, doctor_appointment.patient_id.id, doctor_appointment.time_begin, context=context)
 
 
 
