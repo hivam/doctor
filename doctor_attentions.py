@@ -94,7 +94,7 @@ class doctor_attentions(osv.osv):
                                      readonly=True),
         'professional_id': fields.many2one('doctor.professional', 'Doctor', required=True, readonly=True),
         'speciality': fields.related('professional_id', 'speciality_id', type="many2one", relation="doctor.speciality",
-                                     string='Speciality', required=True, store=True,
+                                     string='Speciality', required=False, store=True,
                                      states={'closed': [('readonly', True)]}),
         'professional_photo': fields.related('professional_id', 'photo', type="binary", relation="doctor.professional",
                                              readonly=True, store=False),
