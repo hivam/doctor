@@ -352,7 +352,7 @@ class doctor_appointment(osv.osv):
 		if modulo_instalado:
 			_logger.info("#######################################")
 			_logger.info(doctor_appointment)
-			self.pool.get('doctor.doctor').obtener_ultimas_atenciones_paciente(cr, uid, 'doctor.attentiont', 2, doctor_appointment.patient_id.id, doctor_appointment.time_begin, context=context)
+			self.pool.get('doctor.doctor').obtener_ultimas_atenciones_paciente(cr, uid, 'doctor.attentions', 2, doctor_appointment.patient_id.id, doctor_appointment.time_begin, context=context)
 
 
 
