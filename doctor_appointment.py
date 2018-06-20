@@ -328,6 +328,8 @@ class doctor_appointment(osv.osv):
 				'value'])
 		
 		context['patient_id'] = doctor_appointment.patient_id.id
+		context['type_id'] = doctor_appointment.type_id.id
+
 		attentiont_id = attentiont_obj.create(cr, uid, attentiont, context=context)
 		# Create number attentiont record
 		attentiont_number = {
