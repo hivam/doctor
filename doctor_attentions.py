@@ -18,7 +18,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from datetime import datetime
+from dateutil.relativedelta import *
+from datetime import datetime, date
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 import logging
@@ -76,10 +77,6 @@ class doctor_attentions(osv.osv):
             res[datos.id] = self._previous(cr, uid, datos.patient_id, 'drugs', datos.id)
         return res
 
-    def _fun_calcular_edad(self, cr, uid, ids, field_name, args, context=None):
-        res = {}
-        for datos in self.browse(cr,uid,ids):
-            _logger.info(context)
 
     _columns = {
         'patient_id': fields.many2one('doctor.patient', 'Patient', ondelete='restrict', readonly=True),
@@ -92,6 +89,8 @@ class doctor_attentions(osv.osv):
         'age_attention': fields.integer('Current age', readonly=True),
         'age_unit': fields.selection([('1', 'Years'), ('2', 'Months'), ('3', 'Days'), ], 'Unit of measure of age',
                                      readonly=True),
+        'age_patient_ymd': fields.char('Age in Years, months and days', size=30, readonly=True),
+
         'professional_id': fields.many2one('doctor.professional', 'Doctor', required=True, readonly=True),
         'speciality': fields.related('professional_id', 'speciality_id', type="many2one", relation="doctor.speciality",
                                      string='Speciality', required=False, store=True,
@@ -236,6 +235,13 @@ class doctor_attentions(osv.osv):
         
         return age
 
+    #it allows to return the patient's age in years, months, days e.g  24 years, 8 months, 3 days. -C
+    def calcular_edad_ymd(self,fecha_nacimiento):
+        today = date.today()
+        age = relativedelta(today, datetime.strptime(fecha_nacimiento, '%Y-%m-%d'))
+        age_ymd= str(age.years)+' Años, '+str(age.months)+' Meses,'+str(age.days)+' Días'
+        return age_ymd
+
     def calcular_age_unit(self,fecha_nacimiento):
         current_date = datetime.today()
         st_birth_date = datetime.strptime(fecha_nacimiento, '%Y-%m-%d')
@@ -279,8 +285,7 @@ class doctor_attentions(osv.osv):
 
         if id_paciente:    
             fecha_nacimiento = self.pool.get('doctor.patient').browse(cr,uid,id_paciente,context=context).birth_date
-            res['age_attention'] = self.calcular_edad(fecha_nacimiento)
-            res['age_unit'] = self.calcular_age_unit(fecha_nacimiento)
+            res['age_patient_ymd'] = self.calcular_edad_ymd(fecha_nacimiento)
 
         #con esto cargams los items de revision por sistemas
         ids = self.pool.get('doctor.systems.category').search(cr,uid,[('active','=',True)],context=context)

@@ -312,8 +312,6 @@ class doctor_appointment(osv.osv):
 		@param doctor_appointment: Appointment method get data from.
 		"""
 
-		_logger.info('por aca entra')
-
 		attentiont_obj = self.pool.get('doctor.attentions')
 		# Create attentiont object
 		attentiont = {
@@ -350,11 +348,7 @@ class doctor_appointment(osv.osv):
 		doctor_appointment = self.browse(cr, uid, ids, context=context)[0]
 
 		if modulo_instalado:
-			_logger.info("#######################################")
-			_logger.info(doctor_appointment)
 			self.pool.get('doctor.doctor').obtener_ultimas_atenciones_paciente(cr, uid, 'doctor.attentions', 2, doctor_appointment.patient_id.id, doctor_appointment.time_begin, context=context)
-
-
 
 		attentiont_id = self.create_attentiont(cr, uid, doctor_appointment, context=context)
 		# Update appointment state

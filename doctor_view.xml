@@ -700,10 +700,10 @@
                                 </h3>
                                 </div>
                                 <group col='2'>
-                                    <div>
-                                    <field name='age_attention' nolabel='1' style="width:10%%"/>
-                                    <field name='age_unit' nolabel='1' style="width:10%%"/> - of age
-                                    </div>
+                                   
+                                    <label string="Edad" nolabel="1" style="font-weight: bold"/>
+                                    <field name='age_patient_ymd' nolabel='1'/>
+                                    
                                 </group>
                             </group>
                         </group>

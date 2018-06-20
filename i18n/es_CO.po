@@ -59,6 +59,11 @@ msgid "Current age"
 msgstr "Edad actual"
 
 #. module: doctor
+#: field:doctor.attentions,age_attention:0
+msgid "Age in Years, months and days"
+msgstr "Edad en años, meses y días"
+
+#. module: doctor
 #: view:doctor.past.category:0
 #: model:ir.actions.act_window,name:doctor.action_past_category_form
 #: model:ir.model,name:doctor.model_doctor_past_category
