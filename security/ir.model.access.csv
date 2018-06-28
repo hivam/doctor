@@ -84,7 +84,8 @@ access_doctor_res_partner_assistant,res.partner_assistant,base.model_res_partner
 access_doctor_appointment_procedures,doctor.appointment.procedures,model_doctor_appointment_procedures,doctor.group_doctor_assistant,1,1,1,0
 access_doctor_appointment_type,doctor.appointment.type,model_doctor_appointment_type,doctor.group_doctor_assistant,1,0,0,0
 access_doctor_appointment,doctor.appointment,model_doctor_appointment,doctor.group_doctor_assistant,1,1,1,0
-
+access_doctor_diseases_past_asistente,doctor.diseases.past,model_doctor_diseases_past,group_doctor_assistant,1,0,0,0
+access_doctor_diseases_assistent,doctor.diseases.assistent,model_doctor_diseases,group_doctor_assistant,1,0,0,0
 
 restriction_doctor_attentions,doctor.attentions,model_doctor_attentions,doctor.group_doctor_inactivo,1,0,0,0
 restriction_doctor_atc_physician,doctor.atc_physician,model_doctor_atc,doctor.group_doctor_inactivo,1,0,0,0
