@@ -1057,16 +1057,16 @@
                                             </field>
                                         </page>
                                         <page string="Diagnostic support" groups="doctor.group_doctor_physician">
-                                            <separator string="Diagnostic images" colspan="4"/>
+                                            <separator string="Ayudas Diagnósticas" colspan="4"/>
                                             <field name="diagnostic_images_ids" colspan="4" nolabel="1">
                                                 <tree string="Diagnostic images" editable="bottom">
-                                                    <field name="procedures_id" domain="[('procedure_type', '=', 3)]" context="{'diagnostic_images':'1'}"/>
+                                                    <field name="procedures_id" domain="['|',('procedure_type', '=', 3),('procedure_type', '=',8)]" context="{'diagnostic_images':'1'}"/>
                                                     <field name="quantity"/>
                                                     <field name="indications"/>
                                                 </tree>
                                                 <form string="Diagnostic images">
                                                     <group>
-                                                        <field name="procedures_id" domain="[('procedure_type', '=', 3)]" context="{'diagnostic_images':'1'}"/>
+                                                        <field name="procedures_id" domain="['|',('procedure_type', '=', 3),('procedure_type', '=',8)]" context="{'diagnostic_images':'1'}"/>
                                                         <field name="quantity"/>
                                                         <field name="indications"/>
                                                     </group>
@@ -1088,7 +1088,8 @@
                                                 </form>
                                             </field>
                                         </page>
-                                        <page string="Surgical" groups="doctor.group_doctor_physician">
+                                        <page string="Procedimientos" groups="doctor.group_doctor_physician">
+                                            <separator string="Procedimientos Quirúrgicos" colspan="4"/>
                                             <field name="surgical_procedure_ids" colspan="4" nolabel="1">
                                                 <tree string="Surgical procedure" editable="bottom">
                                                     <field name="procedures_id" domain="[('procedure_type', '=', 2)]"/>
@@ -1103,8 +1104,7 @@
                                                     </group>
                                                 </form>
                                             </field>
-                                        </page>
-                                        <page string="Therapeutic" groups="doctor.group_doctor_physician">
+                                             <separator string="Procedimientos Terapéuticos" colspan="4"/>
                                             <field name="therapeutic_procedure_ids" colspan="4" nolabel="1">
                                                 <tree string="Therapeutic procedure" editable="bottom">
                                                     <field name="procedures_id" domain="[('procedure_type', '=', 5)]"/>
@@ -1120,7 +1120,11 @@
                                                 </form>
                                             </field>
                                         </page>
-                                        <page string="Other procedures" groups="doctor.group_doctor_physician">
+
+                                        <!-- <page string="Therapeutic" groups="doctor.group_doctor_physician">
+                                        </page> -->
+
+                                        <!-- <page string="Other procedures" groups="doctor.group_doctor_physician">
                                             <field name="other_procedure_ids" colspan="4" nolabel="1">
                                                 <tree string="Other procedures" editable="bottom">
                                                     <field name="procedures_id" domain="['|',('procedure_type', '=', 1), '|', ('procedure_type', '=', 6), ('procedure_type', '=', 7)]"/>
@@ -1135,7 +1139,7 @@
                                                     </group>
                                                 </form>
                                             </field>
-                                        </page>
+                                        </page> -->
                                         <page string="Others" groups="doctor.group_doctor_physician,doctor.group_doctor_psicologo">
                                             <separator string="Referral and interconsultation" colspan="4"/>
                                             <field name="referral_ids" colspan="4" nolabel="1">
