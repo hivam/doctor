@@ -286,6 +286,9 @@ class doctor_attentions(osv.osv):
         if id_paciente:    
             fecha_nacimiento = self.pool.get('doctor.patient').browse(cr,uid,id_paciente,context=context).birth_date
             res['age_patient_ymd'] = self.calcular_edad_ymd(fecha_nacimiento)
+            res['age_attention'] = self.calcular_edad(fecha_nacimiento)
+            res['age_unit'] = self.calcular_age_unit(fecha_nacimiento)
+
 
         #con esto cargams los items de revision por sistemas
         ids = self.pool.get('doctor.systems.category').search(cr,uid,[('active','=',True)],context=context)
