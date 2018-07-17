@@ -203,6 +203,7 @@ access_doctor_atc_od_confi,doctor.atc_physician,model_doctor_atc,doctor.group_do
 access_doctor_administration_route_od_confi,doctor.administration.route,model_doctor_administration_route,doctor.group_doctor_odontologo_configuracion,1,1,1,0
 
 
+access_doctor_schedule_remover,doctor.schedule,model_doctor_schedule,doctor.group_doctor_assistant_remove_schedules,1,0,0,1
 
 
 access_doctor_attentions_past_psicologia,doctor.attentions.past,model_doctor_attentions_past,doctor.group_doctor_psicologo,1,1,1,0
