@@ -205,7 +205,7 @@ access_doctor_administration_route_od_confi,doctor.administration.route,model_do
 
 access_doctor_schedule_remover,doctor.schedule,model_doctor_schedule,doctor.group_doctor_assistant_remove_schedules,1,0,0,1
 
-
+access_doctor_insurer_psicologia,doctor.insurer_psycology,model_doctor_insurer,doctor.group_doctor_psicologo,1,1,1,0
 access_doctor_attentions_past_psicologia,doctor.attentions.past,model_doctor_attentions_past,doctor.group_doctor_psicologo,1,1,1,0
 access_doctor_diseases_psicologia,doctor.diseases,model_doctor_diseases,doctor.group_doctor_psicologo,1,0,0,0
 access_doctor_diseases_past_psicologia,doctor.diseases.past,model_doctor_diseases_past,doctor.group_doctor_psicologo,1,0,0,0

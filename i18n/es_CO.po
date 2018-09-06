@@ -139,6 +139,11 @@ msgid "Attended"
 msgstr "Atendido"
 
 #. module: doctor
+#: field:doctor.appointment,number:0
+msgid "Appointment number"
+msgstr "Número de cita"
+
+#. module: doctor
 #: selection:doctor.attentions.referral,referral_ids:0
 #: selection:product.product,procedure_type:0
 msgid "Hospitalization"
@@ -1114,6 +1119,7 @@ msgstr "Frecuencia cardiaca (latidos por minuto)"
 
 #. module: doctor
 #: field:doctor.schedule,appointment_ids:0
+#: view:doctor.patient:0
 msgid "Appointments"
 msgstr "Citas"
 
