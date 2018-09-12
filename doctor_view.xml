@@ -1218,7 +1218,7 @@
     </record>
 
     <!-- attentions Menu -->
-    <menuitem name="Attentions" id="menu_doctor_attentions" action="doctor.action_doctor_attentions" parent="menu_doctor_process" sequence="40"/>
+    <menuitem name="Attentions" id="menu_doctor_attentions" action="doctor.action_doctor_attentions" parent="menu_doctor_process" sequence="40" groups="group_doctor_configuration,group_doctor_physician"/>
 
 <!-- Review sistems categories -->
         <record id="view_doctor_systems_category_form" model="ir.ui.view">
