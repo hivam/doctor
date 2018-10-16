@@ -15,7 +15,7 @@ access_doctor_diseases_past,doctor.diseases.past,model_doctor_diseases_past,doct
 access_doctor_dose_unit_physician,doctor.dose.unit_physician,model_doctor_dose_unit,doctor.group_doctor_physician,1,0,0,0
 access_doctor_drugs_physician,doctor.drugs_physician,model_doctor_drugs,doctor.group_doctor_physician,1,0,0,0
 access_doctor_exam_category,doctor.exam.category,model_doctor_exam_category,doctor.group_doctor_physician,1,0,0,0
-access_doctor_measuring_unit,doctor.measuring.unit,model_doctor_measuring_unit,doctor.group_doctor_physician,1,0,0,0
+access_doctor_measuring_unit,doctor.measuring.unit,model_doctor_measuring_unit,doctor.group_doctor_physician,1,1,1,0
 access_doctor_past_category,doctor.past.category,model_doctor_past_category,doctor.group_doctor_physician,1,0,0,0
 access_doctor_patient_physician,doctor.patient_physician,model_doctor_patient,doctor.group_doctor_physician,1,0,0,0
 access_doctor_prescription,doctor.prescription,model_doctor_prescription,doctor.group_doctor_physician,1,0,1,1
