@@ -38,6 +38,7 @@ This module allows
               'doctor_sequence.xml',
               'doctor_view.xml',
               ],
+              
     'css': ['static/src/css/doctor.css'],
     "js": [
         "static/src/js/search.js",
