@@ -289,36 +289,6 @@ class doctor_attentions(osv.osv):
             res['age_attention'] = self.calcular_edad(fecha_nacimiento)
             res['age_unit'] = self.calcular_age_unit(fecha_nacimiento)
 
-
-        #con esto cargams los items de revision por sistemas
-        ids = self.pool.get('doctor.systems.category').search(cr,uid,[('active','=',True)],context=context)
-        registros = []
-        for i in self.pool.get('doctor.systems.category').browse(cr,uid,ids,context=context):
-            registros.append((0,0,{'system_category' : i.id,}))
-        #fin carga item revision sistemas
-
-        #con esto cargamos items antecedentes 
-        ids_antecedentes = self.pool.get('doctor.past.category').search(cr,uid,[('active','=',True)],context=context)
-        registros_antecedentes = []
-        for i in self.pool.get('doctor.past.category').browse(cr,uid,ids_antecedentes,context=context):
-            registros_antecedentes.append((0,0,{'past_category' : i.id , 'patient_id' : id_paciente}))
-        #fin carga item antecedentes
-
-        #con esto cargamos los examanes fisicos
-        ids_examenes_fisicos = self.pool.get('doctor.exam.category').search(cr,uid,[('active','=',True)],context=context)
-        registros_examenes_fisicos = []
-        for i in self.pool.get('doctor.exam.category').browse(cr,uid,ids_examenes_fisicos,context=context):
-            registros_examenes_fisicos.append((0,0,{'exam_category' : i.id}))
-        #fin carga item examanes fisicos
-
-
-        if 'Aux. enfermeria' not in nombre_permisos:
-            res['review_systems_id'] = registros
-            res['attentions_past_ids'] = registros_antecedentes
-            res['attentions_exam_ids'] = registros_examenes_fisicos
-
-
-
         return res
 
     _defaults = {
