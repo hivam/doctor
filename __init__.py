@@ -18,11 +18,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import doctor
-import doctor_appointment
-import doctor_attentions
-import doctor_data
-import doctor_invoice
-import doctor_person
-import doctor_product
-import doctor_sales_order
+"""
+from addons.doctor.models import doctor
+from . import doctor_appointment
+from . import doctor_attentions
+from . import doctor_data
+from . import doctor_invoice
+from . import doctor_person
+from . import doctor_product
+from . import doctor_sales_order
+"""
+from . import models

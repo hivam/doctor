@@ -19,20 +19,20 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, osv
-import openerp.addons.decimal_precision as dp
-from openerp.tools.translate import _
+from odoo import models, fields, api
+import odoo.addons.decimal_precision as dp
+from odoo.tools.translate import _
 
 
-class product_template(osv.osv):
+class product_template(models.Model):
     _inherit = 'product.template'
 
-    _columns = {
-        'name': fields.char('Name', size=128, required=True, translate=False, select=True),
-        'standard_price': fields.float('Cost', digits_compute=dp.get_precision('Product Price'),
-                        help="Cost price of the product used for standard stock valuation in accounting and used as a "
-                        "base price on purchase orders.", groups="base.group_user,doctor.group_doctor_configuration"),
-    }
+    name = fields.Char('Name', size=128, required=True, translate=False, select=True)
+    standard_price = fields.Float('Cost', digits_compute=dp.get_precision('Product Price'),
+                                   help="Cost price of the product used for standard stock valuation in accounting and used as a "
+                                        "base price on purchase orders.",
+                                   groups="base.group_user,doctor.group_doctor_configuration")
+
 
 
 product_template()

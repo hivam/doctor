@@ -19,11 +19,12 @@
 #
 ##############################################################################
 import time
-from openerp import pooler
+#from odoo import pooler
 from datetime import date, datetime, timedelta
-from openerp.osv import fields, osv
-from openerp.tools.translate import _
-import openerp.addons.decimal_precision as dp
+#from odoo.osv import fields, osv
+from odoo import models, fields, api
+from odoo.tools.translate import _
+import odoo.addons.decimal_precision as dp
 from pytz import timezone
 import pytz
 from lxml import etree
@@ -38,29 +39,26 @@ import time
 import re
 import math
 
-from openerp import SUPERUSER_ID, tools
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
+from odoo import SUPERUSER_ID, tools
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
 
-import sale
-import doctor
-import doctor_person
-import doctor_appointment
-import doctor_attentions
-import doctor_invoice
-import doctor_sales_order
-import doctor_data
-from openerp import netsvc
+#from . import sale
+#import addons.doctor.doctor_person
+#import addons.doctor.doctor_appointment
+#import addons.doctor.doctor_attentions
+#import addons.doctor.doctor_invoice
+#import addons.doctor.doctor_sales_order
+#import addons.doctor.doctor_data
+from odoo import netsvc
 
 
-class doctor_schedule(osv.osv):
+class doctor_schedule(models.Model):
     """Schedule"""
     _name = 'doctor.schedule'
     _description = "Scheduling doctor office hours"
     _order = 'date_begin asc'
     _rec_name = 'professional_id'
 
-
-    
 
     def _date_to_dateuser(self, cr, uid, ids, date_begin):
         date_begin_user = datetime.strptime(date_begin, "%Y-%m-%d %H:%M:%S")
@@ -117,14 +115,19 @@ class doctor_schedule(osv.osv):
                 res[schedule.id][field] = number
         return res
 
-    _columns = {
-        'professional_id': fields.many2one('doctor.professional', 'Doctor'),
-        'date_begin': fields.datetime('Start date', required=True),
-        'schedule_duration': fields.float('Duration (in hours)', required=True),
-        'date_end': fields.datetime('End date', required=True),
-        'patients_count': fields.function(_get_register, string='Number of patients', multi='register_numbers'),
-        'appointment_ids': fields.one2many('doctor.appointment', 'schedule_id', 'Appointments', domain=[('state', '!=', 'cancel'), ('cita_eliminada', '!=', True)]),
+    professional_id = fields.Many2one('doctor.professional', 'Doctor')
+    date_begin = fields.Datetime('Start date', required=True)
+    schedule_duration = fields.Float('Duration (in hours)', required=True)
+    date_end = fields.Datetime('End date', required=True)
+    patients_count = fields.Char(compute='_get_register', string='Number of patients', multi='register_numbers')
+    appointment_ids = fields.One2many('doctor.appointment', 'schedule_id', 'Appointments',
+                                       domain=[('state', '!=', 'cancel'), ('cita_eliminada', '!=', True)])
+
+    """
+    _defaults = {
+        'professional_id': _get_professional_id if _get_professional_id != False else False,
     }
+    """
 
     def _check_schedule(self, cr, uid, ids):
         for record in self.browse(cr, uid, ids):
@@ -150,11 +153,13 @@ class doctor_schedule(osv.osv):
                 return False
         return True
 
+    """
     _constraints = [
         (_check_closing_time, 'Error ! Closing Time cannot be set before Beginning Time.', ['date_end']),
         (_check_schedule, 'Error ! The Office Doctor is busy.', ['date_begin', 'date_end']),
         (_check_date_begin, 'Error ! Can not create a schedule for a date before the current.', ['date_begin']),
     ]
+    """
 
     def onchange_start_date(self, cr, uid, ids, date_begin, schedule_duration, date_end, context={}):
         values = {}
@@ -176,10 +181,6 @@ class doctor_schedule(osv.osv):
         return False
 
 
-    _defaults = {
-        'professional_id': _get_professional_id if _get_professional_id != False else False,
-        'schedule_duration': 4,
-    }
 
 
 
@@ -188,12 +189,12 @@ class doctor_schedule(osv.osv):
 doctor_schedule()
 
 
-class doctor_diseases(osv.osv):
+class doctor_diseases(models.Model):
     _name = "doctor.diseases"
-    _columns = {
-        'code': fields.char('Code', size=4, required=True),
-        'name': fields.char('Disease', size=256, required=True),
-    }
+
+    code = fields.Char('Code', size=4, required=True),
+    name = fields.Char('Disease', size=256, required=True),
+
 
     _sql_constraints = [('code_uniq', 'unique (code)', 'The Medical Diseases code must be unique')]
 
@@ -228,7 +229,7 @@ class doctor_diseases(osv.osv):
 doctor_diseases()
 
 
-class doctor_systems_category(osv.osv):
+class doctor_systems_category(models.Model):
     def name_get(self, cr, uid, ids, context=None):
         """Return the categories' display name, including their direct
            parent by default.
@@ -273,25 +274,24 @@ class doctor_systems_category(osv.osv):
 
     _description = 'Review systems categories'
     _name = 'doctor.systems.category'
-    _columns = {
-        'name': fields.char('Category Name', required=True, size=64, translate=True),
-        'parent_id': fields.many2one('doctor.systems.category', 'Parent Category', select=True, ondelete='cascade'),
-        'complete_name': fields.function(_name_get_fnc, type="char", string='Full Name'),
-        'child_ids': fields.one2many('doctor.systems.category', 'parent_id', 'Child Categories'),
-        'active': fields.boolean('Active',
-                                 help="The active field allows you to hide the category without removing it."),
-        'parent_left': fields.integer('Left parent', select=True),
-        'parent_right': fields.integer('Right parent', select=True),
-    }
 
+    name = fields.Char('Category Name', required=True, size=64, translate=True)
+    parent_id = fields.Many2one('doctor.systems.category', 'Parent Category', select=True, ondelete='cascade')
+    complete_name = fields.Char(compute='_name_get_fnc', type="char", string='Full Name')
+    child_ids = fields.One2many('doctor.systems.category', 'parent_id', 'Child Categories')
+    active = fields.Boolean('Active',
+                             help="The active field allows you to hide the category without removing it.",
+                            default=1)
+    parent_left = fields.Integer('Left parent', select=True)
+    parent_right = fields.Integer('Right parent', select=True)
+
+
+    """
     _constraints = [
-        (osv.osv._check_recursion, 'Error ! You can not create recursive categories.', ['parent_id'])
+        (models.Model._check_recursion, 'Error ! You can not create recursive categories.', ['parent_id'])
     ]
-
-    _defaults = {
-        'active': 1,
-    }
-
+    
+    """
     _parent_store = True
     _parent_order = 'name'
     _order = 'parent_left'
@@ -300,15 +300,15 @@ class doctor_systems_category(osv.osv):
 doctor_systems_category()
 
 
-class doctor_review_systems(osv.osv):
+class doctor_review_systems(models.Model):
     _name = "doctor.review.systems"
     _rec_name = 'attentiont_id'
-    _columns = {
-        'attentiont_id': fields.many2one('doctor.attentions', 'Attention'),
-        'system_category': fields.many2one('doctor.systems.category', 'Systems category', required=True,
-                                           ondelete='restrict'),
-        'review_systems': fields.text('Review systems', required=True),
-    }
+
+    attentiont_id = fields.Many2one('doctor.attentions', 'Attention'),
+    system_category = fields.Many2one('doctor.systems.category', 'Systems category', required=True,
+                                       ondelete='restrict'),
+    review_systems = fields.Text('Review systems', required=True),
+
 
     def name_get(self, cr, uid, ids, context={}):
         if not len(ids):
@@ -322,7 +322,7 @@ class doctor_review_systems(osv.osv):
 doctor_review_systems()
 
 
-class doctor_past_category(osv.osv):
+class doctor_past_category(models.Model):
     def name_get(self, cr, uid, ids, context=None):
         """Return the categories' display name, including their direct
            parent by default.
@@ -367,24 +367,23 @@ class doctor_past_category(osv.osv):
 
     _description = 'Past categories'
     _name = 'doctor.past.category'
-    _columns = {
-        'name': fields.char('Category Name', required=True, size=64, translate=True),
-        'parent_id': fields.many2one('doctor.past.category', 'Parent Category', select=True, ondelete='cascade'),
-        'complete_name': fields.function(_name_get_fnc, type="char", string='Full Name'),
-        'child_ids': fields.one2many('doctor.past.category', 'parent_id', 'Child Categories'),
-        'active': fields.boolean('Active',
-                                 help="The active field allows you to hide the category without removing it."),
-        'parent_left': fields.integer('Left parent', select=True),
-        'parent_right': fields.integer('Right parent', select=True),
-    }
 
+    name = fields.Char('Category Name', required=True, size=64, translate=True)
+    parent_id = fields.Many2one('doctor.past.category', 'Parent Category', select=True, ondelete='cascade')
+    complete_name = fields.Char(compute='_name_get_fnc', type="char", string='Full Name')
+    child_ids = fields.One2many('doctor.past.category', 'parent_id', 'Child Categories')
+    active = fields.Boolean('Active',
+                             help="The active field allows you to hide the category without removing it.",
+                            default=1)
+    parent_left = fields.Integer('Left parent', select=True)
+    parent_right = fields.Integer('Right parent', select=True)
+
+
+    """
     _constraints = [
-        (osv.osv._check_recursion, 'Error ! You can not create recursive categories.', ['parent_id'])
+        (models.Model._check_recursion, 'Error ! You can not create recursive categories.', ['parent_id'])
     ]
-
-    _defaults = {
-        'active': 1,
-    }
+    """
 
     _parent_store = True
     _parent_order = 'name'
@@ -394,14 +393,14 @@ class doctor_past_category(osv.osv):
 doctor_past_category()
 
 
-class doctor_diseases_past(osv.osv):
+class doctor_diseases_past(models.Model):
     _name = "doctor.diseases.past"
     _rec_name = 'attentiont_id'
-    _columns = {
-        'attentiont_id': fields.many2one('doctor.attentions', 'Attention', ondelete='restrict'),
-        'patient_id': fields.many2one('doctor.patient', 'Patient', required=True, ondelete='restrict'),
-        'diseases_id': fields.many2one('doctor.diseases', 'Past diseases', required=True, ondelete='restrict'),
-    }
+
+    attentiont_id = fields.Many2one('doctor.attentions', 'Attention', ondelete='restrict')
+    patient_id = fields.Many2one('doctor.patient', 'Patient', required=True, ondelete='restrict')
+    diseases_id = fields.Many2one('doctor.diseases', 'Past diseases', required=True, ondelete='restrict')
+
 
     def name_get(self, cr, uid, ids, context={}):
         if not len(ids):
@@ -419,14 +418,13 @@ class doctor_diseases_past(osv.osv):
 doctor_diseases_past()
 
 
-class doctor_atc_past(osv.osv):
+class doctor_atc_past(models.Model):
     _name = "doctor.atc.past"
     _rec_name = 'attentiont_id'
-    _columns = {
-        'attentiont_id': fields.many2one('doctor.attentions', 'Attention', ondelete='restrict'),
-        'patient_id': fields.many2one('doctor.patient', 'Patient', required=True, ondelete='restrict'),
-        'atc_id': fields.many2one('doctor.atc', 'Past drugs', required=True, ondelete='restrict'),
-    }
+
+    attentiont_id = fields.Many2one('doctor.attentions', 'Attention', ondelete='restrict')
+    patient_id = fields.Many2one('doctor.patient', 'Patient', required=True, ondelete='restrict')
+    atc_id = fields.Many2one('doctor.atc', 'Past drugs', required=True, ondelete='restrict')
 
     def name_get(self, cr, uid, ids, context={}):
         if not len(ids):
@@ -444,7 +442,7 @@ class doctor_atc_past(osv.osv):
 doctor_atc_past()
 
 
-class doctor_exam_category(osv.osv):
+class doctor_exam_category(models.Model):
     def name_get(self, cr, uid, ids, context=None):
         """Return the categories' display name, including their direct
            parent by default.
@@ -489,24 +487,23 @@ class doctor_exam_category(osv.osv):
 
     _description = 'Exam categories'
     _name = 'doctor.exam.category'
-    _columns = {
-        'name': fields.char('Category Name', required=True, size=64, translate=True),
-        'parent_id': fields.many2one('doctor.exam.category', 'Parent Category', select=True, ondelete='cascade'),
-        'complete_name': fields.function(_name_get_fnc, type="char", string='Full Name'),
-        'child_ids': fields.one2many('doctor.exam.category', 'parent_id', 'Child Categories'),
-        'active': fields.boolean('Active',
-                                 help="The active field allows you to hide the category without removing it."),
-        'parent_left': fields.integer('Left parent', select=True),
-        'parent_right': fields.integer('Right parent', select=True),
-    }
 
+    name = fields.Char('Category Name', required=True, size=64, translate=True)
+    parent_id = fields.Many2one('doctor.exam.category', 'Parent Category', select=True, ondelete='cascade')
+    complete_name = fields.Char(compute='_name_get_fnc', type="char", string='Full Name')
+    child_ids = fields.One2many('doctor.exam.category', 'parent_id', 'Child Categories')
+    active = fields.Boolean('Active',
+                             help="The active field allows you to hide the category without removing it.",
+                            default=1)
+    parent_left = fields.Integer('Left parent', select=True)
+    parent_right = fields.Integer('Right parent', select=True)
+
+    """
     _constraints = [
-        (osv.osv._check_recursion, 'Error ! You can not create recursive categories.', ['parent_id'])
+        (models.Model._check_recursion, 'Error ! You can not create recursive categories.', ['parent_id'])
     ]
+    """
 
-    _defaults = {
-        'active': 1,
-    }
 
     _parent_store = True
     _parent_order = 'name'
@@ -516,7 +513,7 @@ class doctor_exam_category(osv.osv):
 doctor_exam_category()
 
 
-class doctor_health_procedures(osv.osv):
+class doctor_health_procedures(models.Model):
     _inherit = "product.product"
 
     def onchange_type(self, cr, uid, ids, type):
@@ -566,70 +563,62 @@ class doctor_health_procedures(osv.osv):
                 result.append(_name_get(mydict))
         return result
 
-    _columns = {
-        'is_health_procedure': fields.boolean('Is Health Procedure?'),
-        'procedure_code': fields.char('Code', size=16),
-        'procedure_description': fields.char('Description', size=256),
-        'complexity_level': fields.selection([('1', '1'), ('2', '2'), ('3', '3')], 'Complexity Level'),
-        'procedure_type': fields.selection([('1', 'Consultation'), ('2', 'Surgical Procedure'),
-                                            ('3', 'Diagnostic Image'), ('4', 'Clinical laboratory'),
-                                            ('5', 'Therapeutic Procedure'), ('6', 'Hospitalization'),
-                                            ('7', 'Odontological'), ('8', 'Other')], 'Procedure Type'),
-        'professional_ids': fields.many2many('doctor.professional', id1='procedures_ids', id2='professional_ids',
-                                             string='My health procedures', required=False, ondelete='restrict'),
-    }
+    is_health_procedure = fields.Boolean('Is Health Procedure?')
+    procedure_code = fields.Char('Code', size=16)
+    procedure_description = fields.Char('Description', size=256)
+    complexity_level = fields.Selection([('1', '1'), ('2', '2'), ('3', '3')], 'Complexity Level')
+    procedure_type = fields.Selection([('1', 'Consultation'), ('2', 'Surgical Procedure'),
+                                        ('3', 'Diagnostic Image'), ('4', 'Clinical laboratory'),
+                                        ('5', 'Therapeutic Procedure'), ('6', 'Hospitalization'),
+                                        ('7', 'Odontological'), ('8', 'Other')], 'Procedure Type')
+    professional_ids = fields.Many2many('doctor.professional', id1='procedures_ids', id2='professional_ids',
+                                         string='My health procedures', required=False, ondelete='restrict')
 
 
 doctor_health_procedures()
 
 
-class doctor_prescription(osv.osv):
+class doctor_prescription(models.Model):
     _name = "doctor.prescription"
     _rec_name = 'drugs_id'
-    _columns = {
-        'attentiont_id': fields.many2one('doctor.attentions', 'Attention'),
-        'drugs_id': fields.many2one('doctor.drugs', 'Drug', required=True, ondelete='restrict'),
-        'total_quantity': fields.integer('Total quantity', required=True),
-        'measuring_unit_qt': fields.many2one('doctor.measuring.unit', 'Drug measuring unit', required=True,
-                                             ondelete='restrict'),
-        'action_id': fields.selection([
-                                          ('take', 'Take'),
-                                          ('inject', 'Inject'),
-                                          ('apply', 'Apply'),
-                                          ('inhale', 'Inhale'),
-                                      ], 'Action', required=True),
-        'quantity': fields.integer('Quantity', required=True),
-        'measuring_unit_q': fields.many2one('doctor.measuring.unit', 'Drug measuring unit', required=True,
-                                            ondelete='restrict'),
-        'frequency': fields.integer('Frequency (each)', required=True),
-        'frequency_unit_n': fields.selection([
-                                                 ('minutes', 'minutes'),
-                                                 ('hours', 'hours'),
-                                                 ('days', 'days'),
-                                                 ('weeks', 'weeks'),
-                                                 ('wr', 'when required'),
-                                                 ('total', 'total'),
-                                             ], 'Frequency unit', required=True),
-        'duration': fields.integer('Treatment duration', required=True),
-        'duration_period_n': fields.selection([
-                                                  ('minutes', 'minutes'),
-                                                  ('hours', 'hours'),
-                                                  ('days', 'days'),
-                                                  ('months', 'months'),
-                                                  ('indefinite', 'indefinite'),
-                                              ], 'Treatment period', required=True),
-        'administration_route_id': fields.many2one('doctor.administration.route', 'Administration route', required=True,
-                                                   ondelete='restrict'),
-        'dose': fields.integer('Dose', required=True),
-        'dose_unit_id': fields.many2one('doctor.dose.unit', 'Dose unit', required=True, ondelete='restrict'),
-        'indications': fields.text('Indications'),
-    }
 
-    _defaults = {
-        'action_id': 'take',
-        'frequency_unit_n': 'hours',
-        'duration_period_n': 'days',
-    }
+    attentiont_id = fields.Many2one('doctor.attentions', 'Attention')
+    drugs_id = fields.Many2one('doctor.drugs', 'Drug', required=True, ondelete='restrict')
+    total_quantity = fields.Integer('Total quantity', required=True)
+    measuring_unit_qt = fields.Many2one('doctor.measuring.unit', 'Drug measuring unit', required=True,
+                                         ondelete='restrict')
+    action_id = fields.Selection([
+        ('take', 'Take'),
+        ('inject', 'Inject'),
+        ('apply', 'Apply'),
+        ('inhale', 'Inhale'),
+    ], 'Action', required=True, default='take')
+    quantity = fields.Integer('Quantity', required=True)
+    measuring_unit_q = fields.Many2one('doctor.measuring.unit', 'Drug measuring unit', required=True,
+                                        ondelete='restrict')
+    frequency = fields.Integer('Frequency (each)', required=True)
+    frequency_unit_n = fields.Selection([
+        ('minutes', 'minutes'),
+        ('hours', 'hours'),
+        ('days', 'days'),
+        ('weeks', 'weeks'),
+        ('wr', 'when required'),
+        ('total', 'total'),
+    ], 'Frequency unit', required=True, default='hours')
+    duration = fields.Integer('Treatment duration', required=True)
+    duration_period_n = fields.Selection([
+        ('minutes', 'minutes'),
+        ('hours', 'hours'),
+        ('days', 'days'),
+        ('months', 'months'),
+        ('indefinite', 'indefinite'),
+    ], 'Treatment period', required=True, default='days')
+    administration_route_id = fields.Many2one('doctor.administration.route', 'Administration route', required=True,
+                                               ondelete='restrict')
+    dose = fields.Integer('Dose', required=True)
+    dose_unit_id = fields.Many2one('doctor.dose.unit', 'Dose unit', required=True, ondelete='restrict')
+    indications = fields.Text('Indications')
+
 
     def name_get(self, cr, uid, ids, context={}):
         if not len(ids):

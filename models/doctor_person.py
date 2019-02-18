@@ -20,12 +20,13 @@
 ##############################################################################
 import logging
 _logger = logging.getLogger(__name__)
-from openerp.osv import fields, osv
-from openerp.tools.translate import _
+from odoo import models, fields, api
+
+from odoo.tools.translate import _
 import time
 import unicodedata
 
-class doctor_professional(osv.osv):
+class doctor_professional(models.Model):
 	_name = "doctor.professional"
 	_description = "Information about the healthcare professional"
 	_rec_name = 'username'
@@ -54,26 +55,21 @@ class doctor_professional(osv.osv):
 		vals['nombreUsuario'] = nombre.upper()
 		return super(doctor_professional, self).write(cr, uid, ids, vals, context=context)
 
-	_columns = {
-		'professional': fields.many2one('res.partner', 'Healthcare Professional', ondelete='cascade',
-										domain=[('is_company', '=', False)]),
-		'username': fields.char('Username', size=64, required=True),
-		'photo': fields.binary('patient'),
-		'speciality_id': fields.many2one('doctor.speciality', 'Speciality', required=True),
-		'professional_card': fields.char('Professional card', size=64, required=True),
-		'authority': fields.char('Authority', size=64, required=True),
-		'work_phone': fields.char('Work Phone', size=64),
-		'work_mobile': fields.char('Work Mobile', size=64),
-		'work_email': fields.char('Work Email', size=240),
-		'user_id': fields.many2one('res.users', 'User', help='Related user name', required=False, ondelete='cascade'),
-		'active': fields.boolean('Active'),
-		'procedures_ids': fields.many2many('product.product', id1='professional_ids', id2='procedures_ids',
-										   string='My health procedures', required=False, ondelete='restrict'),
-	}
+	professional = fields.Many2one('res.partner', 'Healthcare Professional', ondelete='cascade',
+									domain=[('is_company', '=', False)])
+	username = fields.Char('Username', size=64, required=True)
+	photo = fields.Binary('patient')
+	speciality_id = fields.Many2one('doctor.speciality', 'Speciality', required=True)
+	professional_card = fields.Char('Professional card', size=64, required=True)
+	authority = fields.Char('Authority', size=64, required=True)
+	work_phone = fields.Char('Work Phone', size=64)
+	work_mobile = fields.Char('Work Mobile', size=64)
+	work_email = fields.Char('Work Email', size=240)
+	user_id = fields.Many2one('res.users', 'User', help='Related user name', required=False, ondelete='cascade')
+	active = fields.Boolean('Active', default=lambda *a: 1)
+	procedures_ids = fields.Many2many('product.product', id1='professional_ids', id2='procedures_ids',
+									   string='My health procedures', required=False, ondelete='restrict')
 
-	_defaults = {
-		'active': lambda *a: 1,
-	}
 
 	def name_get(self, cr, uid, ids, context={}):
 		if not len(ids):
@@ -110,7 +106,7 @@ class doctor_professional(osv.osv):
 doctor_professional()
 
 
-class doctor_patient(osv.osv):
+class doctor_patient(models.Model):
 	_name = "doctor.patient"
 	_description = "Information about the patient"
 
@@ -238,27 +234,25 @@ class doctor_patient(osv.osv):
 				res[datos.id] = False	
 		return res
 
-	_columns = {
-		'patient': fields.many2one('res.partner', 'Paciente', ondelete='cascade',
-								   domain=[('is_company', '=', False)]),
-		'firstname' : fields.char('Primer Nombre', size=15, required=True),
-		'middlename' : fields.char('Segundo Nombre', size=15),
-		'lastname' : fields.char('Primer Apellido', size=15, required=True),
-		'surname' : fields.char('Segundo Apellido', size=15),
-		'photo': fields.binary('patient'),
-		'birth_date': fields.date('Date of Birth', required=True),
-		'sex': fields.selection([('m', 'Male'), ('f', 'Female'), ], 'Sex', select=True, required=True),
-		'blood_type': fields.selection([('A', 'A'), ('B', 'B'), ('AB', 'AB'), ('O', 'O'), ], 'Blood Type'),
-		'rh': fields.selection([('+', '+'), ('-', '-'), ], 'Rh'),
-		'insurer': fields.many2one('doctor.insurer', 'Insurer', required=False, help='Insurer'),
-		'deceased': fields.boolean('Deceased', help="Mark if the patient has died"),
-		'death_date': fields.date('Date of Death'),
-		'death_cause': fields.many2one('doctor.diseases', 'Cause of Death'),
-		'attentions_ids': fields.one2many('doctor.attentions', 'patient_id', 'Attentions'),
-		'appointments_ids': fields.one2many('doctor.appointment', 'patient_id', 'Attentions'),
-		'get_professional_id': fields.function(_get_profesional_id, type="integer", store= False, 
-								readonly=True, method=True),
-	}
+	patient = fields.Many2one('res.partner', 'Paciente', ondelete='cascade',
+								   domain=[('is_company', '=', False)])
+	firstname = fields.Char('Primer Nombre', size=15, required=True)
+	middlename = fields.Char('Segundo Nombre', size=15)
+	lastname = fields.Char('Primer Apellido', size=15, required=True)
+	surname = fields.Char('Segundo Apellido', size=15)
+	photo = fields.Binary('patient')
+	birth_date = fields.Date('Date of Birth', required=True)
+	sex = fields.Selection([('m', 'Male'), ('f', 'Female'), ], 'Sex', select=True, required=True)
+	blood_type = fields.Selection([('A', 'A'), ('B', 'B'), ('AB', 'AB'), ('O', 'O'), ], 'Blood Type')
+	rh = fields.Selection([('+', '+'), ('-', '-'), ], 'Rh')
+	insurer = fields.Many2one('doctor.insurer', 'Insurer', required=False, help='Insurer')
+	deceased = fields.Boolean('Deceased', help="Mark if the patient has died")
+	death_date = fields.Date('Date of Death')
+	death_cause = fields.Many2one('doctor.diseases', 'Cause of Death')
+	attentions_ids = fields.One2many('doctor.attentions', 'patient_id', 'Attentions')
+	appointments_ids = fields.One2many('doctor.appointment', 'patient_id', 'Attentions')
+	get_professional_id = fields.Integer(compute='_get_profesional_id', type="integer", store= False,
+							readonly=True, method=True)
 
 	def name_get(self,cr,uid,ids,context=None):
 		if context is None:

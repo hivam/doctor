@@ -19,30 +19,28 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, osv
-from openerp.tools.translate import _
+from odoo import models, fields, api
+from odoo.tools.translate import _
 import logging
 _logger = logging.getLogger(__name__)
 
-class doctor_speciality(osv.osv):
+class doctor_speciality(models.Model):
 	_name = "doctor.speciality"
-	_columns = {
-		'code': fields.char('Code', size=3, required=True),
-		'name': fields.char('Speciality', size=64, required=True),
-	}
+	code = fields.Char('Code', size=3, required=True)
+	name = fields.Char('Speciality', size=64, required=True)
+
 
 	_sql_constraints = [('code_uniq', 'unique (code)', 'The Medical Speciality code must be unique')]
 
 doctor_speciality()
 
 
-class doctor_insurer(osv.osv):
+class doctor_insurer(models.Model):
 	_name = "doctor.insurer"
 	_rec_name = 'insurer'
-	_columns = {
-		'insurer': fields.many2one('res.partner', 'Insurer', help='Insurer'),
-		'code': fields.char('Code', size=6, required=True),
-	}
+	insurer = fields.Many2one('res.partner', 'Insurer', help='Insurer')
+	code = fields.Char('Code', size=6, required=True)
+
 
 	def name_get(self, cr, uid, ids, context={}):
 
@@ -69,12 +67,12 @@ class doctor_insurer(osv.osv):
 doctor_insurer()
 
 
-class doctor_pharmaceutical_form(osv.osv):
+class doctor_pharmaceutical_form(models.Model):
 	_name = "doctor.pharmaceutical.form"
-	_columns = {
-		'code': fields.char('Code', size=10, required=True),
-		'name': fields.char('Pharmaceutical form', size=128, required=True),
-	}
+
+	code = fields.Char('Code', size=10, required=True)
+	name = fields.Char('Pharmaceutical form', size=128, required=True)
+
 
 	_sql_constraints = [('code_uniq', 'unique (code)', 'The Pharmaceutical Form code must be unique')]
 
@@ -82,12 +80,12 @@ class doctor_pharmaceutical_form(osv.osv):
 doctor_pharmaceutical_form()
 
 
-class doctor_dose_unit(osv.osv):
+class doctor_dose_unit(models.Model):
 	_name = "doctor.dose.unit"
-	_columns = {
-		'code': fields.char('Abbreviation', size=10, required=True),
-		'name': fields.char('Dosage unit', size=128, required=True),
-	}
+
+	code = fields.Char('Abbreviation', size=10, required=True)
+	name = fields.Char('Dosage unit', size=128, required=True)
+
 
 	_sql_constraints = [('code_uniq', 'unique (code)', 'The Dose code must be unique')]
 
@@ -107,12 +105,12 @@ class doctor_dose_unit(osv.osv):
 doctor_dose_unit()
 
 
-class doctor_administration_route(osv.osv):
+class doctor_administration_route(models.Model):
 	_name = "doctor.administration.route"
-	_columns = {
-		'code': fields.char('Code', size=10, required=True),
-		'name': fields.char('Administration route', size=128, required=True),
-	}
+
+	code = fields.Char('Code', size=10, required=True)
+	name = fields.Char('Administration route', size=128, required=True)
+
 
 	_sql_constraints = [('code_uniq', 'unique (code)', 'The Administration Route code must be unique')]
 
@@ -120,12 +118,12 @@ class doctor_administration_route(osv.osv):
 doctor_administration_route()
 
 
-class doctor_measuring_unit(osv.osv):
+class doctor_measuring_unit(models.Model):
 	_name = "doctor.measuring.unit"
-	_columns = {
-		'code': fields.char('Code', size=10, required=True),
-		'name': fields.char('Measuring unit', size=128, required=True),
-	}
+
+	code = fields.Char('Code', size=10, required=True)
+	name = fields.Char('Measuring unit', size=128, required=True)
+
 
 	#_sql_constraints = [('code_uniq', 'unique (code)', 'The Measuring unit code must be unique')]
 
@@ -133,19 +131,19 @@ class doctor_measuring_unit(osv.osv):
 doctor_measuring_unit()
 
 
-class doctor_drugs(osv.osv):
+class doctor_drugs(models.Model):
 	_name = "doctor.drugs"
 	_rec_name = 'atc_id'
-	_columns = {
-		'code': fields.char('Code', size=10, required=True),
-		'atc_id': fields.many2one('doctor.atc', 'ATC', required=True, ondelete='restrict'),
-		'pharmaceutical_form': fields.many2one('doctor.pharmaceutical.form', 'Pharmaceutical form', required=True,
-											   ondelete='restrict'),
-		'drugs_concentration': fields.char('Drugs concentration', size=64, required=True),
-		'administration_route': fields.many2one('doctor.administration.route', 'Administration route', required=True,
-												ondelete='restrict'),
-		'indication_drug':fields.text('Indicaciones', size=300, help='Agregar indicaciones al medicamento'),
-	}
+
+	code = fields.Char('Code', size=10, required=True)
+	atc_id = fields.Many2one('doctor.atc', 'ATC', required=True, ondelete='restrict')
+	pharmaceutical_form = fields.Many2one('doctor.pharmaceutical.form', 'Pharmaceutical form', required=True,
+										   ondelete='restrict')
+	drugs_concentration = fields.Char('Drugs concentration', size=64, required=True)
+	administration_route = fields.Many2one('doctor.administration.route', 'Administration route', required=True,
+											ondelete='restrict')
+	indication_drug = fields.Text('Indicaciones', size=300, help='Agregar indicaciones al medicamento')
+
 
 	def name_get(self, cr, uid, ids, context={}):
 		if not len(ids):
@@ -165,12 +163,12 @@ class doctor_drugs(osv.osv):
 doctor_drugs()
 
 
-class doctor_atc(osv.osv):
+class doctor_atc(models.Model):
 	_name = "doctor.atc"
-	_columns = {
-		'code': fields.char('Code', size=7, required=True),
-		'name': fields.char('Description', size=512, required=True),
-	}
+
+	code = fields.Char('Code', size=7, required=True)
+	name = fields.Char('Description', size=512, required=True)
+
 
 	def name_get(self, cr, uid, ids, context={}):
 		if not len(ids):

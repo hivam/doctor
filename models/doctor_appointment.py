@@ -20,17 +20,18 @@
 ##############################################################################
 
 from datetime import datetime, timedelta
-from openerp.osv import fields, osv
-from openerp.tools.translate import _
+from odoo import models, fields, api
+#from openerp.osv import fields, osv
+from odoo.tools.translate import _
 import pytz
-from doctor_attentions import doctor_attentions
+from . import doctor_attentions
 import logging
 _logger = logging.getLogger(__name__)
-class doctor_appointment_type(osv.osv):
+class doctor_appointment_type(models.Model):
 	_name = "doctor.appointment.type"
 	_columns = {
-		'name': fields.char('Type', size=30, required=True),
-		'duration': fields.integer('Duration', required=True),
+		'name':  fields.Char('Type', size=30, required=True),
+		'duration':  fields.Integer('Duration', required=True),
 	}
 
 
@@ -38,7 +39,7 @@ class doctor_appointment_type(osv.osv):
 doctor_appointment_type()
 
 
-class doctor_appointment(osv.osv):
+class doctor_appointment(models.Model):
 	_name = "doctor.appointment"
 	_order = 'time_begin asc'
 	_rec_name = 'number'
@@ -87,44 +88,39 @@ class doctor_appointment(osv.osv):
 				res[record.id] = False
 		return res
 
-	_columns = {
-		'schedule_id': fields.many2one('doctor.schedule', 'Schedule', states={'invoiced': [('readonly', True)]}),
-		'number': fields.char('Appointment number', select=1, size=32, readonly=True,
-							  help="Number of appointment. Keep empty to get the number assigned by a sequence."),
-		'professional_id': fields.related('schedule_id', 'professional_id', type="many2one",
-										  relation="doctor.professional", string='Professional', required=True,
-										  store=True),
-		'patient_id': fields.many2one('doctor.patient', "Patient", required=True,
-									  states={'invoiced': [('readonly', True)]}),
-		'insurer_id': fields.related('patient_id', 'insurer', type="many2one", relation="doctor.insurer",
-									 string='Insurer', required=False, states={'invoiced': [('readonly', True)]},
-									 store= True),
-		'type_id': fields.many2one('doctor.appointment.type', "Appointment type",
-								   states={'invoiced': [('readonly', True)]}),
-		'time_begin': fields.datetime('Start time', required=True, states={'invoiced': [('readonly', True)]}),
-		'time_end': fields.datetime('End time', required=True, states={'invoiced': [('readonly', True)]}),
-		'appointment_today': fields.function(_get_appointment_today, type="boolean", store=True, readonly=True,
-											 method=True, string="Appointment today"),
-		'state': fields.selection([
-									  ('draft', 'Unconfirmed'), ('cancel', 'Cancelled'),
-									  ('confirm', 'Confirmed'), ('assists', 'Waiting'),
-									  ('attending', 'Attending'), ('invoiced', 'Invoiced')],
-								  'Status', readonly=True, required=True),
-		'procedures_id': fields.one2many('doctor.appointment.procedures', 'appointment_id', 'Health Procedures',
-										 ondelete='restrict', states={'invoiced': [('readonly', True)]}),
-		'order_id': fields.many2one('sale.order', 'Order', ondelete='restrict', readonly=True),
-		'attentiont_id': fields.many2one('doctor.attentions', 'Attentiont', ondelete='restrict', readonly=True),
-		'attended': fields.boolean('Attended', readonly=True),
-		'aditional': fields.boolean('Aditional'),
-		'nb_register': fields.integer('Number of Participants', required=True, readonly=True),
-	}
+	schedule_id =  fields.Many2one('doctor.schedule', 'Schedule', states={'invoiced': [('readonly', True)]})
+	number =  fields.Char('Appointment number', select=1, size=32, readonly=True,
+						  help="Number of appointment. Keep empty to get the number assigned by a sequence.",
+						 default=lambda self, cr, uid, context: context.get('schedule_id', False),)
+	"""
+	professional_id = fields.related('schedule_id', 'professional_id', type="many2one",
+									  relation="doctor.professional", string='Professional', required=True,
+									  store=True)"""
+	patient_id =  fields.Many2one('doctor.patient', "Patient", required=True,
+								  states={'invoiced': [('readonly', True)]})
+	"""
+	insurer_id = fields.related('patient_id', 'insurer', type="many2one", relation="doctor.insurer",
+								 string='Insurer', required=False, states={'invoiced': [('readonly', True)]},
+								 store=True)"""
+	type_id =  fields.Many2one('doctor.appointment.type', "Appointment type",
+							   states={'invoiced': [('readonly', True)]})
+	time_begin =  fields.Datetime('Start time', required=True, states={'invoiced': [('readonly', True)]})
+	time_end =  fields.Datetime('End time', required=True, states={'invoiced': [('readonly', True)]})
+	appointment_today = fields.Char(compute='_get_appointment_today', type="boolean", store=True, readonly=True,
+										 method=True, string="Appointment today")
+	state = fields.Selection([
+		('draft', 'Unconfirmed'), ('cancel', 'Cancelled'),
+		('confirm', 'Confirmed'), ('assists', 'Waiting'),
+		('attending', 'Attending'), ('invoiced', 'Invoiced')],
+		'Status', readonly=True, required=True, default='draft')
+	procedures_id =  fields.One2many('doctor.appointment.procedures', 'appointment_id', 'Health Procedures',
+									 ondelete='restrict', states={'invoiced': [('readonly', True)]})
+	order_id =  fields.Many2one('sale.order', 'Order', ondelete='restrict', readonly=True)
+	attentiont_id =  fields.Many2one('doctor.attentions', 'Attentiont', ondelete='restrict', readonly=True)
+	attended =  fields.Boolean('Attended', readonly=True)
+	aditional =  fields.Boolean('Aditional', default=False)
+	nb_register =  fields.Integer('Number of Participants', required=True, readonly=True, default=1)
 
-	_defaults = {
-		'state': 'draft',
-		'aditional': False,
-		'schedule_id': lambda self, cr, uid, context: context.get('schedule_id', False),
-		'nb_register': 1,
-	}
 
 	def update_appointment_today(self, cr, uid, ids=False, context=None):
 		if context is None:
@@ -379,17 +375,17 @@ class doctor_appointment(osv.osv):
 doctor_appointment()
 
 
-class doctor_appointment_procedures(osv.osv):
+class doctor_appointment_procedures(models.Model):
 	_name = "doctor.appointment.procedures"
 	_rec_name = 'procedures_id'
-	_columns = {
-		'appointment_id': fields.many2one('doctor.appointment', 'Appointment'),
-		'professional_id': fields.many2one('doctor.professional', 'Doctor'),
-		'procedures_id': fields.many2one('product.product', 'Health Procedures', required=True, ondelete='restrict'),
-		'quantity': fields.integer('Quantity', required=True),
-		'additional_description': fields.char('Add. description', size=30,
-											  help='Additional description that will be added to the product description on orders.'),
-	}
+
+	appointment_id =  fields.Many2one('doctor.appointment', 'Appointment')
+	professional_id =  fields.Many2one('doctor.professional', 'Doctor', default=lambda self, cr, uid, context: context.get('professional_id', False))
+	procedures_id =  fields.Many2one('product.product', 'Health Procedures', required=True, ondelete='restrict')
+	quantity =  fields.Integer('Quantity', required=True, default=1)
+	additional_description =  fields.Char('Add. description', size=30,
+										  help='Additional description that will be added to the product description on orders.')
+
 
 	def name_get(self, cr, uid, ids, context={}):
 		if not len(ids):
@@ -399,10 +395,6 @@ class doctor_appointment_procedures(osv.osv):
 			   for r in self.read(cr, uid, ids, [rec_name], context)]
 		return res
 
-	_defaults = {
-		'professional_id': lambda self, cr, uid, context: context.get('professional_id', False),
-		'quantity': 1,
-	}
 
 
 doctor_appointment_procedures()

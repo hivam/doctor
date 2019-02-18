@@ -19,13 +19,13 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, osv
-from openerp.tools.translate import _
-import openerp.addons.decimal_precision as dp
-from openerp.tools.translate import _
+from odoo import models, fields, api
+from odoo.tools.translate import _
+import odoo.addons.decimal_precision as dp
+from odoo.tools.translate import _
 
 
-class doctor_sales_order(osv.osv):
+class doctor_sales_order(models.Model):
     _inherit = "sale.order"
     _name = "sale.order"
 
@@ -67,37 +67,35 @@ class doctor_sales_order(osv.osv):
             result[line.order_id.id] = True
         return result.keys()
 
-    _columns = {
-        'patient_id': fields.many2one('doctor.patient', "Patient"),
-        'amount_untaxed': fields.function(_amount_all, digits_compute=dp.get_precision('Account'),
-                                          string='Untaxed Amount',
-                                          store={
-                                              'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
-                                              'sale.order.line': (
-                                              _get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
-                                          },
-                                          multi='sums', help="The amount without tax.", track_visibility='always'),
-        'amount_tax': fields.function(_amount_all, digits_compute=dp.get_precision('Account'), string='Taxes',
+    patient_id = fields.Many2one('doctor.patient', "Patient")
+    amount_untaxed = fields.Float(compute='_amount_all', digits_compute=dp.get_precision('Account'),
+                                      string='Untaxed Amount',
                                       store={
                                           'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
                                           'sale.order.line': (
-                                          _get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
+                                              _get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
                                       },
-                                      multi='sums', help="The tax amount."),
-        'amount_total': fields.function(_amount_all, digits_compute=dp.get_precision('Account'), string='Total',
-                                        store={
-                                            'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
-                                            'sale.order': (
+                                      multi='sums', help="The amount without tax.", track_visibility='always')
+    amount_tax = fields.Float(compute='_amount_all', digits_compute=dp.get_precision('Account'), string='Taxes',
+                                  store={
+                                      'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
+                                      'sale.order.line': (
+                                          _get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
+                                  },
+                                  multi='sums', help="The tax amount.")
+    amount_total = fields.Float(compute='_amount_all', digits_compute=dp.get_precision('Account'), string='Total',
+                                    store={
+                                        'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
+                                        'sale.order': (
                                             lambda self, cr, uid, ids, c={}: ids, ['amount_patient'], 10),
-                                            'sale.order.line': (
+                                        'sale.order.line': (
                                             _get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
-                                        },
-                                        multi='sums', help="The total amount."),
-        'amount_patient': fields.float('Amount patient', digits_compute=dp.get_precision('Account'), readonly=True,
-                                       states={'draft': [('readonly', False)]}),
-        'amount_partner': fields.float('Amount partner', digits_compute=dp.get_precision('Account'), readonly=True,
-                                       states={'draft': [('readonly', False)]}),
-    }
+                                    },
+                                    multi='sums', help="The total amount.")
+    amount_patient = fields.Float('Amount patient', digits_compute=dp.get_precision('Account'), readonly=True,
+                                   states={'draft': [('readonly', False)]})
+    amount_partner = fields.Float('Amount partner', digits_compute=dp.get_precision('Account'), readonly=True,
+                                   states={'draft': [('readonly', False)]})
 
     def onchange_amount_patient(self, cr, uid, ids, amount_untaxed, amount_tax, amount_patient, context=None):
         values = {}

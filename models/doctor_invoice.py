@@ -19,12 +19,12 @@
 #
 ##############################################################################
 import time
-from openerp.osv import fields, osv
-import openerp.addons.decimal_precision as dp
-from openerp.tools.translate import _
+from odoo import models, fields, api
+import odoo.addons.decimal_precision as dp
+from odoo.tools.translate import _
 
 
-class doctor_invoice(osv.osv):
+class doctor_invoice(models.Model):
     _inherit = "account.invoice"
     _name = "account.invoice"
 
@@ -58,49 +58,48 @@ class doctor_invoice(osv.osv):
             result[tax.invoice_id.id] = True
         return result.keys()
 
-    _columns = {
-        'patient_id': fields.many2one('doctor.patient', "Patient"),
-        'amount_untaxed': fields.function(_amount_all, digits_compute=dp.get_precision('Account'), string='Subtotal',
-                                          track_visibility='always',
-                                          store={
-                                              'account.invoice': (
-                                              lambda self, cr, uid, ids, c={}: ids, ['invoice_line'], 20),
-                                              'account.invoice.tax': (_get_invoice_tax, None, 20),
-                                              'account.invoice.line': (_get_invoice_line,
-                                                                       ['price_unit', 'invoice_line_tax_id', 'quantity',
-                                                                        'discount', 'invoice_id'], 20),
-                                          },
-                                          multi='all'),
-        'amount_tax': fields.function(_amount_all, digits_compute=dp.get_precision('Account'), string='Tax',
+    patient_id = fields.Many2one('doctor.patient', "Patient")
+    amount_untaxed = fields.Float(compute='_amount_all', digits_compute=dp.get_precision('Account'), string='Subtotal',
+                                      track_visibility='always',
                                       store={
                                           'account.invoice': (
-                                          lambda self, cr, uid, ids, c={}: ids, ['invoice_line'], 20),
+                                              lambda self, cr, uid, ids, c={}: ids, ['invoice_line'], 20),
                                           'account.invoice.tax': (_get_invoice_tax, None, 20),
                                           'account.invoice.line': (_get_invoice_line,
                                                                    ['price_unit', 'invoice_line_tax_id', 'quantity',
                                                                     'discount', 'invoice_id'], 20),
                                       },
-                                      multi='all'),
-        'amount_total': fields.function(_amount_all, digits_compute=dp.get_precision('Account'), string='Total',
-                                        store={
-                                            'account.invoice': (
+                                      multi='all')
+    amount_tax = fields.Float(compute='_amount_all', digits_compute=dp.get_precision('Account'), string='Tax',
+                                  store={
+                                      'account.invoice': (
+                                          lambda self, cr, uid, ids, c={}: ids, ['invoice_line'], 20),
+                                      'account.invoice.tax': (_get_invoice_tax, None, 20),
+                                      'account.invoice.line': (_get_invoice_line,
+                                                               ['price_unit', 'invoice_line_tax_id', 'quantity',
+                                                                'discount', 'invoice_id'], 20),
+                                  },
+                                  multi='all')
+    amount_total = fields.Float(compute='_amount_all', digits_compute=dp.get_precision('Account'), string='Total',
+                                    store={
+                                        'account.invoice': (
                                             lambda self, cr, uid, ids, c={}: ids, ['amount_patient'], 20),
-                                            'account.invoice': (
+                                        'account.invoice': (
                                             lambda self, cr, uid, ids, c={}: ids, ['invoice_line'], 20),
-                                            'account.invoice.tax': (_get_invoice_tax, None, 20),
-                                            'account.invoice.line': (_get_invoice_line,
-                                                                     ['price_unit', 'invoice_line_tax_id', 'quantity',
-                                                                      'discount', 'invoice_id'], 20),
-                                        },
-                                        multi='all'),
-        'amount_patient': fields.float('Amount patient', digits_compute=dp.get_precision('Account'), readonly=True,
-                                       states={'draft': [('readonly', False)]}),
-        'amount_partner': fields.float('Amount partner', digits_compute=dp.get_precision('Account'), readonly=True,
-                                       states={'draft': [('readonly', False)]}),
-        'account_patient': fields.many2one('account.account', 'Account patient', readonly=True,
-                                           states={'draft': [('readonly', False)]},
-                                           help="The patient account used for this invoice."),
-    }
+                                        'account.invoice.tax': (_get_invoice_tax, None, 20),
+                                        'account.invoice.line': (_get_invoice_line,
+                                                                 ['price_unit', 'invoice_line_tax_id', 'quantity',
+                                                                  'discount', 'invoice_id'], 20),
+                                    },
+                                    multi='all')
+    amount_patient = fields.Float('Amount patient', digits_compute=dp.get_precision('Account'), readonly=True,
+                                   states={'draft': [('readonly', False)]})
+    amount_partner = fields.Float('Amount partner', digits_compute=dp.get_precision('Account'), readonly=True,
+                                   states={'draft': [('readonly', False)]})
+    account_patient = fields.Many2one('account.account', 'Account patient', readonly=True,
+                                       states={'draft': [('readonly', False)]},
+                                       help="The patient account used for this invoice.")
+
 
     def onchange_amount_patient(self, cr, uid, ids, amount_untaxed, amount_tax, amount_patient, context=None):
         values = {}
@@ -215,7 +214,7 @@ class doctor_invoice(osv.osv):
                 if inv.type == 'out_refund':
                     entry_type = 'cont_voucher'
 
-            diff_currency_p = inv.currency_id.id <> company_currency
+            diff_currency_p = inv.currency_id.id != company_currency
             # create one move line for the total and possibly adjust the other lines amount
             total = 0
             total_currency = 0
