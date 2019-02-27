@@ -1,1 +1,1 @@
-from . import doctor,doctor_invoice,doctor_product,doctor_sales_order,doctor_appointment,doctor_person,doctor_attentions,doctor_data
+from . import doctor_person,doctor_attentions,doctor_data

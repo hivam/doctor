@@ -41,24 +41,18 @@ class doctor_insurer(models.Model):
 	insurer = fields.Many2one('res.partner', 'Insurer', help='Insurer')
 	code = fields.Char('Code', size=6, required=True)
 
+	@api.multi
+	def name_get(self):
+		res = []
 
-	def name_get(self, cr, uid, ids, context={}):
-
-		if not ids:
-			return []
-		#decimos que si hay varios ids, lo tomemos como uno
-		if isinstance(ids,(long,int)):
-			ids=[ids]
-		res=[]
-
-		for record in self.browse(cr,uid,ids,context=context):
+		for record in self:
 			aseguradora= ''
 			try:
 				aseguradora = record.insurer.name
 			except:
 				_logger.info("---Hubo un error en name_get de iniciativas")
 
-			res.append((record['id'], aseguradora))
+			res.append((record.id, aseguradora))
 		return res
 
 	
@@ -89,17 +83,18 @@ class doctor_dose_unit(models.Model):
 
 	_sql_constraints = [('code_uniq', 'unique (code)', 'The Dose code must be unique')]
 
-	def name_get(self, cr, uid, ids, context={}):
-		if not len(ids):
-			return []
-		reads = self.read(cr, uid, ids, ['name', 'code'], context)
+
+
+	@api.multi
+	def name_get(self):
 		res = []
-		for record in reads:
-			name = record['name']
-			if record['code']:
-				name = record['code'] + ' - ' + name
-			res.append((record['id'], name))
+		for record in self:
+			name = record.name
+			if record.code:
+				name = record.code + ' - ' + name
+			res.append((record.id, name))
 		return res
+
 
 
 doctor_dose_unit()
@@ -125,7 +120,7 @@ class doctor_measuring_unit(models.Model):
 	name = fields.Char('Measuring unit', size=128, required=True)
 
 
-	#_sql_constraints = [('code_uniq', 'unique (code)', 'The Measuring unit code must be unique')]
+	_sql_constraints = [('code_uniq', 'unique (code)', 'The Measuring unit code must be unique')]
 
 
 doctor_measuring_unit()
@@ -145,10 +140,12 @@ class doctor_drugs(models.Model):
 	indication_drug = fields.Text('Indicaciones', size=300, help='Agregar indicaciones al medicamento')
 
 
-	def name_get(self, cr, uid, ids, context={}):
+
+	"""
+	def name_get(self):
 		if not len(ids):
 			return []
-		reads = self.read(cr, uid, ids,
+		reads = self.read(self._ids,
 						  ['atc_id', 'pharmaceutical_form', 'drugs_concentration', 'administration_route'], context)
 		res = []
 		for record in reads:
@@ -158,7 +155,7 @@ class doctor_drugs(models.Model):
 					   record['administration_route'][1] + ')'
 			res.append((record['id'], name))
 		return res
-
+	"""
 
 doctor_drugs()
 
@@ -170,18 +167,18 @@ class doctor_atc(models.Model):
 	name = fields.Char('Description', size=512, required=True)
 
 
-	def name_get(self, cr, uid, ids, context={}):
-		if not len(ids):
-			return []
-		reads = self.read(cr, uid, ids, ['name', 'code'], context)
+
+	@api.multi
+	def name_get(self):
 		res = []
-		for record in reads:
-			name = record['name']
-			if record['code']:
-				name = record['code'] + ' - ' + name
-			res.append((record['id'], name))
+		for record in self:
+			name = record.name
+			if record.code:
+				name = record.code + ' - ' + name
+			res.append((record.id, name))
 		return res
 
+	"""
 	def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=100):
 		args = args or []
 		ids = []
@@ -192,6 +189,49 @@ class doctor_atc(models.Model):
 		else:
 			ids = self.search(cr, uid, args, limit=limit, context=context)
 		return self.name_get(cr, uid, ids, context)
-
+	"""
 
 doctor_atc()
+
+
+class doctor_diseases(models.Model):
+	_name = "doctor.diseases"
+
+	code = fields.Char('Code', size=4, required=True)
+	name = fields.Char('Disease', size=256, required=True)
+
+	_sql_constraints = [('code_uniq', 'unique (code)', 'The Medical Diseases code must be unique')]
+
+	@api.multi
+	def name_get(self):
+		res = []
+
+		for record in self:
+			name = record.name
+			if record.code:
+				name = record.code + ' - ' + name
+			res.append((record.id, name))
+		return res
+
+	"""
+	def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=100):
+		args = args or []
+		ids = []
+		odontologia = context.get('odontologia')
+	
+		if name:
+			ids = self.search(cr, uid, [('code', 'ilike', name)] + args, limit=limit, context=context)
+			if not ids:
+				ids = self.search(cr, uid, [('name', operator, name)] + args, limit=limit, context=context)
+		elif odontologia:
+			ids = self.search(cr, uid, [('code','>=','k000'),('code','<=','K149')], limit=limit, context=context)
+		else:
+			ids = self.search(cr, uid, args, limit=limit, context=context)
+		return self.name_get(cr, uid, ids, context)
+	"""
+
+doctor_diseases()
+
+
+
+

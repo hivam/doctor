@@ -31,6 +31,8 @@ class doctor_professional(models.Model):
 	_description = "Information about the healthcare professional"
 	_rec_name = 'username'
 
+
+	"""
 	def write(self, cr, uid, ids, vals, context=None):
 		datos = {'lastname': '', 'surname': '', 'firstname': '', 'middlename': ''}
 		nombre = ''
@@ -54,7 +56,7 @@ class doctor_professional(models.Model):
 
 		vals['nombreUsuario'] = nombre.upper()
 		return super(doctor_professional, self).write(cr, uid, ids, vals, context=context)
-
+	"""
 	professional = fields.Many2one('res.partner', 'Healthcare Professional', ondelete='cascade',
 									domain=[('is_company', '=', False)])
 	username = fields.Char('Username', size=64, required=True)
@@ -70,7 +72,7 @@ class doctor_professional(models.Model):
 	procedures_ids = fields.Many2many('product.product', id1='professional_ids', id2='procedures_ids',
 									   string='My health procedures', required=False, ondelete='restrict')
 
-
+	"""
 	def name_get(self, cr, uid, ids, context={}):
 		if not len(ids):
 			return []
@@ -78,7 +80,8 @@ class doctor_professional(models.Model):
 		res = [(r['id'], r[rec_name][1])
 			for r in self.read(cr, uid, ids, [rec_name], context)]
 		return res
-
+	"""
+	"""
 	def onchange_photo(self, cr, uid, ids, professional, photo, context=None):
 		values = {}
 		if not professional:
@@ -89,19 +92,23 @@ class doctor_professional(models.Model):
 			'photo': professional_img,
 		})
 		return {'value': values}
-
+	
 	def onchange_user(self, cr, uid, ids, user_id, context=None):
 		work_email = False
 		if user_id:
 			work_email = self.pool.get('res.users').browse(cr, uid, user_id, context=context).email
 		return {'value': {'work_email': work_email}}
+	"""
+	@api.model
+	@api.onchange('username')
+	def onchange_username(self):
 
-	def onchange_username(self, cr, uid, ids, username, context=None):
-		if self.pool.get('res.users').search(cr, uid, [('login', '=', username),], context):
+		if self.env['res.users'].search([('login', '=', self.username)]):
 			return {'value': {'username': False,}, 'warning': {'title': 'The username exists', 'message': "Please change the username"}}
-		else:
-			user_id = self.pool.get('res.users').create(cr, uid, {'login': username, 'name': username})
-			return {'value': {'user_id': user_id, },}
+
+		#self.user_id = usuarioid
+
+
 
 doctor_professional()
 
@@ -109,7 +116,7 @@ doctor_professional()
 class doctor_patient(models.Model):
 	_name = "doctor.patient"
 	_description = "Information about the patient"
-
+	"""
 	def write(self, cr, uid, ids, vals, context=None):
 		datos = {'lastname': '', 'surname': '', 'firstname': '', 'middlename': ''}
 		nombre = ''
@@ -223,8 +230,10 @@ class doctor_patient(models.Model):
 			self.pool.get('res.partner').write(cr, uid, partner_id, {'es_paciente': True}, context=context)
 
 		return super(doctor_patient, self).create(cr, uid, vals, context=context)
+	"""
 
-	def _get_profesional_id(self, cr, uid, ids, field_name, arg, context=None):
+	@api.multi
+	def _get_profesional_id(self):
 		res = {}
 		for datos in self.browse(cr, uid, ids):
 			doctor_id = self.pool.get('doctor.professional').search(cr,uid,[('user_id','=',uid)],context=context)
@@ -236,9 +245,9 @@ class doctor_patient(models.Model):
 
 	patient = fields.Many2one('res.partner', 'Paciente', ondelete='cascade',
 								   domain=[('is_company', '=', False)])
-	firstname = fields.Char('Primer Nombre', size=15, required=True)
+	firstname = fields.Char('Primer Nombre', size=15)
 	middlename = fields.Char('Segundo Nombre', size=15)
-	lastname = fields.Char('Primer Apellido', size=15, required=True)
+	lastname = fields.Char('Primer Apellido', size=15)
 	surname = fields.Char('Segundo Apellido', size=15)
 	photo = fields.Binary('patient')
 	birth_date = fields.Date('Date of Birth', required=True)
@@ -250,10 +259,10 @@ class doctor_patient(models.Model):
 	death_date = fields.Date('Date of Death')
 	death_cause = fields.Many2one('doctor.diseases', 'Cause of Death')
 	attentions_ids = fields.One2many('doctor.attentions', 'patient_id', 'Attentions')
-	appointments_ids = fields.One2many('doctor.appointment', 'patient_id', 'Attentions')
-	get_professional_id = fields.Integer(compute='_get_profesional_id', type="integer", store= False,
-							readonly=True, method=True)
-
+	#appointments_ids = fields.One2many('doctor.appointment', 'patient_id', 'Attentions')
+	#get_professional_id = fields.Integer(compute='_get_profesional_id', type="integer", store= False,
+	#						readonly=True, method=True)
+	"""
 	def name_get(self,cr,uid,ids,context=None):
 		if context is None:
 			context = {}
@@ -278,6 +287,6 @@ class doctor_patient(models.Model):
 			'photo': patient_img,
 		})
 		return {'value': values}
-
+	"""
 
 doctor_patient()

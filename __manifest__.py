@@ -42,9 +42,9 @@ This module allows
     'website': 'http://www.tix.com.co',
     'license': 'AGPL-3',
     'depends' : ['base','product','sale'],
-    'data' : ['security/doctor_security.xml',
-              'security/ir.model.access.csv',
-              'doctor_sequence.xml',
+    'data' : [#'security/doctor_security.xml',
+              #'security/ir.model.access.csv',
+              #'doctor_sequence.xml',
               'doctor_view.xml',
               ],
               

@@ -80,13 +80,14 @@ class doctor_schedule(models.Model):
         date_end_user = datetime.strftime(date_end_user, "%H:%M")
         return date_end_user
 
-    def name_get(self, cr, uid, ids, context=None):
-        if not ids:
+    @api.multi
+    def name_get(self):
+        if not self._ids:
             return []
-        if isinstance(ids, (long, int)):
-            ids = [ids]
+        if isinstance(self._ids, (long, int)):
+            ids = [self._ids]
         res = []
-        for record in self.browse(cr, uid, ids, context=context):
+        for record in self.browse(self._ids):
             date_begin = record.date_begin
             date_end = record.date_end
             display_name = record.professional_id['firtsname'] +' '+ record.professional_id['lastname'] + ' (' + self._date_to_dateuser(cr, uid, ids,
@@ -120,8 +121,8 @@ class doctor_schedule(models.Model):
     schedule_duration = fields.Float('Duration (in hours)', required=True)
     date_end = fields.Datetime('End date', required=True)
     patients_count = fields.Char(compute='_get_register', string='Number of patients', multi='register_numbers')
-    appointment_ids = fields.One2many('doctor.appointment', 'schedule_id', 'Appointments',
-                                       domain=[('state', '!=', 'cancel'), ('cita_eliminada', '!=', True)])
+    #appointment_ids = fields.One2many('doctor.appointment', 'schedule_id', 'Appointments',
+    #                                   domain=[('state', '!=', 'cancel')])
 
     """
     _defaults = {
@@ -189,47 +190,9 @@ class doctor_schedule(models.Model):
 doctor_schedule()
 
 
-class doctor_diseases(models.Model):
-    _name = "doctor.diseases"
-
-    code = fields.Char('Code', size=4, required=True),
-    name = fields.Char('Disease', size=256, required=True),
-
-
-    _sql_constraints = [('code_uniq', 'unique (code)', 'The Medical Diseases code must be unique')]
-
-    def name_get(self, cr, uid, ids, context={}):
-        if not len(ids):
-            return []
-        reads = self.read(cr, uid, ids, ['name', 'code'], context)
-        res = []
-        for record in reads:
-            name = record['name']
-            if record['code']:
-                name = record['code'] + ' - ' + name
-            res.append((record['id'], name))
-        return res
-
-    def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=100):
-        args = args or []
-        ids = []
-        odontologia = context.get('odontologia')
-
-        if name:
-            ids = self.search(cr, uid, [('code', 'ilike', name)] + args, limit=limit, context=context)
-            if not ids:
-                ids = self.search(cr, uid, [('name', operator, name)] + args, limit=limit, context=context)
-        elif odontologia:
-            ids = self.search(cr, uid, [('code','>=','k000'),('code','<=','K149')], limit=limit, context=context)
-        else:
-            ids = self.search(cr, uid, args, limit=limit, context=context)
-        return self.name_get(cr, uid, ids, context)
-
-
-doctor_diseases()
-
 
 class doctor_systems_category(models.Model):
+    '''
     def name_get(self, cr, uid, ids, context=None):
         """Return the categories' display name, including their direct
            parent by default.
@@ -253,7 +216,7 @@ class doctor_systems_category(models.Model):
                 name = record['parent_id'][1] + ' / ' + name
             res.append((record['id'], name))
         return res
-
+    
     def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=100):
         if not args:
             args = []
@@ -271,13 +234,13 @@ class doctor_systems_category(models.Model):
     def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
         res = self.name_get(cr, uid, ids, context=context)
         return dict(res)
-
+    '''
     _description = 'Review systems categories'
     _name = 'doctor.systems.category'
 
     name = fields.Char('Category Name', required=True, size=64, translate=True)
     parent_id = fields.Many2one('doctor.systems.category', 'Parent Category', select=True, ondelete='cascade')
-    complete_name = fields.Char(compute='_name_get_fnc', type="char", string='Full Name')
+    #complete_name = fields.Char(compute='_name_get_fnc', type="char", string='Full Name')
     child_ids = fields.One2many('doctor.systems.category', 'parent_id', 'Child Categories')
     active = fields.Boolean('Active',
                              help="The active field allows you to hide the category without removing it.",
@@ -286,12 +249,12 @@ class doctor_systems_category(models.Model):
     parent_right = fields.Integer('Right parent', select=True)
 
 
-    """
+
     _constraints = [
         (models.Model._check_recursion, 'Error ! You can not create recursive categories.', ['parent_id'])
     ]
     
-    """
+
     _parent_store = True
     _parent_order = 'name'
     _order = 'parent_left'
@@ -308,89 +271,21 @@ class doctor_review_systems(models.Model):
     system_category = fields.Many2one('doctor.systems.category', 'Systems category', required=True,
                                        ondelete='restrict'),
     review_systems = fields.Text('Review systems', required=True),
-
-
-    def name_get(self, cr, uid, ids, context={}):
-        if not len(ids):
+    """
+    @api.multi
+    def name_get(self):
+        if not len(self._ids):
             return []
         rec_name = 'attentiont_id'
         res = [(r['id'], r[rec_name][1])
-               for r in self.read(cr, uid, ids, [rec_name], context)]
+               for r in self.read(self._cr, self._uid, self._ids, [rec_name], context)]
         return res
-
+    """
 
 doctor_review_systems()
 
 
-class doctor_past_category(models.Model):
-    def name_get(self, cr, uid, ids, context=None):
-        """Return the categories' display name, including their direct
-           parent by default.
 
-        :param dict context: the ``past_category_display`` key can be
-                             used to select the short version of the
-                             category name (without the direct parent),
-                             when set to ``'short'``. The default is
-                             the long version."""
-        if context is None:
-            context = {}
-        if context.get('past_category_display') == 'short':
-            return super(doctor_past_category, self).name_get(cr, uid, ids, context=context)
-        if isinstance(ids, (int, long)):
-            ids = [ids]
-        reads = self.read(cr, uid, ids, ['name', 'parent_id'], context=context)
-        res = []
-        for record in reads:
-            name = record['name']
-            if record['parent_id']:
-                name = record['parent_id'][1] + ' / ' + name
-            res.append((record['id'], name))
-        return res
-
-    def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=100):
-        if not args:
-            args = []
-        if not context:
-            context = {}
-        if name:
-            # Be sure name_search is symetric to name_get
-            name = name.split(' / ')[-1]
-            ids = self.search(cr, uid, [('name', operator, name)] + args, limit=limit, context=context)
-        else:
-            ids = self.search(cr, uid, args, limit=limit, context=context)
-        return self.name_get(cr, uid, ids, context)
-
-
-    def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
-        res = self.name_get(cr, uid, ids, context=context)
-        return dict(res)
-
-    _description = 'Past categories'
-    _name = 'doctor.past.category'
-
-    name = fields.Char('Category Name', required=True, size=64, translate=True)
-    parent_id = fields.Many2one('doctor.past.category', 'Parent Category', select=True, ondelete='cascade')
-    complete_name = fields.Char(compute='_name_get_fnc', type="char", string='Full Name')
-    child_ids = fields.One2many('doctor.past.category', 'parent_id', 'Child Categories')
-    active = fields.Boolean('Active',
-                             help="The active field allows you to hide the category without removing it.",
-                            default=1)
-    parent_left = fields.Integer('Left parent', select=True)
-    parent_right = fields.Integer('Right parent', select=True)
-
-
-    """
-    _constraints = [
-        (models.Model._check_recursion, 'Error ! You can not create recursive categories.', ['parent_id'])
-    ]
-    """
-
-    _parent_store = True
-    _parent_order = 'name'
-    _order = 'parent_left'
-
-
-doctor_past_category()
 
 
 class doctor_diseases_past(models.Model):
@@ -401,7 +296,7 @@ class doctor_diseases_past(models.Model):
     patient_id = fields.Many2one('doctor.patient', 'Patient', required=True, ondelete='restrict')
     diseases_id = fields.Many2one('doctor.diseases', 'Past diseases', required=True, ondelete='restrict')
 
-
+    """
     def name_get(self, cr, uid, ids, context={}):
         if not len(ids):
             return []
@@ -409,10 +304,8 @@ class doctor_diseases_past(models.Model):
         res = [(r['id'], r[rec_name][1])
                for r in self.read(cr, uid, ids, [rec_name], context)]
         return res
+    """
 
-    _defaults = {
-        'patient_id': lambda self, cr, uid, context: context.get('patient_id', False),
-    }
 
 
 doctor_diseases_past()
@@ -426,6 +319,7 @@ class doctor_atc_past(models.Model):
     patient_id = fields.Many2one('doctor.patient', 'Patient', required=True, ondelete='restrict')
     atc_id = fields.Many2one('doctor.atc', 'Past drugs', required=True, ondelete='restrict')
 
+    """
     def name_get(self, cr, uid, ids, context={}):
         if not len(ids):
             return []
@@ -437,145 +331,12 @@ class doctor_atc_past(models.Model):
     _defaults = {
         'patient_id': lambda self, cr, uid, context: context.get('patient_id', False),
     }
-
+    """
 
 doctor_atc_past()
 
 
-class doctor_exam_category(models.Model):
-    def name_get(self, cr, uid, ids, context=None):
-        """Return the categories' display name, including their direct
-           parent by default.
 
-        :param dict context: the ``exam_category_display`` key can be
-                             used to select the short version of the
-                             category name (without the direct parent),
-                             when set to ``'short'``. The default is
-                             the long version."""
-        if context is None:
-            context = {}
-        if context.get('exam_category_display') == 'short':
-            return super(doctor_exam_category, self).name_get(cr, uid, ids, context=context)
-        if isinstance(ids, (int, long)):
-            ids = [ids]
-        reads = self.read(cr, uid, ids, ['name', 'parent_id'], context=context)
-        res = []
-        for record in reads:
-            name = record['name']
-            if record['parent_id']:
-                name = record['parent_id'][1] + ' / ' + name
-            res.append((record['id'], name))
-        return res
-
-    def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=100):
-        if not args:
-            args = []
-        if not context:
-            context = {}
-        if name:
-            # Be sure name_search is symetric to name_get
-            name = name.split(' / ')[-1]
-            ids = self.search(cr, uid, [('name', operator, name)] + args, limit=limit, context=context)
-        else:
-            ids = self.search(cr, uid, args, limit=limit, context=context)
-        return self.name_get(cr, uid, ids, context)
-
-
-    def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
-        res = self.name_get(cr, uid, ids, context=context)
-        return dict(res)
-
-    _description = 'Exam categories'
-    _name = 'doctor.exam.category'
-
-    name = fields.Char('Category Name', required=True, size=64, translate=True)
-    parent_id = fields.Many2one('doctor.exam.category', 'Parent Category', select=True, ondelete='cascade')
-    complete_name = fields.Char(compute='_name_get_fnc', type="char", string='Full Name')
-    child_ids = fields.One2many('doctor.exam.category', 'parent_id', 'Child Categories')
-    active = fields.Boolean('Active',
-                             help="The active field allows you to hide the category without removing it.",
-                            default=1)
-    parent_left = fields.Integer('Left parent', select=True)
-    parent_right = fields.Integer('Right parent', select=True)
-
-    """
-    _constraints = [
-        (models.Model._check_recursion, 'Error ! You can not create recursive categories.', ['parent_id'])
-    ]
-    """
-
-
-    _parent_store = True
-    _parent_order = 'name'
-    _order = 'parent_left'
-
-
-doctor_exam_category()
-
-
-class doctor_health_procedures(models.Model):
-    _inherit = "product.product"
-
-    def onchange_type(self, cr, uid, ids, type):
-        if not type:
-            return {}
-        else:
-            if type != 'service':
-                return {'value': {
-                    'health_procedure': False,
-                }
-                }
-
-    def name_get(self, cr, user, ids, context=None):
-        if context is None:
-            context = {}
-        if not len(ids):
-            return []
-
-        def _name_get(d):
-            name = d.get('name', '')
-            code = d.get('default_code', False)
-            if code:
-                name = '%s' % (code)
-            return (d['id'], name)
-
-        partner_id = context.get('partner_id', False)
-
-        result = []
-        for product in self.browse(cr, user, ids, context=context):
-            sellers = filter(lambda x: x.name.id == partner_id, product.seller_ids)
-            if sellers:
-                for s in sellers:
-                    mydict = {
-                        'id': product.id,
-                        'name': s.product_name or product.name,
-                        'default_code': s.product_code or product.default_code,
-                        'variants': product.variants
-                    }
-                    result.append(_name_get(mydict))
-            else:
-                mydict = {
-                    'id': product.id,
-                    'name': product.name,
-                    'default_code': product.default_code,
-                    'variants': product.variants
-                }
-                result.append(_name_get(mydict))
-        return result
-
-    is_health_procedure = fields.Boolean('Is Health Procedure?')
-    procedure_code = fields.Char('Code', size=16)
-    procedure_description = fields.Char('Description', size=256)
-    complexity_level = fields.Selection([('1', '1'), ('2', '2'), ('3', '3')], 'Complexity Level')
-    procedure_type = fields.Selection([('1', 'Consultation'), ('2', 'Surgical Procedure'),
-                                        ('3', 'Diagnostic Image'), ('4', 'Clinical laboratory'),
-                                        ('5', 'Therapeutic Procedure'), ('6', 'Hospitalization'),
-                                        ('7', 'Odontological'), ('8', 'Other')], 'Procedure Type')
-    professional_ids = fields.Many2many('doctor.professional', id1='procedures_ids', id2='professional_ids',
-                                         string='My health procedures', required=False, ondelete='restrict')
-
-
-doctor_health_procedures()
 
 
 class doctor_prescription(models.Model):
