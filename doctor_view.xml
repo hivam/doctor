@@ -212,11 +212,11 @@
                       </group>
                     </fieldset>
                 </group>
-                    <!--<group >
+                    <group invisible="1">
                         <field name="deceased" ></field>
                         <field name="death_cause" attrs="{'invisible':[('deceased', '!=', True)]}"></field>
                         <field name="death_date" attrs="{'invisible':[('deceased', '!=', True)]}"></field>
-                    </group>-->
+                    </group>
 
                 <notebook colspan="4">
                     <page string="Attentions">
