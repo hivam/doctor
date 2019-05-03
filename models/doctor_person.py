@@ -32,31 +32,30 @@ class doctor_professional(models.Model):
 	_rec_name = 'username'
 
 
-	"""
-	def write(self, cr, uid, ids, vals, context=None):
+	@api.multi
+	def write(self, vals):
 		datos = {'lastname': '', 'surname': '', 'firstname': '', 'middlename': ''}
 		nombre = ''
-		if context is None:
-			context = {}
-		for professional in self.browse(cr, uid, ids, context=context):
-			if 'lastname' in vals:
-				datos['lastname'] = vals['lastname'] or ' '
 
-			if 'surname' in vals:
-				datos['surname'] = vals['surname'] or ' '
-			
-			if 'firstname' in vals:
-				datos['firstname'] = vals['firstname']	or ' '
 
-			if 	'middlename' in vals:
-				datos['middlename'] = vals['middlename'] or ' '
+		if 'lastname' in vals:
+			datos['lastname'] = vals['lastname'] or ' '
 
-			nombre = "%s %s %s %s" % (datos['lastname'] or professional.lastname, datos['surname'] or professional.surname or '',
-					 datos['firstname'] or professional.firtsname , datos['middlename'] or professional.middlename or '')
+		if 'surname' in vals:
+			datos['surname'] = vals['surname'] or ' '
+
+		if 'firstname' in vals:
+			datos['firstname'] = vals['firstname']	or ' '
+
+		if 	'middlename' in vals:
+			datos['middlename'] = vals['middlename'] or ' '
+
+		nombre = "%s %s %s %s" % (datos['lastname'] or self.lastname, datos['surname'] or self.surname or '',
+				 datos['firstname'] or self.firtsname , datos['middlename'] or self.middlename or '')
 
 		vals['nombreUsuario'] = nombre.upper()
-		return super(doctor_professional, self).write(cr, uid, ids, vals, context=context)
-	"""
+		return super(doctor_professional, self).write(vals)
+
 	professional = fields.Many2one('res.partner', 'Healthcare Professional', ondelete='cascade',
 									domain=[('is_company', '=', False)])
 	username = fields.Char('Username', size=64, required=True)
@@ -72,15 +71,15 @@ class doctor_professional(models.Model):
 	procedures_ids = fields.Many2many('product.product', id1='professional_ids', id2='procedures_ids',
 									   string='My health procedures', required=False, ondelete='restrict')
 
-	"""
-	def name_get(self, cr, uid, ids, context={}):
-		if not len(ids):
+
+	def name_get(self):
+		if not len(self._ids):
 			return []
 		rec_name = 'professional'
 		res = [(r['id'], r[rec_name][1])
-			for r in self.read(cr, uid, ids, [rec_name], context)]
+			for r in self.read([rec_name])]
 		return res
-	"""
+
 	"""
 	def onchange_photo(self, cr, uid, ids, professional, photo, context=None):
 		values = {}
@@ -207,29 +206,7 @@ class doctor_patient(models.Model):
 		return super(doctor_patient, self).write(cr, uid, ids, vals, context=context)
 
 
-	def create(self, cr, uid, vals, context=None):
-		if 'birth_date' in vals:
-			birth_date = vals['birth_date']
-			current_date = time.strftime('%Y-%m-%d')
-			if birth_date > current_date:
-				raise osv.except_osv(_('Warning !'), _("Birth Date Can not be a future date "))
-
-		if vals['middlename']:
-			vals.update({'middlename': vals['middlename'].upper() })
-		if vals['surname']:
-			vals.update({'surname': vals['surname'].upper() })
-		vals.update({'lastname': vals['lastname'].upper() })
-		vals.update({'firstname': vals['firstname'].upper() })
-		vals.update({'name' : "%s %s %s %s" % (vals['lastname'] , vals['surname'] or '' , vals['firstname'] , vals['middlename'] or '')})
-		vals.update({'nombre' : vals['name'].upper()})
-		if not vals['es_profesionalsalud']:
-			id_tercero = self.pool.get('res.partner').create(cr, uid, {'ref': vals['ref'], 'tdoc': vals['tdoc'], 'middlename' : vals['middlename'] or '', 'surname' : vals['surname'] or '',  'lastname': vals['lastname'], 'firtsname': vals['firstname'], 'name': vals['name'], 'image': vals['photo'], 'city_id': vals['city_id'], 'state_id': vals['state_id'], 'street': vals['street'], 'phone': vals['telefono'], 'mobile': vals['movil'], 'email': vals['email'],'es_paciente': True, 'es_profesional_salud': False}, context)
-			vals.update({'patient' : id_tercero}) #una vez creamos el tercero podemos añadir el partner al campo patient.
-		else:
-			partner_id = self.pool.get('res.partner').search(cr, uid, [('ref','=', vals['ref'])])
-			self.pool.get('res.partner').write(cr, uid, partner_id, {'es_paciente': True}, context=context)
-
-		return super(doctor_patient, self).create(cr, uid, vals, context=context)
+	
 	"""
 
 	@api.multi

@@ -80,14 +80,13 @@ class doctor_attentions(models.Model):
             res[datos.id] = self._previous(cr, uid, datos.patient_id, 'drugs', datos.id)
         return res
 
-    """
     def _get_professional_id(self, cr, uid, user_id):
         try:
             professional_id= self.pool.get('doctor.professional').browse(cr, uid, self.pool.get('doctor.professional').search(cr, uid, [( 'user_id',  '=', uid)]))[0].id
             return professional_id
         except:
             return False
-    """
+
     patient_id = fields.Many2one('doctor.patient', 'Patient', ondelete='restrict', readonly=True,
                                  default=lambda self, cr, uid, context: context.get('patient_id', False),)
     """
@@ -103,10 +102,10 @@ class doctor_attentions(models.Model):
     age_unit = fields.Selection([('1', 'Years'), ('2', 'Months'), ('3', 'Days'), ], 'Unit of measure of age',
                                  readonly=True)
     age_patient_ymd = fields.Char('Age in Years, months and days', size=30, readonly=True)
-    """
+
     professional_id = fields.Many2one('doctor.professional', 'Doctor', required=True, readonly=True,
                                       default= _get_professional_id if _get_professional_id != False else False)
-    
+    """
     speciality = fields.related('professional_id', 'speciality_id', type="many2one", relation="doctor.speciality",
                                  string='Speciality', required=False, store=True,
                                  states={'closed': [('readonly', True)]})"""
@@ -119,24 +118,29 @@ class doctor_attentions(models.Model):
                                             states={'closed': [('readonly', True)]})
                                             """
     actual_disease = fields.Text('Current disease', required=False, states={'closed': [('readonly', True)]})
-    """
-    review_systems_id = fields.One2many('doctor.review.systems', 'attentiont_id', 'Review of systems',
-                                         ondelete='restrict', states={'closed': [('readonly', True)]})
+
+    past_ids = fields.One2many(compute='_get_past', relation="doctor.attentions.past", type="one2many", store=False,
+                           readonly=True, method=True, string="Old Past")
+
+    pathological_past_ids = fields.One2many(compute='_get_pathological_past', relation="doctor.diseases.past",
+                                        type="one2many", store=False, readonly=True, method=True,
+                                        string="Old Pathological Past")
+
     attentions_past_ids = fields.One2many('doctor.attentions.past', 'attentiont_id', 'Past', ondelete='restrict',
-                                           states={'closed': [('readonly', True)]})
-    past_ids = fields.Char(compute='_get_past', relation="doctor.attentions.past", type="one2many", store=False,
-                            readonly=True, method=True, string="Old Past")
+                                          states={'closed': [('readonly', True)]})
+
     pathological_past = fields.One2many('doctor.diseases.past', 'attentiont_id', 'Pathological past',
-                                         ondelete='restrict', states={'closed': [('readonly', True)]})
-    pathological_past_ids = fields.Char(compute='_get_pathological_past', relation="doctor.diseases.past",
-                                         type="one2many", store=False, readonly=True, method=True,
-                                         string="Old Pathological Past")
+                                        ondelete='restrict', states={'closed': [('readonly', True)]})
+
     drugs_past = fields.One2many('doctor.atc.past', 'attentiont_id', 'Drugs past', ondelete='restrict',
-                                  states={'closed': [('readonly', True)]})
-    
-    drugs_past_ids = fields.Char(compute='_get_drugs_past', relation="doctor.atc.past", type="one2many", store=False,
-                                  readonly=True, method=True, string="Old drugs Past")
-    """
+                                 states={'closed': [('readonly', True)]})
+
+    drugs_past_ids = fields.One2many(compute='_get_drugs_past', relation="doctor.atc.past", type="one2many", store=False,
+                                 readonly=True, method=True, string="Old drugs Past")
+
+    review_systems_id = fields.One2many('doctor.review.systems', 'attentiont_id', 'Review of systems',
+                                        ondelete='restrict', states={'closed': [('readonly', True)]})
+
     weight = fields.Float('Weight (kg)', states={'closed': [('readonly', True)]})
     height = fields.Float('Height (cm)', states={'closed': [('readonly', True)]})
     body_mass_index = fields.Float('Body Mass Index', states={'closed': [('readonly', True)]})
@@ -150,15 +154,20 @@ class doctor_attentions(models.Model):
     temperature = fields.Float('Temperature (celsius)', states={'closed': [('readonly', True)]})
     pulsioximetry = fields.Integer('Oxygen Saturation', help="Oxygen Saturation (arterial).",
                                     states={'closed': [('readonly', True)]})
-    """
-    attentions_exam_ids = fields.One2many('doctor.attentions.exam', 'attentiont_id', 'Exam', ondelete='restrict',
-                                           states={'closed': [('readonly', True)]})
     analysis = fields.Text('Analysis', required=False, states={'closed': [('readonly', True)]})
     conduct = fields.Text('Conduct', required=False, states={'closed': [('readonly', True)]})
     diseases_ids = fields.One2many('doctor.attentions.diseases', 'attentiont_id', 'Diseases', ondelete='restrict',
-                                    states={'closed': [('readonly', True)]})
+                                   states={'closed': [('readonly', True)]})
     drugs_ids = fields.One2many('doctor.prescription', 'attentiont_id', 'Drugs prescription', ondelete='restrict',
-                                 states={'closed': [('readonly', True)]})
+                                states={'closed': [('readonly', True)]})
+
+    """
+    attentions_exam_ids = fields.One2many('doctor.attentions.exam', 'attentiont_id', 'Exam', ondelete='restrict',
+                                           states={'closed': [('readonly', True)]})
+    
+    
+    
+    
     diagnostic_images_ids = fields.One2many('doctor.attentions.procedures', 'attentiont_id', 'Diagnostic Images',
                                              ondelete='restrict', states={'closed': [('readonly', True)]},
                                              domain=[('procedures_id.procedure_type', '=', 3)])

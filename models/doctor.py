@@ -80,6 +80,7 @@ class doctor_schedule(models.Model):
         date_end_user = datetime.strftime(date_end_user, "%H:%M")
         return date_end_user
 
+    """
     @api.multi
     def name_get(self):
         if not self._ids:
@@ -94,41 +95,45 @@ class doctor_schedule(models.Model):
                                     date_begin) + ' - ' + self._date_end_to_dateuser( cr, uid, ids, date_end) + ')'
             res.append((record['id'], display_name))
         return res
+    """
 
-    def _get_register(self, cr, uid, ids, fields, args, context=None):
+    @api.one
+    def _get_register(self):
         """Get Confirm or uncofirm register value.
         @param ids: List of Event registration type's id
         @param fields: List of function fields(register_current and register_prospect).
         @param context: A standard dictionary for contextual values
         @return: Dictionary of function fields value.
         """
+        _logger.info('entro a get')
+        _logger.info('entro a get')
+        _logger.info('entro a get')
+        _logger.info(self._ids)
+
         res = {}
-        for schedule in self.browse(cr, uid, ids, context=context):
+        for schedule in self.browse(self._ids):
             res[schedule.id] = {}
             reg_open = 0
             for appointment in schedule.appointment_ids:
+                _logger.info('entro a get')
+                _logger.info('entro a get')
+                _logger.info(appointment.state)
                 if appointment.state != 'cancel':
                     reg_open += appointment.nb_register
-            for field in fields:
+            for field in self._fields:
                 number = 0
                 if field == 'patients_count':
                     number = reg_open
                 res[schedule.id][field] = number
-        return res
+        self.patients_count = res
 
-    professional_id = fields.Many2one('doctor.professional', 'Doctor')
+    professional_id = fields.Many2one('doctor.professional', 'Doctor',default= lambda self: self._get_professional_id())
     date_begin = fields.Datetime('Start date', required=True)
     schedule_duration = fields.Float('Duration (in hours)', required=True)
     date_end = fields.Datetime('End date', required=True)
-    patients_count = fields.Char(compute='_get_register', string='Number of patients', multi='register_numbers')
-    #appointment_ids = fields.One2many('doctor.appointment', 'schedule_id', 'Appointments',
-    #                                   domain=[('state', '!=', 'cancel')])
-
-    """
-    _defaults = {
-        'professional_id': _get_professional_id if _get_professional_id != False else False,
-    }
-    """
+    patients_count = fields.Float(compute='_get_register', string='Number of patients', store=True)
+    appointment_ids = fields.One2many('doctor.appointment', 'schedule_id', 'Appointments',
+                                      domain=[('state', '!=', 'cancel')])
 
     def _check_schedule(self, cr, uid, ids):
         for record in self.browse(cr, uid, ids):
@@ -162,24 +167,26 @@ class doctor_schedule(models.Model):
     ]
     """
 
-    def onchange_start_date(self, cr, uid, ids, date_begin, schedule_duration, date_end, context={}):
+
+    @api.onchange('date_begin','schedule_duration','date_end')
+    def onchange_start_date(self):
         values = {}
         res = {}
-        if not date_begin and not date_end:
+        if not self.date_begin and not self.date_end:
             return res
-        schedule_begin = datetime.strptime(date_begin, "%Y-%m-%d %H:%M:%S")
-        duration = schedule_duration
+        schedule_begin = datetime.strptime(self.date_begin, "%Y-%m-%d %H:%M:%S")
+        duration = self.schedule_duration
         date_end = schedule_begin + timedelta(hours=duration)
         values.update({
             'date_end': date_end.strftime("%Y-%m-%d %H:%M:%S"),
         })
         return {'value': values}
 
-    def _get_professional_id(self, cr, uid, user_id):
-        doctor = self.pool.get('doctor.professional').search(cr, uid, [('user_id', '=', uid)])
-        if doctor:
-            return self.pool.get('doctor.professional').browse(cr, uid, doctor)[0].id
-        return False
+    @api.model
+    def _get_professional_id(self):
+        doctor = self.env['doctor.professional'].search([('user_id', '=', self._uid)])
+
+        return doctor
 
 
 
@@ -189,100 +196,6 @@ class doctor_schedule(models.Model):
 
 doctor_schedule()
 
-
-
-class doctor_systems_category(models.Model):
-    '''
-    def name_get(self, cr, uid, ids, context=None):
-        """Return the categories' display name, including their direct
-           parent by default.
-
-        :param dict context: the ``systems_category_display`` key can be
-                             used to select the short version of the
-                             category name (without the direct parent),
-                             when set to ``'short'``. The default is
-                             the long version."""
-        if context is None:
-            context = {}
-        if context.get('systems_category_display') == 'short':
-            return super(doctor_systems_category, self).name_get(cr, uid, ids, context=context)
-        if isinstance(ids, (int, long)):
-            ids = [ids]
-        reads = self.read(cr, uid, ids, ['name', 'parent_id'], context=context)
-        res = []
-        for record in reads:
-            name = record['name']
-            if record['parent_id']:
-                name = record['parent_id'][1] + ' / ' + name
-            res.append((record['id'], name))
-        return res
-    
-    def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=100):
-        if not args:
-            args = []
-        if not context:
-            context = {}
-        if name:
-            # Be sure name_search is symetric to name_get
-            name = name.split(' / ')[-1]
-            ids = self.search(cr, uid, [('name', operator, name)] + args, limit=limit, context=context)
-        else:
-            ids = self.search(cr, uid, args, limit=limit, context=context)
-        return self.name_get(cr, uid, ids, context)
-
-
-    def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
-        res = self.name_get(cr, uid, ids, context=context)
-        return dict(res)
-    '''
-    _description = 'Review systems categories'
-    _name = 'doctor.systems.category'
-
-    name = fields.Char('Category Name', required=True, size=64, translate=True)
-    parent_id = fields.Many2one('doctor.systems.category', 'Parent Category', select=True, ondelete='cascade')
-    #complete_name = fields.Char(compute='_name_get_fnc', type="char", string='Full Name')
-    child_ids = fields.One2many('doctor.systems.category', 'parent_id', 'Child Categories')
-    active = fields.Boolean('Active',
-                             help="The active field allows you to hide the category without removing it.",
-                            default=1)
-    parent_left = fields.Integer('Left parent', select=True)
-    parent_right = fields.Integer('Right parent', select=True)
-
-
-
-    _constraints = [
-        (models.Model._check_recursion, 'Error ! You can not create recursive categories.', ['parent_id'])
-    ]
-    
-
-    _parent_store = True
-    _parent_order = 'name'
-    _order = 'parent_left'
-
-
-doctor_systems_category()
-
-
-class doctor_review_systems(models.Model):
-    _name = "doctor.review.systems"
-    _rec_name = 'attentiont_id'
-
-    attentiont_id = fields.Many2one('doctor.attentions', 'Attention'),
-    system_category = fields.Many2one('doctor.systems.category', 'Systems category', required=True,
-                                       ondelete='restrict'),
-    review_systems = fields.Text('Review systems', required=True),
-    """
-    @api.multi
-    def name_get(self):
-        if not len(self._ids):
-            return []
-        rec_name = 'attentiont_id'
-        res = [(r['id'], r[rec_name][1])
-               for r in self.read(self._cr, self._uid, self._ids, [rec_name], context)]
-        return res
-    """
-
-doctor_review_systems()
 
 
 

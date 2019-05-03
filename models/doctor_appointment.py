@@ -27,13 +27,12 @@ import pytz
 from . import doctor_attentions
 import logging
 _logger = logging.getLogger(__name__)
+
+
 class doctor_appointment_type(models.Model):
 	_name = "doctor.appointment.type"
-	_columns = {
-		'name':  fields.Char('Type', size=30, required=True),
-		'duration':  fields.Integer('Duration', required=True),
-	}
-
+	name = fields.Char('Type', size=30, required=True)
+	duration = fields.Integer('Duration', required=True)
 
 
 doctor_appointment_type()
@@ -44,6 +43,8 @@ class doctor_appointment(models.Model):
 	_order = 'time_begin asc'
 	_rec_name = 'number'
 
+
+	"""
 	def name_get(self, cr, uid, ids, context={}):
 		if not len(ids):
 			return []
@@ -57,7 +58,7 @@ class doctor_appointment(models.Model):
 		if not vals.get('number'):
 			vals['number'] = self.pool.get('ir.sequence').get(cr, uid, 'appointment.sequence')
 		return super(doctor_appointment, self).create(cr, uid, vals, context=context)
-
+	"""
 	def button_confirm(self, cr, uid, ids, context=None):
 		return self.write(cr, uid, ids, {'state': 'confirm'}, context=context)
 
@@ -77,11 +78,11 @@ class doctor_appointment(models.Model):
 		time_begin_user = datetime.strftime(time_begin_user, "%Y-%m-%d")
 		return time_begin_user
 
-	def _get_appointment_today(self, cr, uid, ids, field_name, arg, context=None):
+	def _get_appointment_today(self):
 		res = {}
-		for record in self.browse(cr, uid, ids):
-			date_today = fields.date.context_today(self, cr, uid, context=context)
-			time_begin = self._time2user(cr, uid, ids, record.time_begin)
+		for record in self.browse(self._ids):
+			date_today = fields.date.context_today(self, self._cr, self._uid)
+			time_begin = self._time2user(self._cr, self._uid, self._ids, record.time_begin)
 			if time_begin == date_today:
 				res[record.id] = True
 			else:
@@ -90,18 +91,21 @@ class doctor_appointment(models.Model):
 
 	schedule_id =  fields.Many2one('doctor.schedule', 'Schedule', states={'invoiced': [('readonly', True)]})
 	number =  fields.Char('Appointment number', select=1, size=32, readonly=True,
-						  help="Number of appointment. Keep empty to get the number assigned by a sequence.",
-						 default=lambda self, cr, uid, context: context.get('schedule_id', False),)
+						  help="Number of appointment. Keep empty to get the number assigned by a sequence.")
 	"""
 	professional_id = fields.related('schedule_id', 'professional_id', type="many2one",
 									  relation="doctor.professional", string='Professional', required=True,
 									  store=True)"""
+
+	professional_id = fields.Many2one('doctor.professional', "schedule_id")
 	patient_id =  fields.Many2one('doctor.patient', "Patient", required=True,
 								  states={'invoiced': [('readonly', True)]})
 	"""
 	insurer_id = fields.related('patient_id', 'insurer', type="many2one", relation="doctor.insurer",
 								 string='Insurer', required=False, states={'invoiced': [('readonly', True)]},
 								 store=True)"""
+
+	insurer_id = fields.Many2one('doctor.insurer', "insurer")
 	type_id =  fields.Many2one('doctor.appointment.type', "Appointment type",
 							   states={'invoiced': [('readonly', True)]})
 	time_begin =  fields.Datetime('Start time', required=True, states={'invoiced': [('readonly', True)]})
@@ -133,33 +137,33 @@ class doctor_appointment(models.Model):
 				return super(doctor_appointment, self).write(cr, uid, ids, {'appointment_today': 'True'}, context=context)
 		return True
 	
-	def _check_appointment(self, cr, uid, ids, context=None):
-		for record in self.browse(cr, uid, ids, context=context):
-			modulo_instalado = self.pool.get('ir.module.module').search(cr,uid,[('name', '=', 'doctor_multiroom'), ('state', '=', 'installed')],context=context)
+	def _check_appointment(self):
+		for record in self.browse(self._ids):
+			modulo_instalado = self.env['ir.module.module'].search([('name', '=', 'doctor_multiroom'), ('state', '=', 'installed')])
 			if modulo_instalado:
 				if record.schedule_id.consultorio_id.multi_paciente:
 					return True
 			else:
-				appointment_ids = self.search(cr, uid,
-											  [('time_begin', '<', record.time_end), ('time_end', '>', record.time_begin),
+				appointment_ids = self.search([('time_begin', '<', record.time_end), ('time_end', '>', record.time_begin),
 											   ('aditional', '=', record.aditional), ('state', '=', record.state),
-											   ('id', '<>', record.id)])
+											   ('id', '!=', record.id)])
 				if appointment_ids:
 					return False
 		
 		return True
 
-	def _check_closing_time(self, cr, uid, ids, context=None):
-		for record in self.browse(cr, uid, ids, context=context):
+
+	def _check_closing_time(self):
+		for record in self.browse(self._ids):
 			if record.time_end < record.time_begin:
 				return False
 		return True
 
-	def _check_date_appointment(self, cr, uid, ids, context=None):
+	def _check_date_appointment(self):
 		fecha_hora_actual = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:00")
 		fecha_hora_actual = datetime.strptime(fecha_hora_actual, "%Y-%m-%d %H:%M:00")
 		fecha_usuario_ini = fecha_hora_actual.strftime('%Y-%m-%d 00:00:00')
-		for record in self.browse(cr, uid, ids, context=context):
+		for record in self.browse(self._ids):
 			schedule_begin = record.schedule_id.date_begin
 			schedule_end = record.schedule_id.date_end
 			time_begin = record.time_begin

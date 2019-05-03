@@ -1,1 +1,1 @@
-from . import doctor_person,doctor_attentions,doctor_data
+from . import doctor_person,doctor_attentions,doctor_data, doctor_appointment,doctor
