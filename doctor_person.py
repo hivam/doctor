@@ -151,11 +151,11 @@ class doctor_patient(osv.osv):
 				surname = vals['surname'] if 'surname' in vals else partner_id.surname
 				middlename = vals['middlename'] if 'middlename' in vals else partner_id.middlename
 
-				u['name'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
-				u['display_name'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
+				u['name'] = unicodedata.normalize('NFKD', nombre.decode('utf-8')).encode('ASCII', 'ignore').upper()
+				u['display_name'] = unicodedata.normalize('NFKD', nombre.decode('utf-8')).encode('ASCII', 'ignore').upper()
 			
 
-				vals['nombre'] = unicodedata.normalize('NFKD', nombre).encode('ASCII', 'ignore').upper()
+				vals['nombre'] = unicodedata.normalize('NFKD', nombre.decode('utf-8')).encode('ASCII', 'ignore').upper()
 
 
 				if 'ref' in vals:
